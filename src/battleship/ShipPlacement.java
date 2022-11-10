@@ -222,12 +222,27 @@ public class ShipPlacement extends JPanel implements MouseListener
 		int counter = s.size;
 		int buttonRow = Integer.parseInt(String.valueOf(c).substring(0,1));
 		boolean allButtonsSameRow = false;
+		System.out.println(c);
 
-		for (int i = 0; i < s.size; i++)
+		if (c < 10)
 		{
-			if (buttonRow == Integer.parseInt(String.valueOf(c + i).substring(0,1)))
+			for (int i = 0; i < s.size; i++)
 			{
-				counter--;
+				if ((c + i) < 10)
+				{
+					counter--;
+				}
+			}
+		}
+
+		else
+		{
+			for (int i = 0; i < s.size; i++)
+			{
+				if (buttonRow == Integer.parseInt(Integer.toString(c + i).substring(0,1)))
+				{
+					counter--;
+				}
 			}
 		}
 
