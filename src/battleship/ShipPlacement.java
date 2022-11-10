@@ -8,15 +8,15 @@ import java.awt.event.*;
 
 public class ShipPlacement extends JPanel implements MouseListener
 {
-	JPanel selectionPanel,placementPanel;
+	JPanel selectionPanel, placementPanel, blankPanel;
 	JLabel playerLabel;
 	JButton next;
 	JButton[] placementButtons, selectionButtons;
 	Ship[] ships;
 
-	public ShipPlacement (Ship[] mainShips, int player)
+	public ShipPlacement (Ship[] mainShips, String player)
 	{
-		setLayout(new BorderLayout(/*200, 0*/));
+		setLayout(new BorderLayout(200, 0));
 		setBackground(Color.gray);
 		addMouseListener(this);
 
@@ -28,23 +28,23 @@ public class ShipPlacement extends JPanel implements MouseListener
 		add(selectionPanel, BorderLayout.WEST);
 
 		placementPanel = new JPanel(new GridLayout(10, 10, 0, 0));
-		placementPanel.setPreferredSize(new Dimension(1200, 0));
 		placementPanel.setBackground(Color.gray);
 		add(placementPanel, BorderLayout.CENTER);
 
-		/*JPanel fillPanel = new JPanel(null);
-		fillPanel.setPreferredSize(new Dimension(400, 0));
-		fillPanel.setOpaque(false);
-		add(fillPanel, BorderLayout.EAST);*/
+		/*JPanel blankPanel = new JPanel(null);
+		blankPanel.setPreferredSize(new Dimension(400, 0));
+		blankPanel.setOpaque(false);
+		add(blankPanel, BorderLayout.EAST);*/
 
 		//------------------------------ Content ------------------------------
 
-		playerLabel = new JLabel("Player " + player, SwingConstants.CENTER);
+		playerLabel = new JLabel(player, SwingConstants.CENTER);
 		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 60));
 		playerLabel.setForeground(Color.black);
 		add(playerLabel, BorderLayout.NORTH);
 
 		ships = mainShips;
+
 		selectionButtons = new JButton[ships.length];
 		setSelectionPanel(ships, selectionButtons);
 
@@ -435,7 +435,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 						{
 							for (int i = 0; i < ships[ship].size; i++)
 							{
-								ships[ship].position[i] = coordinates + i;
+								ships[ship].position[i] = coordinates + (i * 10);
 								placementButtons[coordinates + (i * 10)].setBackground(Color.black);
 								placementButtons[coordinates + (i * 10)].setEnabled(false);
 

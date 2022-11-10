@@ -9,8 +9,9 @@ import java.awt.event.*;
 public class MenuInterface extends JFrame implements ActionListener
 {
 	JPanel menuPanel;
-	JLabel menuTitle, blank;
+	JLabel menuTitle, blankLabel;
 	JButton newGame, loadGame, exit;
+	GameInterface gi;
 
 	public MenuInterface ()
 	{
@@ -65,14 +66,12 @@ public class MenuInterface extends JFrame implements ActionListener
 		exit.addActionListener(this);
 		menuPanel.add(exit);
 
-		blank = new JLabel();
-		menuPanel.add(blank);
+		blankLabel = new JLabel();
+		menuPanel.add(blankLabel);
 	}
 
 	public void actionPerformed (ActionEvent e)
 	{
-		GameInterface gi;
-
 		if (e.getSource() instanceof JButton)
 		{
 			JButton clickedButton = (JButton) e.getSource();

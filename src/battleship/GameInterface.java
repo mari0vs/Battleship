@@ -11,8 +11,10 @@ public class GameInterface extends JFrame implements ActionListener
 	JMenu menu;
 	JMenuItem newGame, loadGame, saveGame, exit;
 	CardLayout card;
-	JPanel cardPanel, testPanelA, testPanelB;
-	ShipPlacement shipPlacementPanelA, shipPlacementPanelB;
+	JPanel cardPanel;
+	int currentCard;
+	ShipPlacement shipPlacementA, shipPlacementB;
+	Shooting shootingA, shootingB;
 	Ship[] shipsA, shipsB;
 
 	public GameInterface ()
@@ -72,25 +74,16 @@ public class GameInterface extends JFrame implements ActionListener
 		shipsA = new Ship[5];
 		shipsB = new Ship[5];
 
-		shipPlacementPanelA = new ShipPlacement(shipsA, 1);
-		shipPlacementPanelA.next.addActionListener(this);
-		cardPanel.add(shipPlacementPanelA, "1");
+		shipPlacementA = new ShipPlacement(shipsA, "Player 1");
+		shipPlacementA.next.addActionListener(this);
+		cardPanel.add(shipPlacementA, "1");
 
-		shipPlacementPanelB = new ShipPlacement(shipsB, 2);
-		shipPlacementPanelB.next.addActionListener(this);
-		cardPanel.add(shipPlacementPanelB, "2");
-
-		testPanelA = new JPanel();
-		testPanelA.setBackground(Color.green);
-		cardPanel.add(testPanelA, "3");
-
-		testPanelB = new JPanel();
-		testPanelB.setBackground(Color.pink);
-		cardPanel.add(testPanelB, "4");
+		shipPlacementB = new ShipPlacement(shipsB, "Player 2");
+		shipPlacementB.next.addActionListener(this);
+		cardPanel.add(shipPlacementB, "2");
 
 		card.first(cardPanel);
-
-		
+		currentCard = 1;
 	}
 
 	public void actionPerformed (ActionEvent e)
@@ -100,10 +93,8 @@ public class GameInterface extends JFrame implements ActionListener
 			JMenuItem clickedItem = (JMenuItem) e.getSource();
 			String clickedItemText = clickedItem.getText();
 
-			if (clickedItemText == "New Game")
-			{
-				setVisible(false);
-			}
+			if (clickedItemText == "Sava Game")
+			{}
 
 			else
 			{
@@ -118,7 +109,23 @@ public class GameInterface extends JFrame implements ActionListener
 
 			if (buttonText == "Next")
 			{
-				card.show(cardPanel, "2");
+				if (currentCard == 1)
+				{
+					currentCard = 2;
+					card.show(cardPanel, "2");
+				}
+
+				else if (currentCard == 2)
+				{
+					shootingA = new Shooting(shipsA, shipsB, "Player 1");
+					cardPanel.add(shootingA, "3");
+
+					shootingB = new Shooting(shipsB, shipsA, "Player 2");
+					cardPanel.add(shootingB, "4");
+
+					currentCard = 3;
+					card.show(cardPanel, "3");
+				}
 
 				/*for (int i = 0; i < shipsA.length; i++)
 				{
@@ -129,11 +136,6 @@ public class GameInterface extends JFrame implements ActionListener
 					System.out.println();
 				}
 				System.out.println();*/
-			}
-
-			else if (buttonText == "Next")
-			{
-				card.show(cardPanel, "3");
 			}
 		}
 	}
