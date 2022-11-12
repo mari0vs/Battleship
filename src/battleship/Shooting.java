@@ -1,6 +1,7 @@
 package battleship;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -8,30 +9,50 @@ import java.awt.event.*;
 
 public class Shooting extends JPanel implements ActionListener
 {
-	JPanel playerShipsPanel, shootingPanel;
+	JPanel leftPanel, rightPanel, playerShipsPanel, shootingPanel;
 	JLabel playerLabel;
 	JLabel[] playerShipsLabels;
 	JButton[] shootingButtons;
+	Color[] colors;
 	Ship[] playerShips, enemyShips;
 
-	public Shooting (Ship[] shipsA, Ship[] shipsB, String player)
+	public Shooting (Ship[] shipsA, Ship[] shipsB, String player, Color[] c)
 	{
+		colors = c;
+
+		// setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		setLayout(new BorderLayout(200, 0));
-		setBackground(Color.gray);
-
-		playerShipsPanel = new JPanel(new GridLayout(10, 10, 1, 1));
-		playerShipsPanel.setPreferredSize(new Dimension(1000, 0));
-		playerShipsPanel.setBackground(Color.gray);
-		add(playerShipsPanel, BorderLayout.WEST);
-
-		shootingPanel = new JPanel(new GridLayout(10, 10, 0, 0));
-		shootingPanel.setBackground(Color.gray);
-		add(shootingPanel, BorderLayout.CENTER);
+		setBackground(Color.black);
 
 		playerLabel = new JLabel(player, SwingConstants.CENTER);
-		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 60));
-		playerLabel.setForeground(Color.black);
+		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 80));
+		playerLabel.setForeground(Color.white);
 		add(playerLabel, BorderLayout.NORTH);
+
+		leftPanel = new JPanel();
+		leftPanel.setOpaque(false);
+		leftPanel.setPreferredSize(new Dimension(500, 0));
+		leftPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+		add(leftPanel, BorderLayout.WEST);
+
+		BoxLayout boxlayout = new BoxLayout(leftPanel, BoxLayout.Y_AXIS);
+		leftPanel.setLayout(boxlayout);
+
+		playerShipsPanel = new JPanel(new GridLayout(10, 10, 1, 1));
+		playerShipsPanel.setBackground(Color.black);
+		playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
+		leftPanel.add(playerShipsPanel);
+
+		leftPanel.add(Box.createRigidArea(new Dimension(0, 750)));
+
+		shootingPanel = new JPanel(new GridLayout(10, 10, 1, 1));
+		shootingPanel.setBackground(Color.black);
+		add(shootingPanel, BorderLayout.CENTER);
+
+		rightPanel = new JPanel();
+		rightPanel.setOpaque(false);
+		rightPanel.setPreferredSize(new Dimension(400, 0));
+		add(rightPanel, BorderLayout.EAST);
 
 		playerShips = shipsA;
 		enemyShips = shipsB;
@@ -111,6 +132,27 @@ public class Shooting extends JPanel implements ActionListener
 		{
 			JButton clickedButton = (JButton) e.getSource();
 			int coordinates = Integer.parseInt(clickedButton.getName());
+
+			if (clickedButton == shootingButtons[coordinates])
+			{
+				for (Ship enemyShip: enemyShips)
+				{
+					for (int position: enemyShip.position)
+					{
+						if (coordinates == position)
+						{
+							shootingButtons[coordinates].setBackground(Color.red);
+						}
+
+						else if (shootingButtons[coordinates].getBackground() == Color.blue)
+						{
+							shootingButtons[coordinates].setBackground(Color.green);
+						}
+
+						shootingButtons[coordinates].setEnabled(false);
+					}
+				}
+			}
 		}
 	}
 }

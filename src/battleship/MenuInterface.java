@@ -1,67 +1,111 @@
 package battleship;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Insets;
+import java.awt.Dimension;
 
 @SuppressWarnings("serial")
 
 public class MenuInterface extends JFrame implements ActionListener
 {
-	JPanel menuPanel;
+	JPanel menuPanel, westPanel, southPanel, eastPanel;
 	JLabel menuTitle, blankLabel;
 	JButton newGame, loadGame, exit;
+	Color[] colors;
 	GameInterface gi;
 
 	public MenuInterface ()
 	{
-		Font font = new Font("Comic Sans", Font.BOLD, 30);
+		Font titleFont = new Font("Comic Sans", Font.BOLD, 75);
+		Font buttonFont = new Font("Comic Sans", Font.BOLD, 50);
+		colors = new Color[8];
+
+		colors[0] = new Color(246, 17, 74);//red
+		colors[1] = new Color(10, 160, 191);//blue
+		colors[2] = new Color(243, 110, 152);//pink
+		colors[3] = new Color(120, 177, 119);//green
+		colors[4] = new Color(152, 98, 162);//purple
+		colors[5] = new Color(240, 80, 6);//orange
+		colors[6] = new Color(37, 153, 143);//aqua
+		colors[7] = new Color(252, 160, 12);//yellow
 
 		//Frame
 		setTitle("Menu");
-		setSize(400, 800);
+		setSize(400, 500);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//Content Pane
 		Container contentPane = getContentPane();
+		contentPane.setLayout(new BorderLayout(10, 10));
 		contentPane.setBackground(Color.black);
-		contentPane.setLayout(null);
-
-		//Panels
-		menuPanel = new JPanel(new GridLayout(5, 1, 0, 50));
-		menuPanel.setBounds(10, 10, 365, 745);
-		menuPanel.setBackground(Color.gray);
-		contentPane.add(menuPanel);
 
 		menuTitle = new JLabel("Battleship", SwingConstants.CENTER);
-		menuTitle.setFont(new Font("Comic Sans", Font.BOLD, 60));
-		menuTitle.setForeground(Color.white);
-		menuPanel.add(menuTitle);
+		menuTitle.setFont(titleFont);
+		menuTitle.setForeground(colors[0]);
+		contentPane.add(menuTitle, BorderLayout.NORTH);
+
+		//Panel
+		menuPanel = new JPanel();
+		menuPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colors[0]));
+		// menuPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		menuPanel.setBackground(colors[1]);
+		contentPane.add(menuPanel, BorderLayout.CENTER);
+
+		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);
+		menuPanel.setLayout(boxlayout);
+
+		westPanel = new JPanel();
+		westPanel.setOpaque(false);
+		contentPane.add(westPanel, BorderLayout.WEST);
+
+		southPanel = new JPanel();
+		southPanel.setOpaque(false);
+		contentPane.add(southPanel, BorderLayout.SOUTH);
+
+		eastPanel = new JPanel();
+		eastPanel.setOpaque(false);
+		contentPane.add(eastPanel, BorderLayout.EAST);
+
+		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
 		newGame = new JButton("New Game");
 		newGame.setFocusable(false);
 		newGame.setOpaque(true);
-		newGame.setFont(font);
-		newGame.setBackground(Color.darkGray);
+		newGame.setFont(buttonFont);
+		newGame.setBackground(Color.black);
 		newGame.setForeground(Color.white);
 		newGame.addActionListener(this);
 		menuPanel.add(newGame);
 
+		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
 		loadGame = new JButton("Load Game");
 		loadGame.setFocusable(false);
 		loadGame.setOpaque(true);
-		loadGame.setFont(font);
-		loadGame.setBackground(Color.darkGray);
+		loadGame.setFont(buttonFont);
+		loadGame.setBackground(Color.black);
 		loadGame.setForeground(Color.white);
 		loadGame.addActionListener(this);
 		menuPanel.add(loadGame);
 
+		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+
 		exit = new JButton("Exit");
 		exit.setFocusable(false);
 		exit.setOpaque(true);
-		exit.setFont(font);
-		exit.setBackground(Color.darkGray);
+		exit.setFont(buttonFont);
+		exit.setBackground(Color.black);
 		exit.setForeground(Color.white);
 		exit.addActionListener(this);
 		menuPanel.add(exit);
@@ -79,7 +123,7 @@ public class MenuInterface extends JFrame implements ActionListener
 
 			if (buttonText == "New Game")
 			{
-				gi = new GameInterface();
+				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
 				gi.setVisible(true);
@@ -88,7 +132,7 @@ public class MenuInterface extends JFrame implements ActionListener
 
 			else if (buttonText == "Load Game")
 			{
-				gi = new GameInterface();
+				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
 				gi.setVisible(true);
@@ -108,16 +152,16 @@ public class MenuInterface extends JFrame implements ActionListener
 
 			if (clickedItemText == "New Game")
 			{
-				gi = new GameInterface();
+				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
 			}
 
 			else if (clickedItemText == "Load Game")
 			{
-				gi = new GameInterface();
-				gi.exit.addActionListener(this);
-				gi.newGame.addActionListener(this);
+				//gi = new GameInterface(colors);
+				//gi.exit.addActionListener(this);
+				//gi.newGame.addActionListener(this);
 			}
 
 			else if (clickedItemText == "Exit")
