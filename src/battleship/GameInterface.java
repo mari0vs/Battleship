@@ -21,6 +21,7 @@ public class GameInterface extends JFrame implements ActionListener
 
 	public GameInterface (Color[] c)
 	{
+		colors = c;
 		//------------------------------ Frame ------------------------------
 
 		setTitle("Menu");
@@ -75,11 +76,11 @@ public class GameInterface extends JFrame implements ActionListener
 		shipsA = new Ship[5];
 		shipsB = new Ship[5];
 
-		shipPlacementA = new ShipPlacement(shipsA, "PLAYER 1", c);
+		shipPlacementA = new ShipPlacement(shipsA, "PLAYER 1", colors);
 		shipPlacementA.done.addActionListener(this);
 		cardPanel.add(shipPlacementA, "1");
 
-		shipPlacementB = new ShipPlacement(shipsB, "PLAYER 2", c);
+		shipPlacementB = new ShipPlacement(shipsB, "PLAYER 2", colors);
 		shipPlacementB.done.addActionListener(this);
 		cardPanel.add(shipPlacementB, "2");
 
@@ -93,6 +94,24 @@ public class GameInterface extends JFrame implements ActionListener
 		nextTurn.setForeground(Color.white);
 		nextTurn.addActionListener(this);
 		cardPanel.add(nextTurn, "3");
+
+		shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
+
+		for (int i = 0; i < shootingA.shootingButtons.length; i++)
+		{
+			shootingA.shootingButtons[i].addActionListener(this);
+		}
+
+		cardPanel.add(shootingA, "4");
+
+		shootingB = new Shooting(shipsB, shipsA, "PLAYER 2", colors);
+
+		for (int i = 0; i < shootingB.shootingButtons.length; i++)
+		{
+			shootingB.shootingButtons[i].addActionListener(this);
+		}
+
+		cardPanel.add(shootingB, "5");
 
 		card.first(cardPanel);
 		currentCard = 1;
@@ -129,7 +148,7 @@ public class GameInterface extends JFrame implements ActionListener
 
 				else if (currentCard == 2)
 				{
-					shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
+					/*shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
 
 					for (int i = 0; i < shootingA.shootingButtons.length; i++)
 					{
@@ -145,7 +164,9 @@ public class GameInterface extends JFrame implements ActionListener
 						shootingB.shootingButtons[i].addActionListener(this);
 					}
 
-					cardPanel.add(shootingB, "5");
+					cardPanel.add(shootingB, "5");*/
+
+					
 
 					currentCard = 4;
 					card.show(cardPanel, "4");

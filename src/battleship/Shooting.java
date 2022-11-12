@@ -26,27 +26,28 @@ public class Shooting extends JPanel implements ActionListener
 
 		playerLabel = new JLabel(player, SwingConstants.CENTER);
 		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 80));
-		playerLabel.setForeground(Color.white);
+		playerLabel.setForeground(colors[4]);
 		add(playerLabel, BorderLayout.NORTH);
 
 		leftPanel = new JPanel();
-		leftPanel.setOpaque(false);
 		leftPanel.setPreferredSize(new Dimension(500, 0));
-		leftPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+		leftPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
+		leftPanel.setBackground(colors[4]);
 		add(leftPanel, BorderLayout.WEST);
 
 		BoxLayout boxlayout = new BoxLayout(leftPanel, BoxLayout.Y_AXIS);
 		leftPanel.setLayout(boxlayout);
 
 		playerShipsPanel = new JPanel(new GridLayout(10, 10, 1, 1));
-		playerShipsPanel.setBackground(Color.black);
+		playerShipsPanel.setBackground(colors[4]);
 		playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
 		leftPanel.add(playerShipsPanel);
 
 		leftPanel.add(Box.createRigidArea(new Dimension(0, 750)));
 
 		shootingPanel = new JPanel(new GridLayout(10, 10, 1, 1));
-		shootingPanel.setBackground(Color.black);
+		shootingPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		shootingPanel.setBackground(colors[4]);
 		add(shootingPanel, BorderLayout.CENTER);
 
 		rightPanel = new JPanel();
@@ -64,26 +65,28 @@ public class Shooting extends JPanel implements ActionListener
 		setShootingPanel(shootingButtons);
 	}
 
-	public void setPlayerShipsPanel (JLabel[] bs, Ship[] s)
+	public void setPlayerShipsPanel (JLabel[] ls, Ship[] s)
 	{
-		for (int i = 0; i < bs.length; i++)
+		for (int i = 0; i < ls.length; i++)
 		{
 			if (i < 10)
 			{
-				bs[i] = new JLabel();
-				bs[i].setName("0" + Integer.toString(i));
-				bs[i].setOpaque(true);
-				bs[i].setBackground(Color.blue);
-				playerShipsPanel.add(bs[i]);
+				ls[i] = new JLabel();
+				ls[i].setName("0" + Integer.toString(i));
+				ls[i].setOpaque(true);
+				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+				ls[i].setBackground(colors[1]);
+				playerShipsPanel.add(ls[i]);
 			}
 
 			else
 			{
-				bs[i] = new JLabel();
-				bs[i].setName(Integer.toString(i));
-				bs[i].setOpaque(true);
-				bs[i].setBackground(Color.blue);
-				playerShipsPanel.add(bs[i]);
+				ls[i] = new JLabel();
+				ls[i].setName(Integer.toString(i));
+				ls[i].setOpaque(true);
+				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+				ls[i].setBackground(colors[1]);
+				playerShipsPanel.add(ls[i]);
 			}
 		}
 
@@ -91,7 +94,7 @@ public class Shooting extends JPanel implements ActionListener
 		{
 			for (int j = 0; j < s[i].size; j++)
 			{
-				bs[s[i].position[j]].setBackground(Color.black);
+				ls[s[i].position[j]].setBackground(Color.black);
 			}
 		}
 	}
@@ -107,7 +110,8 @@ public class Shooting extends JPanel implements ActionListener
 				bs[i].setFocusable(true);
 				bs[i].setEnabled(true);
 				bs[i].setOpaque(true);
-				bs[i].setBackground(Color.blue);
+				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+				bs[i].setBackground(colors[1]);
 				bs[i].addActionListener(this);
 				shootingPanel.add(bs[i]);
 			}
@@ -119,7 +123,8 @@ public class Shooting extends JPanel implements ActionListener
 				bs[i].setFocusable(true);
 				bs[i].setEnabled(true);
 				bs[i].setOpaque(true);
-				bs[i].setBackground(Color.blue);
+				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
+				bs[i].setBackground(colors[1]);
 				bs[i].addActionListener(this);
 				shootingPanel.add(bs[i]);
 			}
@@ -141,12 +146,12 @@ public class Shooting extends JPanel implements ActionListener
 					{
 						if (coordinates == position)
 						{
-							shootingButtons[coordinates].setBackground(Color.red);
+							shootingButtons[coordinates].setBackground(colors[0]);
 						}
 
-						else if (shootingButtons[coordinates].getBackground() == Color.blue)
+						else if (shootingButtons[coordinates].getBackground() == colors[1])
 						{
-							shootingButtons[coordinates].setBackground(Color.green);
+							shootingButtons[coordinates].setBackground(colors[6]);
 						}
 
 						shootingButtons[coordinates].setEnabled(false);

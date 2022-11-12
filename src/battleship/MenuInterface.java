@@ -5,15 +5,6 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Insets;
-import java.awt.Dimension;
-
 @SuppressWarnings("serial")
 
 public class MenuInterface extends JFrame implements ActionListener
@@ -135,6 +126,27 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
+
+				for (Ship ship: gi.shipsA)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
+
+				for (Ship ship: gi.shipsB)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
+
 				gi.setVisible(true);
 				setVisible(false);
 			}
@@ -159,9 +171,29 @@ public class MenuInterface extends JFrame implements ActionListener
 
 			else if (clickedItemText == "Load Game")
 			{
-				//gi = new GameInterface(colors);
-				//gi.exit.addActionListener(this);
-				//gi.newGame.addActionListener(this);
+				gi = new GameInterface(colors);
+				gi.exit.addActionListener(this);
+				gi.newGame.addActionListener(this);
+
+				for (Ship ship: gi.shipsA)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
+
+				for (Ship ship: gi.shipsB)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
 			}
 
 			else if (clickedItemText == "Exit")
