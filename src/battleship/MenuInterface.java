@@ -19,16 +19,16 @@ public class MenuInterface extends JFrame implements ActionListener
 	{
 		Font titleFont = new Font("Comic Sans", Font.BOLD, 75);
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 50);
-		colors = new Color[8];
+		colors = new Color[7];
 
-		colors[0] = new Color(246, 17, 74);//red
-		colors[1] = new Color(10, 160, 191);//blue
-		colors[2] = new Color(243, 110, 152);//pink
-		colors[3] = new Color(120, 177, 119);//green
-		colors[4] = new Color(152, 98, 162);//purple
-		colors[5] = new Color(240, 80, 6);//orange
-		colors[6] = new Color(37, 153, 143);//aqua
-		colors[7] = new Color(252, 160, 12);//yellow
+		colors[0] = new Color(0, 48, 73);//dark blue
+		colors[1] = new Color(102, 155, 188);//light blue
+
+		colors[2] = new Color(216, 140, 154);//red
+		colors[3] = new Color(242, 208, 169);//orange
+		colors[4] = new Color(241, 227, 211);//cream
+		colors[5] = new Color(153, 193, 185);//green
+		colors[6] = new Color(142, 125, 190);//purple
 
 		//Frame
 		setTitle("Menu");
@@ -39,7 +39,7 @@ public class MenuInterface extends JFrame implements ActionListener
 		//Content Pane
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout(10, 10));
-		contentPane.setBackground(Color.black);
+		contentPane.setBackground(colors[4]);
 
 		menuTitle = new JLabel("Battleship", SwingConstants.CENTER);
 		menuTitle.setFont(titleFont);
@@ -48,7 +48,7 @@ public class MenuInterface extends JFrame implements ActionListener
 
 		//Panel
 		menuPanel = new JPanel();
-		menuPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, colors[0]));
+		menuPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]));
 		// menuPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		menuPanel.setBackground(colors[1]);
 		contentPane.add(menuPanel, BorderLayout.CENTER);
@@ -68,36 +68,36 @@ public class MenuInterface extends JFrame implements ActionListener
 		eastPanel.setOpaque(false);
 		contentPane.add(eastPanel, BorderLayout.EAST);
 
-		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		menuPanel.add(Box.createRigidArea(new Dimension(20, 10)));
 
 		newGame = new JButton("New Game");
 		newGame.setFocusable(false);
 		newGame.setOpaque(true);
 		newGame.setFont(buttonFont);
-		newGame.setBackground(Color.black);
-		newGame.setForeground(Color.white);
+		newGame.setBackground(colors[4]);
+		newGame.setForeground(colors[0]);
 		newGame.addActionListener(this);
 		menuPanel.add(newGame);
 
-		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		menuPanel.add(Box.createRigidArea(new Dimension(20, 10)));
 
 		loadGame = new JButton("Load Game");
 		loadGame.setFocusable(false);
 		loadGame.setOpaque(true);
 		loadGame.setFont(buttonFont);
-		loadGame.setBackground(Color.black);
-		loadGame.setForeground(Color.white);
+		loadGame.setBackground(colors[4]);
+		loadGame.setForeground(colors[0]);
 		loadGame.addActionListener(this);
 		menuPanel.add(loadGame);
 
-		menuPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+		menuPanel.add(Box.createRigidArea(new Dimension(20, 10)));
 
 		exit = new JButton("Exit");
 		exit.setFocusable(false);
 		exit.setOpaque(true);
 		exit.setFont(buttonFont);
-		exit.setBackground(Color.black);
-		exit.setForeground(Color.white);
+		exit.setBackground(colors[4]);
+		exit.setForeground(colors[0]);
 		exit.addActionListener(this);
 		menuPanel.add(exit);
 
