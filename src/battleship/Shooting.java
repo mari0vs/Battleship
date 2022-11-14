@@ -9,54 +9,59 @@ import java.awt.event.*;
 
 public class Shooting extends JPanel implements ActionListener
 {
-	JPanel leftPanel, rightPanel, playerShipsPanel, shootingPanel;
+	JPanel leftPanel, playerShipsPanel, centerPanel, shootingPanel, rightPanel;
 	JLabel playerLabel;
 	JLabel[] playerShipsLabels;
 	JButton[] shootingButtons;
 	Color[] colors;
 	Ship[] playerShips, enemyShips;
 
-	public Shooting (Ship[] shipsA, Ship[] shipsB, String player, Color[] c)
+	public Shooting (Ship[] ps, Ship[] es, String player, Color[] c)
 	{
 		colors = c;
 
-		// setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		setLayout(new BorderLayout(200, 0));
-		setBackground(Color.black);
+		setLayout(new BorderLayout(100, 0));
+		setBackground(colors[0]);
 
 		playerLabel = new JLabel(player, SwingConstants.CENTER);
 		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 80));
-		playerLabel.setForeground(colors[4]);
+		playerLabel.setForeground(colors[1]);
 		add(playerLabel, BorderLayout.NORTH);
 
 		leftPanel = new JPanel();
 		leftPanel.setPreferredSize(new Dimension(500, 0));
-		leftPanel.setBorder(new EmptyBorder(20, 20, 0, 20));
-		leftPanel.setBackground(colors[4]);
+		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
 
 		BoxLayout boxlayout = new BoxLayout(leftPanel, BoxLayout.Y_AXIS);
 		leftPanel.setLayout(boxlayout);
 
-		playerShipsPanel = new JPanel(new GridLayout(10, 10, 1, 1));
-		playerShipsPanel.setBackground(colors[4]);
-		playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
+		playerShipsPanel = new JPanel(new GridLayout(10, 10, 0, 0));
+		playerShipsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		playerShipsPanel.setBackground(colors[2]);
+		// playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
 		leftPanel.add(playerShipsPanel);
 
 		leftPanel.add(Box.createRigidArea(new Dimension(0, 750)));
 
-		shootingPanel = new JPanel(new GridLayout(10, 10, 1, 1));
+		JPanel centerPanel = new JPanel(new BorderLayout());
+		centerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+		centerPanel.setOpaque(false);
+		add(centerPanel, BorderLayout.CENTER);
+
+		shootingPanel = new JPanel(new GridLayout(10, 10, 0, 0));
 		shootingPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		shootingPanel.setBackground(colors[4]);
-		add(shootingPanel, BorderLayout.CENTER);
+		shootingPanel.setBackground(colors[2]);
+		centerPanel.add(shootingPanel, BorderLayout.CENTER);
 
 		rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		rightPanel.setPreferredSize(new Dimension(400, 0));
+		rightPanel.setPreferredSize(new Dimension(500, 0));
 		add(rightPanel, BorderLayout.EAST);
 
-		playerShips = shipsA;
-		enemyShips = shipsB;
+		playerShips = ps;
+		enemyShips = es;
 
 		playerShipsLabels = new JLabel[100];
 		setPlayerShipsPanel(playerShipsLabels, playerShips);
@@ -65,7 +70,7 @@ public class Shooting extends JPanel implements ActionListener
 		setShootingPanel(shootingButtons);
 	}
 
-	public void setPlayerShipsPanel (JLabel[] ls, Ship[] s)
+	public void setPlayerShipsPanel (JLabel[] ls, Ship[] ss)
 	{
 		for (int i = 0; i < ls.length; i++)
 		{
@@ -74,8 +79,9 @@ public class Shooting extends JPanel implements ActionListener
 				ls[i] = new JLabel();
 				ls[i].setName("0" + Integer.toString(i));
 				ls[i].setOpaque(true);
-				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-				ls[i].setBackground(colors[1]);
+				// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+				ls[i].setBackground(colors[5]);
 				playerShipsPanel.add(ls[i]);
 			}
 
@@ -84,17 +90,18 @@ public class Shooting extends JPanel implements ActionListener
 				ls[i] = new JLabel();
 				ls[i].setName(Integer.toString(i));
 				ls[i].setOpaque(true);
-				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-				ls[i].setBackground(colors[1]);
+				// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+				ls[i].setBackground(colors[5]);
 				playerShipsPanel.add(ls[i]);
 			}
 		}
 
-		for (int i = 0; i < s.length; i++)
+		for (Ship s: ss)
 		{
-			for (int j = 0; j < s[i].size; j++)
+			for (int p: s.position)
 			{
-				ls[s[i].position[j]].setBackground(Color.black);
+				ls[p].setBackground(colors[6]);
 			}
 		}
 	}
@@ -110,8 +117,9 @@ public class Shooting extends JPanel implements ActionListener
 				bs[i].setFocusable(true);
 				bs[i].setEnabled(true);
 				bs[i].setOpaque(true);
-				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-				bs[i].setBackground(colors[1]);
+				// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+				bs[i].setBackground(colors[5]);
 				bs[i].addActionListener(this);
 				shootingPanel.add(bs[i]);
 			}
@@ -123,8 +131,9 @@ public class Shooting extends JPanel implements ActionListener
 				bs[i].setFocusable(true);
 				bs[i].setEnabled(true);
 				bs[i].setOpaque(true);
-				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.black));
-				bs[i].setBackground(colors[1]);
+				// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+				bs[i].setBackground(colors[5]);
 				bs[i].addActionListener(this);
 				shootingPanel.add(bs[i]);
 			}
@@ -146,12 +155,14 @@ public class Shooting extends JPanel implements ActionListener
 					{
 						if (coordinates == position)
 						{
-							shootingButtons[coordinates].setBackground(colors[0]);
+							shootingButtons[coordinates].setBackground(colors[3]);
+							playerShipsLabels[coordinates].setBackground(colors[3]);
 						}
 
-						else if (shootingButtons[coordinates].getBackground() == colors[1])
+						else if (shootingButtons[coordinates].getBackground() == colors[5])
 						{
-							shootingButtons[coordinates].setBackground(colors[6]);
+							shootingButtons[coordinates].setBackground(colors[4]);
+							playerShipsLabels[coordinates].setBackground(colors[4]);
 						}
 
 						shootingButtons[coordinates].setEnabled(false);

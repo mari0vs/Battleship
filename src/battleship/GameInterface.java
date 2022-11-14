@@ -1,6 +1,7 @@
 package battleship;
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,7 +12,7 @@ public class GameInterface extends JFrame implements ActionListener
 	JMenu menu;
 	JMenuItem newGame, loadGame, saveGame, exit;
 	CardLayout card;
-	JPanel cardPanel;
+	JPanel cardPanel, nextTurnPanel;
 	int currentCard;
 	JButton nextTurn;
 	Color[] colors;
@@ -73,8 +74,13 @@ public class GameInterface extends JFrame implements ActionListener
 
 		//-------------------- Content --------------------
 
-		shipsA = new Ship[5];
-		shipsB = new Ship[5];
+		shipsA = setShips(shipsA);
+		shipsB = setShips(shipsB);
+
+		/*for (Ship s: shipsA)
+		{
+			s.print();
+		}*/
 
 		shipPlacementA = new ShipPlacement(shipsA, "PLAYER 1", colors);
 		shipPlacementA.done.addActionListener(this);
@@ -84,37 +90,81 @@ public class GameInterface extends JFrame implements ActionListener
 		shipPlacementB.done.addActionListener(this);
 		cardPanel.add(shipPlacementB, "2");
 
-		nextTurn = new JButton("PLAYER 1's turn");
-		nextTurn.setName("Next Turn");
+		nextTurnPanel = new JPanel();
+		nextTurnPanel.setSize(new Dimension(1000, 800));
+		Border border = BorderFactory.createMatteBorder(400, 700, 400, 700, colors[0]);
+		Border margin = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]);
+		nextTurnPanel.setBorder(new CompoundBorder(border, margin));
+		nextTurnPanel.setBackground(colors[5]);
+		cardPanel.add(nextTurnPanel, "3");
+
+		BoxLayout boxLayout = new BoxLayout(nextTurnPanel, BoxLayout.Y_AXIS);
+		nextTurnPanel.setLayout(boxLayout);
+
+		nextTurnPanel.add(Box.createVerticalGlue());
+
+		nextTurn = new JButton("PLAYER 1'S TURN");
+		nextTurn.setName("A");
 		nextTurn.setFocusable(true);
 		nextTurn.setEnabled(true);
 		nextTurn.setOpaque(true);
-		nextTurn.setPreferredSize(new Dimension(0, 50));
-		nextTurn.setBackground(Color.black);
-		nextTurn.setForeground(Color.white);
+		nextTurn.setFont(new Font("Comic Sans", Font.BOLD, 100));
+		nextTurn.setBorder(new EmptyBorder(100, 100, 100, 100));
+		nextTurn.setBackground(colors[0]);
+		nextTurn.setForeground(colors[1]);
+		nextTurn.setAlignmentX(CENTER_ALIGNMENT);
 		nextTurn.addActionListener(this);
-		cardPanel.add(nextTurn, "3");
+		nextTurnPanel.add(nextTurn, BorderLayout.CENTER);
 
-		shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
-
-		for (int i = 0; i < shootingA.shootingButtons.length; i++)
-		{
-			shootingA.shootingButtons[i].addActionListener(this);
-		}
-
-		cardPanel.add(shootingA, "4");
-
-		shootingB = new Shooting(shipsB, shipsA, "PLAYER 2", colors);
-
-		for (int i = 0; i < shootingB.shootingButtons.length; i++)
-		{
-			shootingB.shootingButtons[i].addActionListener(this);
-		}
-
-		cardPanel.add(shootingB, "5");
+		nextTurnPanel.add(Box.createVerticalGlue());
 
 		card.first(cardPanel);
 		currentCard = 1;
+	}
+
+	public Ship[] setShips (Ship[] ss)
+	{
+		ss = new Ship[5];
+
+		ss[0] = new Ship(2);
+		ss[1] = new Ship(2);
+		ss[2] = new Ship(3);
+		ss[3] = new Ship(3);
+		ss[4] = new Ship(4);
+
+		return ss;
+	}
+
+	public boolean checkWinner (int coordinates, String player, Ship[] ss, JPanel pPanel, JPanel ePanel)
+	{
+		boolean winner = false;
+		boolean hit = false;
+
+		for (Ship ship: ss)
+		{
+			winner = true;
+			ship.sunk = true;
+
+			for (int i = 0; i < ship.size; i++)
+			{
+				if (coordinates == ship.position[i])
+				{
+					ship.hits[i] = true;
+					hit = ship.hits[i];
+				}
+
+				ship.sunk = ship.sunk && ship.hits[i];
+			}
+			winner = winner && ship.sunk;
+		}
+
+		if (winner)
+		{
+			cardPanel.add(new Winner(player, pPanel, ePanel, colors), "6");
+			card.show(cardPanel, "6");
+		}
+
+		return hit;
 	}
 
 	public void actionPerformed (ActionEvent e)
@@ -148,7 +198,7 @@ public class GameInterface extends JFrame implements ActionListener
 
 				else if (currentCard == 2)
 				{
-					/*shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
+					shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
 
 					for (int i = 0; i < shootingA.shootingButtons.length; i++)
 					{
@@ -164,123 +214,70 @@ public class GameInterface extends JFrame implements ActionListener
 						shootingB.shootingButtons[i].addActionListener(this);
 					}
 
-					cardPanel.add(shootingB, "5");*/
+					cardPanel.add(shootingB, "5");
 
-					
-
-					currentCard = 4;
-					card.show(cardPanel, "4");
+					currentCard = 3;
+					card.show(cardPanel, "3");
 				}
-
-				/*for (int i = 0; i < shipsA.length; i++)
-				{
-					for (int j = 0; j < shipsA[i].size; j++)
-					{
-						System.out.println(shipsA[i].position[j]);
-					}
-					System.out.println();
-				}
-				System.out.println();*/
 			}
 
-			/*boolean turn = true;
+			else if (currentCard == 6)
+			{
+				if (buttonText == "New Game")
+				{
 
-			else if ()
-			{}*/
+				}
+			}
+
+			else if (currentCard == 3)
+			{
+				String buttonName = clickedButton.getName();
+
+				if (buttonName == "A")
+				{
+					currentCard = 4;
+					card.show(cardPanel, "4");
+					clickedButton.setText("PLAYER 2'S TURN");
+					clickedButton.setName("B");
+				}
+
+				if (buttonName == "B")
+				{
+					currentCard = 5;
+					card.show(cardPanel, "5");
+					clickedButton.setText("PLAYER 1'S TURN");
+					clickedButton.setName("A");
+				}
+			}
 
 			else
 			{
 				int coordinates = Integer.parseInt(clickedButton.getName());
 
-				if (clickedButton == shootingA.shootingButtons[coordinates] && currentCard == 4)
+				if (currentCard == 4)
 				{
-					boolean hit = false;
-					boolean playerAWinner = false;
-
-					for (Ship ship: shipsB)
+					if (!checkWinner(coordinates,
+									"PLAYER 1",
+									shipsB,
+									shootingA.playerShipsPanel,
+									shootingB.playerShipsPanel))
 					{
-						for (int i = 0; i < ship.size; i++)
-						{
-							if (coordinates == ship.position[i])
-							{
-								while (!hit)
-								{
-									ship.hits[i] = true;
-									hit = true;
-								}
-
-								if (!ship.hits[i])
-								{
-									ship.sunk = ship.hits[i];
-								}
-
-								else
-								{
-									ship.sunk = ship.hits[i];
-								}
-							}
-						}
-
-						/*for (boolean i: ship.hits)
-						{
-							if (!i)
-							{
-								ship.sunk = i;
-							}
-
-							else
-							{
-								ship.sunk = i;
-							}
-							
-							System.out.println(ship.sunk);
-						}
-						System.out.println();*/
-
-						/*if (!i)
-							{
-								ship.sunk = i;
-							}
-
-							else
-							{
-								ship.sunk = i;
-							}*/
-
-						playerAWinner = playerAWinner && ship.sunk;
-					}
-
-					if (playerAWinner)
-					{
-						System.out.println("Player 1 wins");
-					}
-
-					else if (!hit)
-					{
-						currentCard = 5;
-						card.show(cardPanel, "5");
+						currentCard = 3;
+						card.show(cardPanel, "3");
 					}
 				}
 
-				else if (clickedButton == shootingB.shootingButtons[coordinates] && currentCard == 5)
+
+				else if (currentCard == 5)
 				{
-					boolean hit = false;
-
-					for (int ship = 0; ship < shipsA.length; ship++)
+					if (!checkWinner(coordinates,
+									"PLAYER 2",
+									shipsA,
+									shootingB.playerShipsPanel,
+									shootingA.playerShipsPanel))
 					{
-						for (int i = 0; i < shipsA[ship].size; i++)
-						{
-							if (coordinates == shipsA[ship].position[i])
-							{
-								hit = true;
-							}
-						}
-					}
-
-					if (!hit)
-					{
-						currentCard = 4;
-						card.show(cardPanel, "4");
+						currentCard = 3;
+						card.show(cardPanel, "3");
 					}
 				}
 			}

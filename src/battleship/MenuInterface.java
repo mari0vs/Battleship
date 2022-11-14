@@ -21,13 +21,24 @@ public class MenuInterface extends JFrame implements ActionListener
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 50);
 		colors = new Color[7];
 
-		colors[0] = new Color(0, 48, 73);//dark blue
-		colors[1] = new Color(102, 155, 188);//light blue
+		/*
+		background 			0
+		foreground 			1
+		highlight			2
 
-		colors[2] = new Color(216, 140, 154);//red
-		colors[3] = new Color(242, 208, 169);//orange
-		colors[4] = new Color(241, 227, 211);//cream
-		colors[5] = new Color(153, 193, 185);//green
+		!placeable & hit 	3
+		placeable & !hit	4
+		board & menu		5
+		ship				6
+		*/
+
+		colors[0] = new Color(0, 48, 73);//dark blue
+		colors[1] = new Color(241, 227, 211);//cream
+		colors[2] = new Color(242, 208, 169);//orange
+
+		colors[3] = new Color(216, 140, 154);//red
+		colors[4] = new Color(153, 193, 185);//green
+		colors[5] = new Color(102, 155, 188);//light blue
 		colors[6] = new Color(142, 125, 190);//purple
 
 		//Frame
@@ -39,18 +50,18 @@ public class MenuInterface extends JFrame implements ActionListener
 		//Content Pane
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout(10, 10));
-		contentPane.setBackground(colors[4]);
+		contentPane.setBackground(colors[0]);
 
 		menuTitle = new JLabel("Battleship", SwingConstants.CENTER);
 		menuTitle.setFont(titleFont);
-		menuTitle.setForeground(colors[0]);
+		menuTitle.setForeground(colors[1]);
 		contentPane.add(menuTitle, BorderLayout.NORTH);
 
 		//Panel
 		menuPanel = new JPanel();
-		menuPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]));
+		menuPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]));
 		// menuPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		menuPanel.setBackground(colors[1]);
+		menuPanel.setBackground(colors[5]);
 		contentPane.add(menuPanel, BorderLayout.CENTER);
 
 		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);
@@ -74,8 +85,8 @@ public class MenuInterface extends JFrame implements ActionListener
 		newGame.setFocusable(false);
 		newGame.setOpaque(true);
 		newGame.setFont(buttonFont);
-		newGame.setBackground(colors[4]);
-		newGame.setForeground(colors[0]);
+		newGame.setBackground(colors[0]);
+		newGame.setForeground(colors[1]);
 		newGame.addActionListener(this);
 		menuPanel.add(newGame);
 
@@ -85,8 +96,8 @@ public class MenuInterface extends JFrame implements ActionListener
 		loadGame.setFocusable(false);
 		loadGame.setOpaque(true);
 		loadGame.setFont(buttonFont);
-		loadGame.setBackground(colors[4]);
-		loadGame.setForeground(colors[0]);
+		loadGame.setBackground(colors[0]);
+		loadGame.setForeground(colors[1]);
 		loadGame.addActionListener(this);
 		menuPanel.add(loadGame);
 
@@ -96,8 +107,8 @@ public class MenuInterface extends JFrame implements ActionListener
 		exit.setFocusable(false);
 		exit.setOpaque(true);
 		exit.setFont(buttonFont);
-		exit.setBackground(colors[4]);
-		exit.setForeground(colors[0]);
+		exit.setBackground(colors[0]);
+		exit.setForeground(colors[1]);
 		exit.addActionListener(this);
 		menuPanel.add(exit);
 
@@ -117,6 +128,7 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
+				// gi.ng.addActionListener(this);
 				gi.setVisible(true);
 				setVisible(false);
 			}
@@ -126,6 +138,7 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
+				// gi.ng.addActionListener(this);
 
 				for (Ship ship: gi.shipsA)
 				{
@@ -167,6 +180,7 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
+				// gi.ng.addActionListener(this);
 			}
 
 			else if (clickedItemText == "Load Game")
@@ -174,6 +188,7 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi = new GameInterface(colors);
 				gi.exit.addActionListener(this);
 				gi.newGame.addActionListener(this);
+				// gi.ng.addActionListener(this);
 
 				for (Ship ship: gi.shipsA)
 				{
