@@ -29,37 +29,65 @@ public class GameInterface extends JFrame implements ActionListener
 		setTitle("Menu");
 		//setBounds(10, 100, 1200, 1000);
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//setUndecorated(true);
+		setUndecorated(true);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		//------------------------------ Menu ------------------------------
 
 		Font font = new Font("Comic Sans", Font.BOLD, 15);
+
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBorder(BorderFactory.createMatteBorder(5, 10, 5, 10, colors[2]));
+		menuBar.setBackground(colors[5]);
+		menuBar.setForeground(colors[1]);
 		setJMenuBar(menuBar);
 
 		menu = new JMenu("Options");
+		menu.setOpaque(true);
 		menu.setFont(font);
+		menu.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]));
+		menu.setBackground(colors[0]);
+		menu.setForeground(colors[1]);
 		menuBar.add(menu);
 
 		newGame = new JMenuItem("New Game");
 		newGame.setFont(font);
+		Border newGameB = BorderFactory.createMatteBorder(2, 2, 0, 2, colors[2]);
+		Border newGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		newGame.setBorder(new CompoundBorder(newGameB, newGameM));
+		newGame.setBackground(colors[0]);
+		newGame.setForeground(colors[1]);
 		newGame.addActionListener(this);
 		menu.add(newGame);
 
 		loadGame = new JMenuItem("Load Game");
 		loadGame.setFont(font);
+		Border loadGameB = BorderFactory.createMatteBorder(0, 2, 0, 2, colors[2]);
+		Border loadGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		loadGame.setBorder(new CompoundBorder(loadGameB, loadGameM));
+		loadGame.setBackground(colors[0]);
+		loadGame.setForeground(colors[1]);
 		loadGame.addActionListener(this);
 		menu.add(loadGame);
 
 		saveGame = new JMenuItem("Save Game");
 		saveGame.setFont(font);
+		Border saveGameB = BorderFactory.createMatteBorder(0, 2, 0, 2, colors[2]);
+		Border saveGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		saveGame.setBorder(new CompoundBorder(saveGameB, saveGameM));
+		saveGame.setBackground(colors[0]);
+		saveGame.setForeground(colors[1]);
 		saveGame.addActionListener(this);
 		menu.add(saveGame);
 
 		exit = new JMenuItem("Exit");
 		exit.setFont(font);
+		Border exitB = BorderFactory.createMatteBorder(0, 2, 2, 2, colors[2]);
+		Border exitM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		exit.setBorder(new CompoundBorder(exitB, exitM));
+		exit.setBackground(colors[0]);
+		exit.setForeground(colors[1]);
 		exit.addActionListener(this);
 		menu.add(exit);
 
@@ -138,12 +166,11 @@ public class GameInterface extends JFrame implements ActionListener
 
 	public boolean checkWinner (int coordinates, String player, Ship[] ss, JPanel pPanel, JPanel ePanel)
 	{
-		boolean w = false;
+		boolean w = true;
 		boolean hit = false;
 
 		for (Ship ship: ss)
 		{
-			w = true;
 			ship.sunk = true;
 
 			for (int i = 0; i < ship.size; i++)
