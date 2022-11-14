@@ -54,7 +54,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 		add(centerPanel, BorderLayout.CENTER);
 
 		placementPanel = new JPanel(new GridLayout(10, 10, 0, 0));
-		placementPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]));
+		placementPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		placementPanel.setBackground(colors[0]);
 		centerPanel.add(placementPanel, BorderLayout.CENTER);
 
