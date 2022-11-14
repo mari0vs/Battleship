@@ -39,7 +39,9 @@ public class ShipPlacement extends JPanel implements MouseListener
 
 		selectionPanel = new JPanel();
 		selectionPanel.setPreferredSize(new Dimension(400, 0));
-		selectionPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]));
+		Border border = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
+		Border margin = new EmptyBorder(20, 20, 20, 20);
+		selectionPanel.setBorder(new CompoundBorder(border, margin));
 		selectionPanel.setBackground(colors[5]);
 		leftPanel.add(selectionPanel, BorderLayout.CENTER);
 
@@ -52,7 +54,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 		add(centerPanel, BorderLayout.CENTER);
 
 		placementPanel = new JPanel(new GridLayout(10, 10, 0, 0));
-		placementPanel.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]));
+		placementPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]));
 		placementPanel.setBackground(colors[0]);
 		centerPanel.add(placementPanel, BorderLayout.CENTER);
 
@@ -65,8 +67,6 @@ public class ShipPlacement extends JPanel implements MouseListener
 
 		ships = s;
 
-		selectionPanel.add(Box.createRigidArea(new Dimension(0, 20)));
-
 		selectionButtons = new JButton[ships.length];
 		setSelectionPanel(selectionButtons, buttonFont);
 
@@ -77,13 +77,11 @@ public class ShipPlacement extends JPanel implements MouseListener
 		done.setEnabled(false);//--------------------------------------------------------------------------false
 		done.setOpaque(true);
 		done.setFont(buttonFont);
-		done.setBorder(new EmptyBorder(30, 80, 30, 80));
+		done.setBorder(new EmptyBorder(20, 120, 20, 120));
 		done.setBackground(colors[0]);
 		done.setForeground(colors[1]);
-		done.setAlignmentX(CENTER_ALIGNMENT);
+		// done.setAlignmentX(CENTER_ALIGNMENT);
 		selectionPanel.add(done);
-
-		selectionPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		placementButtons = new JButton[100];
 		setPlacementPanel(placementButtons);
@@ -104,13 +102,13 @@ public class ShipPlacement extends JPanel implements MouseListener
 			bs[i].setBackground(colors[0]);
 			bs[i].setForeground(colors[1]);
 			bs[i].addMouseListener(this);
-			bs[i].setAlignmentX(CENTER_ALIGNMENT);
+			// bs[i].setAlignmentX(CENTER_ALIGNMENT);
 			selectionPanel.add(bs[i]);
 
 			if (i == 0 || i == 1)
 			{
 				bs[i].setText("Small Ship");
-				bs[i].setBorder(new EmptyBorder(30, 20, 30, 20));
+				bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
 
 				selectionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 			}
@@ -118,7 +116,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 			else if (i == 2 || i == 3)
 			{
 				bs[i].setText("Medium Ship");
-				bs[i].setBorder(new EmptyBorder(30, 10, 30, 10));
+				bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
 
 				selectionPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 			}
@@ -126,7 +124,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 			else
 			{
 				bs[i].setText("Big Ship");
-				bs[i].setBorder(new EmptyBorder(30, 80, 30, 80));
+				bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
 			}
 		}
 	}

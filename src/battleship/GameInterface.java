@@ -18,6 +18,7 @@ public class GameInterface extends JFrame implements ActionListener
 	Color[] colors;
 	ShipPlacement shipPlacementA, shipPlacementB;
 	Shooting shootingA, shootingB;
+	Winner winner;
 	Ship[] shipsA, shipsB;
 
 	public GameInterface (Color[] c)
@@ -93,7 +94,7 @@ public class GameInterface extends JFrame implements ActionListener
 		nextTurnPanel = new JPanel();
 		nextTurnPanel.setSize(new Dimension(1000, 800));
 		Border border = BorderFactory.createMatteBorder(400, 700, 400, 700, colors[0]);
-		Border margin = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]);
+		Border margin = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		nextTurnPanel.setBorder(new CompoundBorder(border, margin));
 		nextTurnPanel.setBackground(colors[5]);
 		cardPanel.add(nextTurnPanel, "3");
@@ -137,12 +138,12 @@ public class GameInterface extends JFrame implements ActionListener
 
 	public boolean checkWinner (int coordinates, String player, Ship[] ss, JPanel pPanel, JPanel ePanel)
 	{
-		boolean winner = false;
+		boolean w = false;
 		boolean hit = false;
 
 		for (Ship ship: ss)
 		{
-			winner = true;
+			w = true;
 			ship.sunk = true;
 
 			for (int i = 0; i < ship.size; i++)
@@ -155,12 +156,16 @@ public class GameInterface extends JFrame implements ActionListener
 
 				ship.sunk = ship.sunk && ship.hits[i];
 			}
-			winner = winner && ship.sunk;
+			w = w && ship.sunk;
 		}
 
-		if (winner)
+		if (w)
 		{
-			cardPanel.add(new Winner(player, pPanel, ePanel, colors), "6");
+			winner = new Winner(player, pPanel, ePanel, colors);
+			winner.mm.addActionListener(this);
+			cardPanel.add(winner, "6");
+
+			currentCard = 6;
 			card.show(cardPanel, "6");
 		}
 
@@ -169,21 +174,7 @@ public class GameInterface extends JFrame implements ActionListener
 
 	public void actionPerformed (ActionEvent e)
 	{
-		if (e.getSource() instanceof JMenuItem)
-		{
-			JMenuItem clickedItem = (JMenuItem) e.getSource();
-			String clickedItemText = clickedItem.getText();
-
-			if (clickedItemText == "Sava Game")
-			{}
-
-			else
-			{
-				setVisible(false);
-			}
-		}
-
-		else
+		if (e.getSource() instanceof JButton)
 		{
 			JButton clickedButton = (JButton) e.getSource();
 			String buttonText = clickedButton.getText();
@@ -221,14 +212,6 @@ public class GameInterface extends JFrame implements ActionListener
 				}
 			}
 
-			else if (currentCard == 6)
-			{
-				if (buttonText == "New Game")
-				{
-
-				}
-			}
-
 			else if (currentCard == 3)
 			{
 				String buttonName = clickedButton.getName();
@@ -250,12 +233,28 @@ public class GameInterface extends JFrame implements ActionListener
 				}
 			}
 
-			else
+			else if (currentCard == 4 || currentCard == 5)
 			{
 				int coordinates = Integer.parseInt(clickedButton.getName());
 
 				if (currentCard == 4)
 				{
+					for (Ship enemyShip: shipsB)
+					{
+						for (int position: enemyShip.position)
+						{
+							if (coordinates == position)
+							{
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[3]);
+							}
+
+							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[5])
+							{
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[4]);
+							}
+						}
+					}
+
 					if (!checkWinner(coordinates,
 									"PLAYER 1",
 									shipsB,
@@ -270,6 +269,22 @@ public class GameInterface extends JFrame implements ActionListener
 
 				else if (currentCard == 5)
 				{
+					for (Ship enemyShip: shipsA)
+					{
+						for (int position: enemyShip.position)
+						{
+							if (coordinates == position)
+							{
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[3]);
+							}
+
+							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[5])
+							{
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[4]);
+							}
+						}
+					}
+
 					if (!checkWinner(coordinates,
 									"PLAYER 2",
 									shipsA,
@@ -280,6 +295,28 @@ public class GameInterface extends JFrame implements ActionListener
 						card.show(cardPanel, "3");
 					}
 				}
+			}
+
+			else
+			{
+				if (buttonText == "Main Menu")
+				{
+					exit.doClick();
+				}
+			}
+		}
+
+		else// (e.getSource() instanceof JMenuItem)
+		{
+			JMenuItem clickedItem = (JMenuItem) e.getSource();
+			String clickedItemText = clickedItem.getText();
+
+			if (clickedItemText == "Sava Game")
+			{}
+
+			else
+			{
+				setVisible(false);
 			}
 		}
 	}

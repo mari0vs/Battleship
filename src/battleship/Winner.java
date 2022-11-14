@@ -11,7 +11,7 @@ public class Winner extends JPanel// implements ActionListener
 {
 	JPanel lPanel, cPanel, rPanel;
 	JLabel winnerLabel;
-	JButton ng, ex;
+	JButton mm;
 	Color[] colors;
 
     public Winner (String p, JPanel pP, JPanel eP, Color[] c)
@@ -37,40 +37,28 @@ public class Winner extends JPanel// implements ActionListener
 		lPanel.add(pP);
 
 		cPanel = new JPanel();
-		Border b = BorderFactory.createMatteBorder(20, 20, 20, 20, colors[0]);
-		Border m = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[2]);
+		Border b = BorderFactory.createMatteBorder(500, 20, 500, 20, colors[0]);
+		Border m = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		cPanel.setBorder(new CompoundBorder(b, m));
-		cPanel.setOpaque(false);
-		add(cPanel, BorderLayout.WEST);
+		cPanel.setBackground(colors[5]);
+		add(cPanel, BorderLayout.CENTER);
 
 		BoxLayout cbl = new BoxLayout(cPanel, BoxLayout.Y_AXIS);
 		cPanel.setLayout(cbl);
 
 		cPanel.add(Box.createVerticalGlue());
 
-		ng = new JButton("New Game");
-		ng.setFocusable(false);
-		ng.setEnabled(true);
-		ng.setOpaque(true);
-		ng.setFont(new Font("Comic Sans", Font.BOLD, 40));
-		ng.setBackground(colors[0]);
-		ng.setForeground(colors[1]);
-		// ng.addActionListener(this);
-		ng.setAlignmentX(CENTER_ALIGNMENT);
-		cPanel.add(ng);
-
-		cPanel.add(Box.createVerticalGlue());
-
-		ex = new JButton("Exit");
-		ex.setFocusable(false);
-		ex.setEnabled(true);
-		ex.setOpaque(true);
-		ex.setFont(new Font("Comic Sans", Font.BOLD, 40));
-		ex.setBackground(colors[0]);
-		ex.setForeground(colors[1]);
-		// ex.addActionListener(this);
-		ex.setAlignmentX(CENTER_ALIGNMENT);
-		cPanel.add(ex);
+		mm = new JButton("Main Menu");
+		mm.setName("0");
+		mm.setFocusable(false);
+		mm.setEnabled(true);
+		mm.setOpaque(true);
+		mm.setFont(new Font("Comic Sans", Font.BOLD, 40));
+		mm.setBorder(new EmptyBorder(20, 100, 20, 100));
+		mm.setBackground(colors[0]);
+		mm.setForeground(colors[1]);
+		mm.setAlignmentX(CENTER_ALIGNMENT);
+		cPanel.add(mm);
 
 		cPanel.add(Box.createVerticalGlue());
 

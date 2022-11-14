@@ -156,13 +156,11 @@ public class Shooting extends JPanel implements ActionListener
 						if (coordinates == position)
 						{
 							shootingButtons[coordinates].setBackground(colors[3]);
-							playerShipsLabels[coordinates].setBackground(colors[3]);
 						}
 
 						else if (shootingButtons[coordinates].getBackground() == colors[5])
 						{
 							shootingButtons[coordinates].setBackground(colors[4]);
-							playerShipsLabels[coordinates].setBackground(colors[4]);
 						}
 
 						shootingButtons[coordinates].setEnabled(false);

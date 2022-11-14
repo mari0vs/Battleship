@@ -29,7 +29,7 @@ public class MenuInterface extends JFrame implements ActionListener
 		!placeable & hit 	3
 		placeable & !hit	4
 		board & menu		5
-		ship				6
+		ships				6
 		*/
 
 		colors[0] = new Color(0, 48, 73);//dark blue
@@ -190,7 +190,7 @@ public class MenuInterface extends JFrame implements ActionListener
 				gi.newGame.addActionListener(this);
 				// gi.ng.addActionListener(this);
 
-				for (Ship ship: gi.shipsA)
+				/*for (Ship ship: gi.shipsA)
 				{
 					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
 
@@ -208,7 +208,7 @@ public class MenuInterface extends JFrame implements ActionListener
 					{
 						ship.position[i] = rand + i;
 					}
-				}
+				}*/
 			}
 
 			else if (clickedItemText == "Exit")
