@@ -12,6 +12,7 @@ public class MenuInterface extends JFrame implements ActionListener
 	JPanel menuPanel, westPanel, southPanel, eastPanel;
 	JLabel menuTitle, blankLabel;
 	JButton newGame, loadGame, exit;
+	Colors coolors;
 	Color[] colors;
 	GameInterface gi;
 
@@ -19,27 +20,30 @@ public class MenuInterface extends JFrame implements ActionListener
 	{
 		Font titleFont = new Font("Comic Sans", Font.BOLD, 75);
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 50);
-		colors = new Color[7];
+
+		coolors = new Colors(new String[] {"retro", "dark"});
+		colors = coolors.colors;
 
 		/*
 		background 			0
 		foreground 			1
 		highlight			2
+		menu				3
 
-		!placeable & hit 	3
-		placeable & !hit	4
-		board & menu		5
-		ships				6
+		!placeable & hit 	4
+		placeable & !hit	5
+		board				6
+		ships				7
 		*/
 
-		colors[0] = new Color(0, 48, 73);//dark blue
-		colors[1] = new Color(241, 227, 211);//cream
-		colors[2] = new Color(242, 208, 169);//orange
+		//colors[0] = new Color(0, 48, 73);//dark blue
+		//colors[1] = new Color(241, 227, 211);//cream
+		//colors[2] = new Color(242, 208, 169);//orange
 
-		colors[3] = new Color(216, 140, 154);//red
-		colors[4] = new Color(153, 193, 185);//green
-		colors[5] = new Color(102, 155, 188);//light blue
-		colors[6] = new Color(142, 125, 190);//purple
+		//colors[3] = new Color(216, 140, 154);//red
+		//colors[4] = new Color(153, 193, 185);//green
+		//colors[5] = new Color(102, 155, 188);//light blue
+		//colors[6] = new Color(142, 125, 190);//purple
 
 		//Frame
 		setTitle("Menu");
