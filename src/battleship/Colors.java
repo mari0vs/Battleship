@@ -47,11 +47,12 @@ public class Colors
 	foreground 			1
 	highlight			2
 	menu				3
+	board				4
 
-	!placeable & hit 	4
-	placeable & !hit	5
-	board				6
-	ships				7
+	placeable			5
+	!placeable & hit 	6
+	!hit				7
+	ships				8
 	*/
 
 	public void retroTheme (String t)
