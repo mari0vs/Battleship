@@ -16,11 +16,11 @@ public class Shooting extends JPanel
 	Color[] colors;
 	Ship[] playerShips;
 
-	public Shooting (Ship[] ps, String player, Color[] c, int sw, int sh)
+	public Shooting (int[] ss, Color[] c, Ship[] ps, String player)
 	{
 		colors = c;
 
-		setLayout(new BorderLayout(100, 0));
+		setLayout(new BorderLayout(ss[4], 0));
 		setBackground(colors[0]);
 
 		playerLabel = new JLabel(player, SwingConstants.CENTER);
@@ -29,7 +29,7 @@ public class Shooting extends JPanel
 		add(playerLabel, BorderLayout.NORTH);
 
 		leftPanel = new JPanel();
-		leftPanel.setPreferredSize(new Dimension(500, 0));
+		leftPanel.setPreferredSize(new Dimension(ss[5], 0));
 		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
@@ -43,7 +43,7 @@ public class Shooting extends JPanel
 		// playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
 		leftPanel.add(playerShipsPanel);
 
-		leftPanel.add(Box.createRigidArea(new Dimension(0, 750)));
+		leftPanel.add(Box.createRigidArea(new Dimension(0, ss[6])));
 
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		centerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -57,7 +57,7 @@ public class Shooting extends JPanel
 
 		rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		rightPanel.setPreferredSize(new Dimension(500, 0));
+		rightPanel.setPreferredSize(new Dimension(ss[5], 0));
 		add(rightPanel, BorderLayout.EAST);
 
 		playerShips = ps;
@@ -69,7 +69,7 @@ public class Shooting extends JPanel
 		setShootingPanel(shootingButtons);
 	}
 
-	public void setPlayerShipsPanel (JLabel[] ls, Ship[] ss)
+	public void setPlayerShipsPanel (JLabel[] ls, Ship[] sh)
 	{
 		for (int i = 0; i < ls.length; i++)
 		{
@@ -91,7 +91,7 @@ public class Shooting extends JPanel
 			}
 		}
 
-		for (Ship s: ss)
+		for (Ship s: sh)
 		{
 			for (int p: s.position)
 			{

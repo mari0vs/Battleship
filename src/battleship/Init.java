@@ -32,7 +32,7 @@ public class Init implements ActionListener, MouseListener
 		coolors = new Colors(new String[] {"retro", "dark"});
 		colors = coolors.colors;
 
-		menuInterface = new MenuInterface(sizes, colors);
+		menuInterface = new MenuInterface(colors);
 		menuInterface.newGame.addActionListener(this);
 		menuInterface.loadGame.addActionListener(this);
 		menuInterface.exit.addActionListener(this);
@@ -82,8 +82,8 @@ public class Init implements ActionListener, MouseListener
 
 		if (w)
 		{
-			winner = new Winner(player, pPanel, ePanel, colors);
-			winner.mm.addActionListener(this);
+			winner = new Winner(colors, sizes, player, pPanel, ePanel);
+			winner.mainMenu.addActionListener(this);
 			gameInterface.cardPanel.add(winner, "6");
 
 			gameInterface.currentCard = 6;
@@ -113,11 +113,11 @@ public class Init implements ActionListener, MouseListener
 				gameInterface.nextTurn.addActionListener(this);
 				// gameInterface.ng.addActionListener(this);
 
-				shipPlacementA = new ShipPlacement(shipsA, "PLAYER 1", colors);
+				shipPlacementA = new ShipPlacement(colors, sizes, shipsA, "PLAYER 1");
 				shipPlacementA.done.addActionListener(this);
 				gameInterface.cardPanel.add(shipPlacementA, "1");
 
-				shipPlacementB = new ShipPlacement(shipsB, "PLAYER 2", colors);
+				shipPlacementB = new ShipPlacement(colors, sizes, shipsB, "PLAYER 2");
 				shipPlacementB.done.addActionListener(this);
 				gameInterface.cardPanel.add(shipPlacementB, "2");
 
@@ -176,7 +176,7 @@ public class Init implements ActionListener, MouseListener
 
 				else if (gameInterface.currentCard == 2)
 				{
-					shootingA = new Shooting(shipsA, "PLAYER 1", colors, screenWidth, screenHeight);
+					shootingA = new Shooting(sizes, colors, shipsA, "PLAYER 1");
 
 					for (int i = 0; i < shootingA.shootingButtons.length; i++)
 					{
@@ -185,7 +185,7 @@ public class Init implements ActionListener, MouseListener
 
 					gameInterface.cardPanel.add(shootingA, "4");
 
-					shootingB = new Shooting(shipsB, "PLAYER 2", colors, screenWidth, screenHeight);
+					shootingB = new Shooting(sizes, colors, shipsB, "PLAYER 2");
 
 					for (int i = 0; i < shootingB.shootingButtons.length; i++)
 					{

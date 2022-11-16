@@ -11,10 +11,10 @@ public class Winner extends JPanel// implements ActionListener
 {
 	JPanel lPanel, cPanel, rPanel;
 	JLabel winnerLabel;
-	JButton mm;
+	JButton mainMenu;
 	Color[] colors;
 
-    public Winner (String p, JPanel pA, JPanel pB, Color[] c)
+    public Winner (Color[] c, int[] ss, String p, JPanel pA, JPanel pB)
     {
     	colors = c;
 
@@ -26,18 +26,16 @@ public class Winner extends JPanel// implements ActionListener
 		winnerLabel.setForeground(colors[1]);
 		add(winnerLabel, BorderLayout.NORTH);
 
-		lPanel = new JPanel();
-		lPanel.setPreferredSize(new Dimension(1000, 0));
-		lPanel.setBorder(new EmptyBorder(100, 20, 100, 20));
+		lPanel = new JPanel(new BorderLayout());
+		lPanel.setPreferredSize(new Dimension(ss[10], 0));
+		lPanel.setBorder(new EmptyBorder(ss[11], 20, ss[11], 20));
 		lPanel.setOpaque(false);
 		add(lPanel, BorderLayout.WEST);
 
-		BoxLayout lbl = new BoxLayout(lPanel, BoxLayout.Y_AXIS);
-		lPanel.setLayout(lbl);
-		lPanel.add(pA);
+		lPanel.add(pA, BorderLayout.CENTER);
 
 		cPanel = new JPanel();
-		Border b = BorderFactory.createMatteBorder(500, 20, 500, 20, colors[0]);
+		Border b = BorderFactory.createMatteBorder(ss[12], 20, ss[12], 20, colors[0]);
 		Border m = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		cPanel.setBorder(new CompoundBorder(b, m));
 		cPanel.setBackground(colors[5]);
@@ -48,28 +46,26 @@ public class Winner extends JPanel// implements ActionListener
 
 		cPanel.add(Box.createVerticalGlue());
 
-		mm = new JButton("Main Menu");
-		mm.setName("0");
-		mm.setFocusable(false);
-		mm.setEnabled(true);
-		mm.setOpaque(true);
-		mm.setFont(new Font("Comic Sans", Font.BOLD, 40));
-		mm.setBorder(new EmptyBorder(20, 100, 20, 100));
-		mm.setBackground(colors[0]);
-		mm.setForeground(colors[1]);
-		mm.setAlignmentX(CENTER_ALIGNMENT);
-		cPanel.add(mm);
+		mainMenu = new JButton("Main Menu");
+		mainMenu.setName("0");
+		mainMenu.setFocusable(false);
+		mainMenu.setEnabled(true);
+		mainMenu.setOpaque(true);
+		mainMenu.setFont(new Font("Comic Sans", Font.BOLD, 40));
+		mainMenu.setBorder(new EmptyBorder(20, 20, 20, 20));
+		mainMenu.setBackground(colors[0]);
+		mainMenu.setForeground(colors[1]);
+		mainMenu.setAlignmentX(CENTER_ALIGNMENT);
+		cPanel.add(mainMenu);
 
 		cPanel.add(Box.createVerticalGlue());
 
-		rPanel = new JPanel();
-		rPanel.setPreferredSize(new Dimension(1000, 0));
-		rPanel.setBorder(new EmptyBorder(100, 20, 100, 20));
+		rPanel = new JPanel(new BorderLayout());
+		rPanel.setPreferredSize(new Dimension(ss[10], 0));
+		rPanel.setBorder(new EmptyBorder(ss[11], 20, ss[11], 20));
 		rPanel.setOpaque(false);
 		add(rPanel, BorderLayout.EAST);
 
-		BoxLayout rbl = new BoxLayout(rPanel, BoxLayout.Y_AXIS);
-		rPanel.setLayout(rbl);
-		rPanel.add(pB);
+		rPanel.add(pB, BorderLayout.CENTER);
     }
 }
