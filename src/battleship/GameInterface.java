@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 
-public class GameInterface extends JFrame// implements ActionListener
+public class GameInterface extends JFrame
 {
 	JMenu menu;
 	JMenuItem newGame, loadGame, saveGame, exit;
@@ -97,8 +97,11 @@ public class GameInterface extends JFrame// implements ActionListener
 
 		//-------------------- Content --------------------
 		nextTurnPanel = new JPanel();
-		nextTurnPanel.setSize(new Dimension(1000, 800));
-		Border border = BorderFactory.createMatteBorder(400, 700, 400, 700, colors[0]);
+		Border border = BorderFactory.createMatteBorder((int) Math.round(sw*0.15), 
+														(int) Math.round(sh*0.4),
+														(int) Math.round(sw*0.15),
+														(int) Math.round(sh*0.4),
+														colors[0]);
 		Border margin = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		nextTurnPanel.setBorder(new CompoundBorder(border, margin));
 		nextTurnPanel.setBackground(colors[5]);

@@ -171,7 +171,7 @@ public class Init implements ActionListener, MouseListener
 
 				else if (gameInterface.currentCard == 2)
 				{
-					shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
+					shootingA = new Shooting(shipsA, "PLAYER 1", colors, screenWidth, screenHeight);
 
 					for (int i = 0; i < shootingA.shootingButtons.length; i++)
 					{
@@ -180,7 +180,7 @@ public class Init implements ActionListener, MouseListener
 
 					gameInterface.cardPanel.add(shootingA, "4");
 
-					shootingB = new Shooting(shipsB, shipsA, "PLAYER 2", colors);
+					shootingB = new Shooting(shipsB, "PLAYER 2", colors, screenWidth, screenHeight);
 
 					for (int i = 0; i < shootingB.shootingButtons.length; i++)
 					{
@@ -227,13 +227,17 @@ public class Init implements ActionListener, MouseListener
 						{
 							if (coordinates == position)
 							{
+								shootingA.shootingButtons[coordinates].setBackground(colors[3]);
 								shootingB.playerShipsLabels[coordinates].setBackground(colors[3]);
 							}
 
 							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[5])
 							{
+								shootingA.shootingButtons[coordinates].setBackground(colors[4]);
 								shootingB.playerShipsLabels[coordinates].setBackground(colors[4]);
 							}
+
+							shootingA.shootingButtons[coordinates].setEnabled(false);
 						}
 					}
 
@@ -257,21 +261,25 @@ public class Init implements ActionListener, MouseListener
 						{
 							if (coordinates == position)
 							{
+								shootingB.shootingButtons[coordinates].setBackground(colors[3]);
 								shootingA.playerShipsLabels[coordinates].setBackground(colors[3]);
 							}
 
 							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[5])
 							{
+								shootingB.shootingButtons[coordinates].setBackground(colors[4]);
 								shootingA.playerShipsLabels[coordinates].setBackground(colors[4]);
 							}
+
+							shootingB.shootingButtons[coordinates].setEnabled(false);
 						}
 					}
 
 					if (!checkWinner(coordinates,
 									"PLAYER 2",
 									shipsA,
-									shootingB.playerShipsPanel,
-									shootingA.playerShipsPanel))
+									shootingA.playerShipsPanel,
+									shootingB.playerShipsPanel))
 					{
 						gameInterface.currentCard = 3;
 						gameInterface.card.show(gameInterface.cardPanel, "3");
@@ -305,6 +313,8 @@ public class Init implements ActionListener, MouseListener
 				gameInterface.exit.addActionListener(this);
 				gameInterface.nextTurn.addActionListener(this);
 				// gameInterface.ng.addActionListener(this);
+
+				gameInterface.setVisible(true);
 			}
 
 			else if (clickedItemText == "Sava Game")
@@ -340,6 +350,7 @@ public class Init implements ActionListener, MouseListener
 					}
 				}
 */
+				gameInterface.setVisible(true);
 			}
 
 			else if (clickedItemText == "Exit")

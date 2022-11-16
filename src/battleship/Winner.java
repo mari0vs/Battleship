@@ -14,7 +14,7 @@ public class Winner extends JPanel// implements ActionListener
 	JButton mm;
 	Color[] colors;
 
-    public Winner (String p, JPanel pP, JPanel eP, Color[] c)
+    public Winner (String p, JPanel pA, JPanel pB, Color[] c)
     {
     	colors = c;
 
@@ -34,7 +34,7 @@ public class Winner extends JPanel// implements ActionListener
 
 		BoxLayout lbl = new BoxLayout(lPanel, BoxLayout.Y_AXIS);
 		lPanel.setLayout(lbl);
-		lPanel.add(pP);
+		lPanel.add(pA);
 
 		cPanel = new JPanel();
 		Border b = BorderFactory.createMatteBorder(500, 20, 500, 20, colors[0]);
@@ -70,6 +70,6 @@ public class Winner extends JPanel// implements ActionListener
 
 		BoxLayout rbl = new BoxLayout(rPanel, BoxLayout.Y_AXIS);
 		rPanel.setLayout(rbl);
-		rPanel.add(eP);
+		rPanel.add(pB);
     }
 }

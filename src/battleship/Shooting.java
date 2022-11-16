@@ -7,16 +7,16 @@ import java.awt.event.*;
 
 @SuppressWarnings("serial")
 
-public class Shooting extends JPanel implements ActionListener
+public class Shooting extends JPanel
 {
 	JPanel leftPanel, playerShipsPanel, centerPanel, shootingPanel, rightPanel;
 	JLabel playerLabel;
 	JLabel[] playerShipsLabels;
 	JButton[] shootingButtons;
 	Color[] colors;
-	Ship[] playerShips, enemyShips;
+	Ship[] playerShips;
 
-	public Shooting (Ship[] ps, Ship[] es, String player, Color[] c)
+	public Shooting (Ship[] ps, String player, Color[] c, int sw, int sh)
 	{
 		colors = c;
 
@@ -61,7 +61,6 @@ public class Shooting extends JPanel implements ActionListener
 		add(rightPanel, BorderLayout.EAST);
 
 		playerShips = ps;
-		enemyShips = es;
 
 		playerShipsLabels = new JLabel[100];
 		setPlayerShipsPanel(playerShipsLabels, playerShips);
@@ -74,26 +73,21 @@ public class Shooting extends JPanel implements ActionListener
 	{
 		for (int i = 0; i < ls.length; i++)
 		{
-			if (i < 10)
-			{
 				ls[i] = new JLabel();
-				ls[i].setName("0" + Integer.toString(i));
 				ls[i].setOpaque(true);
 				// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
 				ls[i].setBackground(colors[5]);
 				playerShipsPanel.add(ls[i]);
+
+			if (i < 10)
+			{
+				ls[i].setName("0" + Integer.toString(i));
 			}
 
 			else
 			{
-				ls[i] = new JLabel();
 				ls[i].setName(Integer.toString(i));
-				ls[i].setOpaque(true);
-				// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
-				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-				ls[i].setBackground(colors[5]);
-				playerShipsPanel.add(ls[i]);
 			}
 		}
 
@@ -110,62 +104,23 @@ public class Shooting extends JPanel implements ActionListener
 	{
 		for (int i = 0; i < bs.length; i++)
 		{
+			bs[i] = new JButton();
+			bs[i].setFocusable(true);
+			bs[i].setEnabled(true);
+			bs[i].setOpaque(true);
+			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+			bs[i].setBackground(colors[5]);
+			shootingPanel.add(bs[i]);
+
 			if (i < 10)
 			{
-				bs[i] = new JButton();
 				bs[i].setName("0" + Integer.toString(i));
-				bs[i].setFocusable(true);
-				bs[i].setEnabled(true);
-				bs[i].setOpaque(true);
-				// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
-				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-				bs[i].setBackground(colors[5]);
-				bs[i].addActionListener(this);
-				shootingPanel.add(bs[i]);
 			}
 
 			else
 			{
-				bs[i] = new JButton();
 				bs[i].setName(Integer.toString(i));
-				bs[i].setFocusable(true);
-				bs[i].setEnabled(true);
-				bs[i].setOpaque(true);
-				// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
-				bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-				bs[i].setBackground(colors[5]);
-				bs[i].addActionListener(this);
-				shootingPanel.add(bs[i]);
-			}
-		}
-	}
-
-	public void actionPerformed (ActionEvent e)
-	{
-		if (e.getSource() instanceof JButton)
-		{
-			JButton clickedButton = (JButton) e.getSource();
-			int coordinates = Integer.parseInt(clickedButton.getName());
-
-			if (clickedButton == shootingButtons[coordinates])
-			{
-				for (Ship enemyShip: enemyShips)
-				{
-					for (int position: enemyShip.position)
-					{
-						if (coordinates == position)
-						{
-							shootingButtons[coordinates].setBackground(colors[3]);
-						}
-
-						else if (shootingButtons[coordinates].getBackground() == colors[5])
-						{
-							shootingButtons[coordinates].setBackground(colors[4]);
-						}
-
-						shootingButtons[coordinates].setEnabled(false);
-					}
-				}
 			}
 		}
 	}
