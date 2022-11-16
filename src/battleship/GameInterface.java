@@ -21,7 +21,7 @@ public class GameInterface extends JFrame
 	Winner winner;
 	Ship[] shipsA, shipsB;
 
-	public GameInterface (Color[] c, int sw, int sh)
+	public GameInterface (int[] ss, Color[] c)
 	{
 		colors = c;
 		//------------------------------ Frame ------------------------------
@@ -97,11 +97,7 @@ public class GameInterface extends JFrame
 
 		//-------------------- Content --------------------
 		nextTurnPanel = new JPanel();
-		Border border = BorderFactory.createMatteBorder((int) Math.round(sw*0.15), 
-														(int) Math.round(sh*0.4),
-														(int) Math.round(sw*0.15),
-														(int) Math.round(sh*0.4),
-														colors[0]);
+		Border border = BorderFactory.createMatteBorder(ss[2], ss[3], ss[2], ss[3], colors[0]);
 		Border margin = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		nextTurnPanel.setBorder(new CompoundBorder(border, margin));
 		nextTurnPanel.setBackground(colors[5]);
@@ -118,10 +114,7 @@ public class GameInterface extends JFrame
 		nextTurn.setEnabled(true);
 		nextTurn.setOpaque(true);
 		nextTurn.setFont(new Font("Comic Sans", Font.BOLD, 100));
-		nextTurn.setBorder(new EmptyBorder((int) Math.round(sw*0.02), 
-											(int) Math.round(sh*0.02),
-											(int) Math.round(sw*0.02),
-											(int) Math.round(sh*0.02)));
+		nextTurn.setBorder(new EmptyBorder(ss[4], ss[5], ss[4], ss[5]));
 		nextTurn.setBackground(colors[0]);
 		nextTurn.setForeground(colors[1]);
 		nextTurn.setAlignmentX(CENTER_ALIGNMENT);

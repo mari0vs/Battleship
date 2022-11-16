@@ -15,7 +15,7 @@ public class MenuInterface extends JFrame
 	Color[] colors;
 	GameInterface gi;
 
-	public MenuInterface (Color[] c, int sw, int sh)
+	public MenuInterface (int[] ss, Color[] c)
 	{
 		Font titleFont = new Font("Comic Sans", Font.BOLD, 75);
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 50);
@@ -24,7 +24,7 @@ public class MenuInterface extends JFrame
 
 // Frame
 		setTitle("Menu");
-		setSize((int) Math.round(sw*0.5), (int) Math.round(sh*0.5));
+		setSize(ss[0], ss[1]);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

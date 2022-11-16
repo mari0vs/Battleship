@@ -8,6 +8,8 @@ public class Init implements ActionListener, MouseListener
 {
 	GraphicsDevice graphicsDevice;
 	int screenWidth, screenHeight;
+	SizeSetter sizeSetter;
+	int[] sizes;
 	Colors coolors;
 	Color[] colors;
 	Font[] fonts;
@@ -24,10 +26,13 @@ public class Init implements ActionListener, MouseListener
 		screenWidth = graphicsDevice.getDisplayMode().getWidth();
 		screenHeight = graphicsDevice.getDisplayMode().getHeight();
 
+		sizeSetter = new SizeSetter();
+		sizes = sizeSetter.sizes;
+
 		coolors = new Colors(new String[] {"retro", "dark"});
 		colors = coolors.colors;
 
-		menuInterface = new MenuInterface(colors, screenWidth, screenHeight);
+		menuInterface = new MenuInterface(sizes, colors);
 		menuInterface.newGame.addActionListener(this);
 		menuInterface.loadGame.addActionListener(this);
 		menuInterface.exit.addActionListener(this);
@@ -101,7 +106,7 @@ public class Init implements ActionListener, MouseListener
 				shipsA = setShips(shipsA);
 				shipsB = setShips(shipsB);
 
-				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface = new GameInterface(sizes, colors);
 				gameInterface.newGame.addActionListener(this);
 				gameInterface.loadGame.addActionListener(this);
 				gameInterface.exit.addActionListener(this);
@@ -125,7 +130,7 @@ public class Init implements ActionListener, MouseListener
 
 			else if (buttonText == "Load Game")
 			{
-				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface = new GameInterface(sizes, colors);
 				gameInterface.newGame.addActionListener(this);
 				gameInterface.loadGame.addActionListener(this);
 				gameInterface.exit.addActionListener(this);
@@ -307,7 +312,7 @@ public class Init implements ActionListener, MouseListener
 			if (clickedItemText == "New Game")
 			{
 				gameInterface.setVisible(false);
-				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface = new GameInterface(sizes, colors);
 				gameInterface.newGame.addActionListener(this);
 				gameInterface.loadGame.addActionListener(this);
 				gameInterface.exit.addActionListener(this);
@@ -323,7 +328,7 @@ public class Init implements ActionListener, MouseListener
 			else if (clickedItemText == "Load Game")
 			{
 				gameInterface.setVisible(false);
-				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface = new GameInterface(sizes, colors);
 				gameInterface.newGame.addActionListener(this);
 				gameInterface.loadGame.addActionListener(this);
 				gameInterface.exit.addActionListener(this);
