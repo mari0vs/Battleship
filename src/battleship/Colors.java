@@ -9,7 +9,7 @@ public class Colors
 
     public Colors (String[] theme)
     {
-    	colors = new Color[7];
+    	colors = new Color[9];
 
     	if (theme[0] == "retro")
     	{
@@ -33,7 +33,7 @@ public class Colors
 
     	else if (theme[0] == "neon")
     	{
-    		neonTheme(theme[1]);
+			neonTheme(theme[1]);
     	}
 
     	else if (theme[0] == "pastel")
@@ -47,8 +47,8 @@ public class Colors
 	foreground 			1
 	highlight			2
 	menu				3
-	board				4
 
+	board				4
 	placeable			5
 	!placeable & hit 	6
 	!hit				7
@@ -62,11 +62,13 @@ public class Colors
 			colors[0] = new Color(255, 209, 102);//yellow
 			colors[1] = Color.black;//black
 			colors[2] = new Color(247, 140, 107);//orange
-			colors[3] = new Color(239, 71, 111);//
+			colors[3] = new Color(17, 138, 178);//blue
 
 			colors[4] = new Color(17, 138, 178);//blue
 			colors[5] = new Color(6, 214, 160);//green
 			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(7, 59, 76);//dark blue
 		}
 
 		if (t == "dark")
@@ -74,11 +76,13 @@ public class Colors
 			colors[0] = new Color(7, 59, 76);//dark blue
 			colors[1] = Color.white;//white
 			colors[2] = new Color(247, 140, 107);//orange
-			colors[3] = new Color(239, 71, 111);//
+			colors[3] = new Color(17, 138, 178);//blue
 
 			colors[4] = new Color(17, 138, 178);//blue
 			colors[5] = new Color(6, 214, 160);//green
 			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(255, 209, 102);//yelow
 		}
 	}
 

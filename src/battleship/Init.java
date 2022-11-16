@@ -232,14 +232,14 @@ public class Init implements ActionListener, MouseListener
 						{
 							if (coordinates == position)
 							{
-								shootingA.shootingButtons[coordinates].setBackground(colors[3]);
-								shootingB.playerShipsLabels[coordinates].setBackground(colors[3]);
+								shootingA.shootingButtons[coordinates].setBackground(colors[6]);
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[6]);
 							}
 
-							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[5])
+							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[4])
 							{
-								shootingA.shootingButtons[coordinates].setBackground(colors[4]);
-								shootingB.playerShipsLabels[coordinates].setBackground(colors[4]);
+								shootingA.shootingButtons[coordinates].setBackground(colors[7]);
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[7]);
 							}
 
 							shootingA.shootingButtons[coordinates].setEnabled(false);
@@ -266,14 +266,14 @@ public class Init implements ActionListener, MouseListener
 						{
 							if (coordinates == position)
 							{
-								shootingB.shootingButtons[coordinates].setBackground(colors[3]);
-								shootingA.playerShipsLabels[coordinates].setBackground(colors[3]);
+								shootingB.shootingButtons[coordinates].setBackground(colors[6]);
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[6]);
 							}
 
-							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[5])
+							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[4])
 							{
-								shootingB.shootingButtons[coordinates].setBackground(colors[4]);
-								shootingA.playerShipsLabels[coordinates].setBackground(colors[4]);
+								shootingB.shootingButtons[coordinates].setBackground(colors[7]);
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[7]);
 							}
 
 							shootingB.shootingButtons[coordinates].setEnabled(false);

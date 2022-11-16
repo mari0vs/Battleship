@@ -52,7 +52,7 @@ public class MenuInterface extends JFrame
 
 		menuPanel = new JPanel();
 		menuPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]));
-		menuPanel.setBackground(colors[5]);
+		menuPanel.setBackground(colors[3]);
 		contentPane.add(menuPanel, BorderLayout.CENTER);
 
 		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);

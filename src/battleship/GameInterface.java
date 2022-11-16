@@ -37,14 +37,14 @@ public class GameInterface extends JFrame
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBorder(BorderFactory.createMatteBorder(5, 10, 5, 10, colors[2]));
-		menuBar.setBackground(colors[5]);
+		menuBar.setBackground(colors[3]);
 		menuBar.setForeground(colors[1]);
 		setJMenuBar(menuBar);
 
 		menu = new JMenu("Options");
 		menu.setOpaque(true);
 		menu.setFont(font);
-		menu.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]));
+		menu.setBorder(BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]));
 		menu.setBackground(colors[0]);
 		menu.setForeground(colors[1]);
 		menuBar.add(menu);
@@ -52,7 +52,7 @@ public class GameInterface extends JFrame
 		newGame = new JMenuItem("New Game");
 		newGame.setFont(font);
 		Border newGameB = BorderFactory.createMatteBorder(2, 2, 0, 2, colors[2]);
-		Border newGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		Border newGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]);
 		newGame.setBorder(new CompoundBorder(newGameB, newGameM));
 		newGame.setBackground(colors[0]);
 		newGame.setForeground(colors[1]);
@@ -61,7 +61,7 @@ public class GameInterface extends JFrame
 		loadGame = new JMenuItem("Load Game");
 		loadGame.setFont(font);
 		Border loadGameB = BorderFactory.createMatteBorder(0, 2, 0, 2, colors[2]);
-		Border loadGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		Border loadGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]);
 		loadGame.setBorder(new CompoundBorder(loadGameB, loadGameM));
 		loadGame.setBackground(colors[0]);
 		loadGame.setForeground(colors[1]);
@@ -70,7 +70,7 @@ public class GameInterface extends JFrame
 		saveGame = new JMenuItem("Save Game");
 		saveGame.setFont(font);
 		Border saveGameB = BorderFactory.createMatteBorder(0, 2, 0, 2, colors[2]);
-		Border saveGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		Border saveGameM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]);
 		saveGame.setBorder(new CompoundBorder(saveGameB, saveGameM));
 		saveGame.setBackground(colors[0]);
 		saveGame.setForeground(colors[1]);
@@ -79,7 +79,7 @@ public class GameInterface extends JFrame
 		exit = new JMenuItem("Exit");
 		exit.setFont(font);
 		Border exitB = BorderFactory.createMatteBorder(0, 2, 2, 2, colors[2]);
-		Border exitM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[5]);
+		Border exitM = BorderFactory.createMatteBorder(5, 5, 5, 5, colors[3]);
 		exit.setBorder(new CompoundBorder(exitB, exitM));
 		exit.setBackground(colors[0]);
 		exit.setForeground(colors[1]);
@@ -100,7 +100,7 @@ public class GameInterface extends JFrame
 		Border border = BorderFactory.createMatteBorder(ss[0], ss[1], ss[0], ss[1], colors[0]);
 		Border margin = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		nextTurnPanel.setBorder(new CompoundBorder(border, margin));
-		nextTurnPanel.setBackground(colors[5]);
+		nextTurnPanel.setBackground(colors[3]);
 		cardPanel.add(nextTurnPanel, "3");
 
 		BoxLayout boxLayout = new BoxLayout(nextTurnPanel, BoxLayout.Y_AXIS);

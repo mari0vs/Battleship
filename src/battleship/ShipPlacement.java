@@ -21,7 +21,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 40);
 		colors = c;
 
-		setLayout(new BorderLayout(ss[7], 0));
+		setLayout(new BorderLayout(ss[4], 0));
 		setBackground(colors[0]);
 		addMouseListener(this);
 
@@ -33,16 +33,16 @@ public class ShipPlacement extends JPanel implements MouseListener
 		add(playerLabel, BorderLayout.NORTH);
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
+		leftPanel.setPreferredSize(new Dimension(ss[5], 0));
 		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
 
 		selectionPanel = new JPanel();
-		selectionPanel.setPreferredSize(new Dimension(ss[8], 0));
 		Border spb = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		Border spm = new EmptyBorder(20, 20, 20, 20);
 		selectionPanel.setBorder(new CompoundBorder(spb, spm));
-		selectionPanel.setBackground(colors[5]);
+		selectionPanel.setBackground(colors[3]);
 		leftPanel.add(selectionPanel, BorderLayout.CENTER);
 
 		BoxLayout spbl = new BoxLayout(selectionPanel, BoxLayout.Y_AXIS);
@@ -55,20 +55,20 @@ public class ShipPlacement extends JPanel implements MouseListener
 
 		placementPanel = new JPanel(new GridLayout(10, 10, 0, 0));
 		placementPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		placementPanel.setBackground(colors[0]);
+		placementPanel.setBackground(colors[2]);
 		centerPanel.add(placementPanel, BorderLayout.CENTER);
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
-		rightPanel.setBorder(new EmptyBorder(ss[9], 20, ss[9], 20));
+		rightPanel.setPreferredSize(new Dimension(ss[5], 0));
+		rightPanel.setBorder(new EmptyBorder(ss[6], 20, 20, 20));
 		rightPanel.setOpaque(false);
 		add(rightPanel, BorderLayout.EAST);
 
 		JPanel donePanel = new JPanel();
-		donePanel.setPreferredSize(new Dimension(ss[8], 0));
 		Border dpb = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
 		Border dpm = new EmptyBorder(20, 20, 20, 20);
 		donePanel.setBorder(new CompoundBorder(dpb, dpm));
-		donePanel.setBackground(colors[5]);
+		donePanel.setBackground(colors[3]);
 		rightPanel.add(donePanel, BorderLayout.CENTER);
 
 		BoxLayout rpbl = new BoxLayout(donePanel, BoxLayout.Y_AXIS);
@@ -178,7 +178,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 			bs[i].setOpaque(true);
 			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-			bs[i].setBackground(colors[5]);
+			bs[i].setBackground(colors[3]);
 			bs[i].addMouseListener(this);
 			placementPanel.add(bs[i]);
 		}
@@ -291,7 +291,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 						{
 							for (int i = 0; i < ship.size; i++)
 							{
-								placementButtons[coordinates + i].setBackground(colors[4]);
+								placementButtons[coordinates + i].setBackground(colors[5]);
 							}
 						}
 
@@ -302,13 +302,13 @@ public class ShipPlacement extends JPanel implements MouseListener
 						{
 							for (int i = 0; i < ship.size; i++)
 							{
-								placementButtons[coordinates + (i * 10)].setBackground(colors[4]);
+								placementButtons[coordinates + (i * 10)].setBackground(colors[5]);
 							}
 						}
 
 						else if (placementButtons[coordinates].isEnabled())
 						{
-							placementButtons[coordinates].setBackground(colors[3]);
+							placementButtons[coordinates].setBackground(colors[6]);
 						}
 					}
 				}
@@ -339,7 +339,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 						{
 							for (int i = 0; i < ship.size; i++)
 							{
-								placementButtons[coordinates + i].setBackground(colors[5]);
+								placementButtons[coordinates + i].setBackground(colors[4]);
 							}
 						}
 
@@ -350,13 +350,13 @@ public class ShipPlacement extends JPanel implements MouseListener
 						{
 							for (int i = 0; i < ship.size; i++)
 							{
-								placementButtons[coordinates + (i * 10)].setBackground(colors[5]);
+								placementButtons[coordinates + (i * 10)].setBackground(colors[4]);
 							}
 						}
 
 						else if (placementButtons[coordinates].isEnabled())
 						{
-							placementButtons[coordinates].setBackground(colors[5]);
+							placementButtons[coordinates].setBackground(colors[4]);
 						}
 					}
 				}
@@ -379,7 +379,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 				{
 					if (pb.isEnabled())
 					{
-						pb.setBackground(colors[5]);
+						pb.setBackground(colors[4]);
 					}
 				}
 
@@ -401,7 +401,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 								{
 									for (int i = 0; i < ship.size; i++)
 									{
-										placementButtons[coordinates + i].setBackground(colors[4]);
+										placementButtons[coordinates + i].setBackground(colors[5]);
 									}
 								}
 
@@ -412,13 +412,13 @@ public class ShipPlacement extends JPanel implements MouseListener
 								{
 									for (int i = 0; i < ship.size; i++)
 									{
-										placementButtons[coordinates + (i * 10)].setBackground(colors[4]);
+										placementButtons[coordinates + (i * 10)].setBackground(colors[5]);
 									}
 								}
 
 								else if (pb.isEnabled())
 								{
-									pb.setBackground(colors[3]);
+									pb.setBackground(colors[6]);
 								}
 							}
 						}
@@ -460,7 +460,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 							for (int i = 0; i < ship.size; i++)
 							{
 								ship.position[i] = coordinates + i;
-								placementButtons[coordinates + i].setBackground(colors[6]);
+								placementButtons[coordinates + i].setBackground(colors[8]);
 								placementButtons[coordinates + i].setEnabled(false);
 							}
 
@@ -484,7 +484,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 							for (int i = 0; i < ship.size; i++)
 							{
 								ship.position[i] = coordinates + (i * 10);
-								placementButtons[coordinates + (i * 10)].setBackground(colors[6]);
+								placementButtons[coordinates + (i * 10)].setBackground(colors[8]);
 								placementButtons[coordinates + (i * 10)].setEnabled(false);
 
 							}

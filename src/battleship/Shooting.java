@@ -29,7 +29,7 @@ public class Shooting extends JPanel
 		add(playerLabel, BorderLayout.NORTH);
 
 		leftPanel = new JPanel();
-		leftPanel.setPreferredSize(new Dimension(ss[5], 0));
+		leftPanel.setPreferredSize(new Dimension(ss[7], 0));
 		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
@@ -43,7 +43,7 @@ public class Shooting extends JPanel
 		// playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
 		leftPanel.add(playerShipsPanel);
 
-		leftPanel.add(Box.createRigidArea(new Dimension(0, ss[6])));
+		leftPanel.add(Box.createRigidArea(new Dimension(0, ss[8])));
 
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		centerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -57,7 +57,7 @@ public class Shooting extends JPanel
 
 		rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		rightPanel.setPreferredSize(new Dimension(ss[5], 0));
+		rightPanel.setPreferredSize(new Dimension(ss[7], 0));
 		add(rightPanel, BorderLayout.EAST);
 
 		playerShips = ps;
@@ -77,7 +77,7 @@ public class Shooting extends JPanel
 				ls[i].setOpaque(true);
 				// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 				ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-				ls[i].setBackground(colors[5]);
+				ls[i].setBackground(colors[4]);
 				playerShipsPanel.add(ls[i]);
 
 			if (i < 10)
@@ -95,7 +95,7 @@ public class Shooting extends JPanel
 		{
 			for (int p: s.position)
 			{
-				ls[p].setBackground(colors[6]);
+				ls[p].setBackground(colors[8]);
 			}
 		}
 	}
@@ -110,7 +110,7 @@ public class Shooting extends JPanel
 			bs[i].setOpaque(true);
 			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-			bs[i].setBackground(colors[5]);
+			bs[i].setBackground(colors[4]);
 			shootingPanel.add(bs[i]);
 
 			if (i < 10)
