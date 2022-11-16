@@ -12,7 +12,7 @@ public class Init implements ActionListener, MouseListener
 	Color[] colors;
 	Font[] fonts;
 	MenuInterface menuInterface;
-	Ship[] ships;
+	Ship[] shipsA, shipsB;
 	GameInterface gameInterface;
 	ShipPlacement shipPlacementA, shipPlacementB;
 	Shooting shootingA, shootingB;
@@ -27,7 +27,7 @@ public class Init implements ActionListener, MouseListener
 		coolors = new Colors(new String[] {"retro", "dark"});
 		colors = coolors.colors;
 
-		menuInterface = new MenuInterface();
+		menuInterface = new MenuInterface(colors, screenWidth, screenHeight);
 		menuInterface.newGame.addActionListener(this);
 		menuInterface.loadGame.addActionListener(this);
 		menuInterface.exit.addActionListener(this);
@@ -40,6 +40,54 @@ public class Init implements ActionListener, MouseListener
 		new Init();
 	}
 
+	public Ship[] setShips (Ship[] ss)
+	{
+		ss = new Ship[5];
+
+		ss[0] = new Ship(2);
+		ss[1] = new Ship(2);
+		ss[2] = new Ship(3);
+		ss[3] = new Ship(3);
+		ss[4] = new Ship(4);
+
+		return ss;
+	}
+
+	public boolean checkWinner (int coordinates, String player, Ship[] ss, JPanel pPanel, JPanel ePanel)
+	{
+		boolean w = true;
+		boolean hit = false;
+
+		for (Ship ship: ss)
+		{
+			ship.sunk = true;
+
+			for (int i = 0; i < ship.size; i++)
+			{
+				if (coordinates == ship.position[i])
+				{
+					ship.hits[i] = true;
+					hit = ship.hits[i];
+				}
+
+				ship.sunk = ship.sunk && ship.hits[i];
+			}
+			w = w && ship.sunk;
+		}
+
+		if (w)
+		{
+			winner = new Winner(player, pPanel, ePanel, colors);
+			winner.mm.addActionListener(this);
+			gameInterface.cardPanel.add(winner, "6");
+
+			gameInterface.currentCard = 6;
+			gameInterface.card.show(gameInterface.cardPanel, "6");
+		}
+
+		return hit;
+	}
+
 	public void actionPerformed(ActionEvent e)
 	{
 
@@ -50,71 +98,40 @@ public class Init implements ActionListener, MouseListener
 
 			if (buttonText == "New Game")
 			{
-				gameInterface = new GameInterface(colors);
-				gameInterface.exit.addActionListener(this);
+				shipsA = setShips(shipsA);
+				shipsB = setShips(shipsB);
+
+				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
 				gameInterface.newGame.addActionListener(this);
+				gameInterface.loadGame.addActionListener(this);
+				gameInterface.exit.addActionListener(this);
+				gameInterface.nextTurn.addActionListener(this);
 				// gameInterface.ng.addActionListener(this);
+
+				shipPlacementA = new ShipPlacement(shipsA, "PLAYER 1", colors);
+				shipPlacementA.done.addActionListener(this);
+				gameInterface.cardPanel.add(shipPlacementA, "1");
+
+				shipPlacementB = new ShipPlacement(shipsB, "PLAYER 2", colors);
+				shipPlacementB.done.addActionListener(this);
+				gameInterface.cardPanel.add(shipPlacementB, "2");
+
+				gameInterface.card.show(gameInterface.cardPanel, "1");
+				gameInterface.currentCard = 1;
+
 				gameInterface.setVisible(true);
 				menuInterface.setVisible(false);
 			}
 
 			else if (buttonText == "Load Game")
 			{
-				gameInterface = new GameInterface(colors);
-				gameInterface.exit.addActionListener(this);
+				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
 				gameInterface.newGame.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
-
-				/*for (Ship ship: gameInterface.shipsA)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
-
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}
-
-				for (Ship ship: gameInterface.shipsB)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
-
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}*/
-
-				gameInterface.setVisible(true);
-				menuInterface.setVisible(false);
-			}
-
-			else
-			{
-				System.exit(0);
-			}
-		}
-
-		else
-		{
-			JMenuItem clickedItem = (JMenuItem) e.getSource();
-			String clickedItemText = clickedItem.getText();
-
-			if (clickedItemText == "New Game")
-			{
-				gameInterface = new GameInterface(colors);
+				gameInterface.loadGame.addActionListener(this);
 				gameInterface.exit.addActionListener(this);
-				gameInterface.newGame.addActionListener(this);
+				gameInterface.nextTurn.addActionListener(this);
 				// gameInterface.ng.addActionListener(this);
-			}
-
-			else if (clickedItemText == "Load Game")
-			{
-				gameInterface = new GameInterface(colors);
-				gameInterface.exit.addActionListener(this);
-				gameInterface.newGame.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
-
+/*
 				for (Ship ship: gameInterface.shipsA)
 				{
 					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
@@ -134,10 +151,200 @@ public class Init implements ActionListener, MouseListener
 						ship.position[i] = rand + i;
 					}
 				}
+*/
+				gameInterface.setVisible(true);
+				menuInterface.setVisible(false);
+			}
+
+			else if (buttonText == "Exit")
+			{
+				System.exit(0);
+			}
+
+			else if (buttonText == "Done")
+			{
+				if (gameInterface.currentCard == 1)
+				{
+					gameInterface.currentCard = 2;
+					gameInterface.card.show(gameInterface.cardPanel, "2");
+				}
+
+				else if (gameInterface.currentCard == 2)
+				{
+					shootingA = new Shooting(shipsA, shipsB, "PLAYER 1", colors);
+
+					for (int i = 0; i < shootingA.shootingButtons.length; i++)
+					{
+						shootingA.shootingButtons[i].addActionListener(this);
+					}
+
+					gameInterface.cardPanel.add(shootingA, "4");
+
+					shootingB = new Shooting(shipsB, shipsA, "PLAYER 2", colors);
+
+					for (int i = 0; i < shootingB.shootingButtons.length; i++)
+					{
+						shootingB.shootingButtons[i].addActionListener(this);
+					}
+
+					gameInterface.cardPanel.add(shootingB, "5");
+
+					gameInterface.currentCard = 3;
+					gameInterface.card.show(gameInterface.cardPanel, "3");
+				}
+			}
+
+			else if (gameInterface.currentCard == 3)
+			{
+				String buttonName = clickedButton.getName();
+
+				if (buttonName == "A")
+				{
+					gameInterface.currentCard = 4;
+					gameInterface.card.show(gameInterface.cardPanel, "4");
+					clickedButton.setText("PLAYER 2'S TURN");
+					clickedButton.setName("B");
+				}
+
+				if (buttonName == "B")
+				{
+					gameInterface.currentCard = 5;
+					gameInterface.card.show(gameInterface.cardPanel, "5");
+					clickedButton.setText("PLAYER 1'S TURN");
+					clickedButton.setName("A");
+				}
+			}
+
+			else if (gameInterface.currentCard == 4 || gameInterface.currentCard == 5)
+			{
+				int coordinates = Integer.parseInt(clickedButton.getName());
+
+				if (gameInterface.currentCard == 4)
+				{
+					for (Ship enemyShip: shipsB)
+					{
+						for (int position: enemyShip.position)
+						{
+							if (coordinates == position)
+							{
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[3]);
+							}
+
+							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[5])
+							{
+								shootingB.playerShipsLabels[coordinates].setBackground(colors[4]);
+							}
+						}
+					}
+
+					if (!checkWinner(coordinates,
+									"PLAYER 1",
+									shipsB,
+									shootingA.playerShipsPanel,
+									shootingB.playerShipsPanel))
+					{
+						gameInterface.currentCard = 3;
+						gameInterface.card.show(gameInterface.cardPanel, "3");
+					}
+				}
+
+
+				else if (gameInterface.currentCard == 5)
+				{
+					for (Ship enemyShip: shipsA)
+					{
+						for (int position: enemyShip.position)
+						{
+							if (coordinates == position)
+							{
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[3]);
+							}
+
+							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[5])
+							{
+								shootingA.playerShipsLabels[coordinates].setBackground(colors[4]);
+							}
+						}
+					}
+
+					if (!checkWinner(coordinates,
+									"PLAYER 2",
+									shipsA,
+									shootingB.playerShipsPanel,
+									shootingA.playerShipsPanel))
+					{
+						gameInterface.currentCard = 3;
+						gameInterface.card.show(gameInterface.cardPanel, "3");
+					}
+				}
+			}
+
+			else if (gameInterface.currentCard == 6)
+			{
+				if (buttonText == "Main Menu")
+				{
+					gameInterface.setVisible(false);
+					gameInterface = null;
+					System.gc();
+					menuInterface.setVisible(true);
+				}
+			}
+		}
+
+		else
+		{
+			JMenuItem clickedItem = (JMenuItem) e.getSource();
+			String clickedItemText = clickedItem.getText();
+
+			if (clickedItemText == "New Game")
+			{
+				gameInterface.setVisible(false);
+				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface.newGame.addActionListener(this);
+				gameInterface.loadGame.addActionListener(this);
+				gameInterface.exit.addActionListener(this);
+				gameInterface.nextTurn.addActionListener(this);
+				// gameInterface.ng.addActionListener(this);
+			}
+
+			else if (clickedItemText == "Sava Game")
+			{}
+
+			else if (clickedItemText == "Load Game")
+			{
+				gameInterface.setVisible(false);
+				gameInterface = new GameInterface(colors, screenWidth, screenHeight);
+				gameInterface.newGame.addActionListener(this);
+				gameInterface.loadGame.addActionListener(this);
+				gameInterface.exit.addActionListener(this);
+				gameInterface.nextTurn.addActionListener(this);
+				// gameInterface.ng.addActionListener(this);
+/*
+				for (Ship ship: gameInterface.shipsA)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
+
+				for (Ship ship: gameInterface.shipsB)
+				{
+					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = rand + i;
+					}
+				}
+*/
 			}
 
 			else if (clickedItemText == "Exit")
 			{
+				gameInterface.setVisible(false);
 				gameInterface = null;
 				System.gc();
 				menuInterface.setVisible(true);

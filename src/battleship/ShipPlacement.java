@@ -74,7 +74,7 @@ public class ShipPlacement extends JPanel implements MouseListener
 
 		done = new JButton("Done");
 		done.setFocusable(false);
-		done.setEnabled(false);//--------------------------------------------------------------------------false
+		done.setEnabled(true);//--------------------------------------------------------------------------false
 		done.setOpaque(true);
 		done.setFont(buttonFont);
 		done.setBorder(new EmptyBorder(20, 120, 20, 120));

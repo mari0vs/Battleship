@@ -39,9 +39,6 @@ public class MenuInterface extends JFrame
 		contentPane.add(menuTitle, BorderLayout.NORTH);
 
 // Panel
-		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);
-		menuPanel.setLayout(boxlayout);
-
 		westPanel = new JPanel();
 		westPanel.setOpaque(false);
 		contentPane.add(westPanel, BorderLayout.WEST);
@@ -58,6 +55,9 @@ public class MenuInterface extends JFrame
 		menuPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]));
 		menuPanel.setBackground(colors[5]);
 		contentPane.add(menuPanel, BorderLayout.CENTER);
+
+		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);
+		menuPanel.setLayout(boxlayout);
 // Buttons
 		menuPanel.add(Box.createRigidArea(new Dimension(10, 20)));
 
