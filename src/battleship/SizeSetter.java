@@ -31,6 +31,18 @@ public class SizeSetter
 			sizes[5] = (int) Math.round(screenWidth*0.05);
 		}
 
+		else
+		{
+			sizes[0] = (int) Math.round(screenWidth*0.5);
+			sizes[1] = (int) Math.round(screenHeight*0.5);
+
+			sizes[2] = (int) Math.round(screenHeight*0.2);
+			sizes[3] = (int) Math.round(screenWidth*0.1);
+
+			sizes[4] = (int) Math.round(screenHeight*0.05);
+			sizes[5] = (int) Math.round(screenWidth*0.05);
+		}
+
 		print();
 	}
 
