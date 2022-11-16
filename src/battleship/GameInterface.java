@@ -118,7 +118,10 @@ public class GameInterface extends JFrame
 		nextTurn.setEnabled(true);
 		nextTurn.setOpaque(true);
 		nextTurn.setFont(new Font("Comic Sans", Font.BOLD, 100));
-		nextTurn.setBorder(new EmptyBorder(100, 100, 100, 100));
+		nextTurn.setBorder(new EmptyBorder((int) Math.round(sw*0.02), 
+											(int) Math.round(sh*0.02),
+											(int) Math.round(sw*0.02),
+											(int) Math.round(sh*0.02)));
 		nextTurn.setBackground(colors[0]);
 		nextTurn.setForeground(colors[1]);
 		nextTurn.setAlignmentX(CENTER_ALIGNMENT);
