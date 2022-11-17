@@ -6,8 +6,6 @@ import java.awt.event.*;
 
 public class Init implements ActionListener, MouseListener
 {
-	GraphicsDevice graphicsDevice;
-	int screenWidth, screenHeight;
 	SizeSetter sizeSetter;
 	int[] sizes;
 	Colors coolors;
@@ -22,10 +20,6 @@ public class Init implements ActionListener, MouseListener
 
 	public Init ()
 	{
-		graphicsDevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		screenWidth = graphicsDevice.getDisplayMode().getWidth();
-		screenHeight = graphicsDevice.getDisplayMode().getHeight();
-
 		sizeSetter = new SizeSetter();
 		sizes = sizeSetter.sizes;
 
@@ -360,12 +354,12 @@ public class Init implements ActionListener, MouseListener
 		}
 	}
 
-	public boolean checkWinner (Ship[] ss, int coordinates, String player)
+	public boolean checkWinner (Ship[] ships, int coordinates, String player)
 	{
 		boolean w = true;
 		boolean hit = false;
 
-		for (Ship ship: ss)
+		for (Ship ship: ships)
 		{
 			ship.sunk = true;
 
@@ -787,7 +781,7 @@ public class Init implements ActionListener, MouseListener
 			}
 		}
 	}
-//
+
 	public void mouseReleased(MouseEvent e)
 	{
 		if (e.getSource() instanceof JButton && e.getButton() == MouseEvent.BUTTON1)
@@ -810,8 +804,6 @@ public class Init implements ActionListener, MouseListener
 			}
 		}
 	}
-
-//--------------------------------------------------------------------------------------------------------------
 
 	public void mouseClicked (MouseEvent e)
 	{}

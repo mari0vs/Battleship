@@ -59,7 +59,7 @@ public class MenuInterface extends JFrame
 		BoxLayout boxlayout = new BoxLayout(menuPanel, BoxLayout.Y_AXIS);
 		menuPanel.setLayout(boxlayout);
 // Buttons
-		menuPanel.add(Box.createRigidArea(new Dimension(10, 20)));
+		menuPanel.add(Box.createRigidArea(new Dimension(15, 10)));
 
 		newGame = new JButton("New Game");
 		newGame.setFocusable(false);

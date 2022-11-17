@@ -47,11 +47,12 @@ public class SizeSetter
 			sizes[3] = (int) Math.round(screenWidth*0.05);// w next turn button
 
 			sizes[4] = (int) Math.round(screenWidth*0.02);// w border layout padding
-			sizes[5] = (int) Math.round(screenWidth*0.2);// w selection panel
-			sizes[6] = (int) Math.round(screenHeight*0.58);// h done panel
 
-			sizes[7] = (int) Math.round(screenWidth*0.15);// w player ships panel
-			sizes[8] = (int) Math.round(screenHeight*0.48);// h player ships panel
+			sizes[5] = (int) Math.round(screenWidth*0.2);// w selection panel
+			sizes[6] = (int) Math.round(screenHeight*0.6);// h done panel
+
+			sizes[7] = (int) Math.round(screenWidth*0.2);// w player ships panel
+			sizes[8] = (int) Math.round(screenHeight*0.5);// h player ships panel
 
 			sizes[9] = (int) Math.round(screenWidth*0.3);// w winner player panels
 			sizes[10] = (int) Math.round(screenHeight*0.14);// h winner player panels
