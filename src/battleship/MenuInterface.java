@@ -24,6 +24,7 @@ public class MenuInterface extends JFrame
 // Frame
 		setTitle("Menu");
 		setSize(400, 600);
+		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

@@ -91,25 +91,29 @@ public class Colors
 		if (t == "light")
 		{
 			colors[0] = new Color(241, 227, 211);//cream
-			colors[1] = new Color(0, 48, 73);//dark blue
-			colors[2] = new Color(242, 208, 169);//orange
+			colors[1] = new Color(0, 48, 73);//background blue
+			colors[2] = new Color(255, 175, 204);//orange
+			colors[3] = new Color(242, 208,169);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(189, 224, 254);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(241, 227, 211);//cream
 		}
 
 		if (t == "dark")
 		{
-			colors[0] = new Color(0, 48, 73);//dark blue
+			colors[0] = new Color(0, 48, 73);//background blue
 			colors[1] = new Color(241, 227, 211);//cream
-			colors[2] = new Color(242, 208, 169);//orange
+			colors[2] = new Color(255, 175, 204);//orange
+			colors[3] = new Color(242, 208,169);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(189, 224, 254);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(0, 48, 73);//background blue
 		}
 	}
 
@@ -117,26 +121,30 @@ public class Colors
 	{
 		if (t == "light")
 		{
-			colors[0] = new Color(253, 240, 213);//cream
-			colors[1] = new Color(0, 48, 73);//dark blue
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(241, 250, 238);//off white
+			colors[1] = new Color(29, 53, 87);//background blue
+			colors[2] = new Color(230, 57, 70);//red
+			colors[3] = new Color(69, 123, 157);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(168, 218, 220);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(241, 250, 238);//off white
 		}
 
 		if (t == "dark")
 		{
-			colors[0] = new Color(0, 48, 73);//dark blue
-			colors[1] = new Color(253, 240, 213);//cream
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(29, 53, 87);//background blue
+			colors[1] = new Color(241, 250, 238);//off white
+			colors[2] = new Color(230, 57, 70);//red
+			colors[3] = new Color(69, 123, 157);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(168, 218, 220);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(29, 53, 87);//background blue
 		}
 	}
 
@@ -144,26 +152,30 @@ public class Colors
 	{
 		if (t == "light")
 		{
-			colors[0] = new Color(253, 240, 213);//cream
-			colors[1] = new Color(2, 48, 71);//dark blue
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(255, 183, 3);//yellow
+			colors[1] = new Color(2, 48, 71);//background blue
+			colors[2] = new Color(251, 133, 0);//orange
+			colors[3] = new Color(33, 158, 188);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(142, 202, 230);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(255, 183, 3);//yellow
 		}
 
 		if (t == "dark")
 		{
-			colors[0] = new Color(2, 48, 71);//dark blue
-			colors[1] = new Color(253, 240, 213);//cream
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(2, 48, 71);//background blue
+			colors[1] = new Color(255, 183, 3);//yellow
+			colors[2] = new Color(251, 133, 0);//orange
+			colors[3] = new Color(33, 158, 188);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(142, 202, 230);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(2, 48, 71);//background blue
 		}
 	}
 
@@ -171,26 +183,30 @@ public class Colors
 	{
 		if (t == "light")
 		{
-			colors[0] = new Color(253, 240, 213);//cream
-			colors[1] = new Color(0, 48, 73);//dark blue
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(247, 37, 133);//pink
+			colors[1] = new Color(58, 12, 163);//dark purple
+			colors[2] = new Color(114, 9, 183);//light purple
+			colors[3] = new Color(67, 97, 238);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(76, 201, 240);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(247, 37, 133);//pink
 		}
 
 		if (t == "dark")
 		{
-			colors[0] = new Color(0, 48, 73);//dark blue
-			colors[1] = new Color(253, 240, 213);//cream
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(58, 12, 163);//dark purple
+			colors[1] = new Color(247, 37, 133);//pink
+			colors[2] = new Color(114, 9, 183);//light purple
+			colors[3] = new Color(67, 97, 238);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(76, 201, 240);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(58, 12, 163);//dark purple
 		}
 	}
 
@@ -198,26 +214,30 @@ public class Colors
 	{
 		if (t == "light")
 		{
-			colors[0] = new Color(253, 240, 213);//cream
-			colors[1] = new Color(0, 48, 73);//dark blue
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(241, 227, 211);//light pink
+			colors[1] = new Color(205, 180, 219);//purple
+			colors[2] = new Color(255, 175, 204);//dark pink
+			colors[3] = new Color(162, 210, 255);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(189, 224, 254);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(255, 200, 221);//pink
 		}
 
 		if (t == "dark")
 		{
-			colors[0] = new Color(0, 48, 73);//dark blue
-			colors[1] = new Color(253, 240, 213);//cream
-			colors[2] = new Color(120, 0, 0);//dark red
+			colors[0] = new Color(205, 180, 219);//purple
+			colors[1] = new Color(241, 227, 211);//light pink
+			colors[2] = new Color(255, 175, 204);//dark pink
+			colors[3] = new Color(162, 210, 255);//dark blue
 
-			colors[3] = new Color(239, 71, 111);//light red
-			colors[4] = new Color(6, 214, 160);//green
-			colors[5] = new Color(102, 155, 188);//light blue
-			colors[6] = new Color(142, 125, 190);//purple
+			colors[4] = new Color(189, 224, 254);//blue
+			colors[5] = new Color(6, 214, 160);//green
+			colors[6] = new Color(239, 71, 111);//red
+			colors[7] = new Color(142, 202, 230);//light blue
+			colors[8] = new Color(205, 180, 219);//purple
 		}
 	}
 }

@@ -148,12 +148,12 @@ public class ShipPlacement extends JPanel
 		{
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
-			bs[i].setFocusable(true);
+			bs[i].setFocusable(false);
 			bs[i].setEnabled(true);
 			bs[i].setOpaque(true);
 			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-			bs[i].setBackground(colors[3]);
+			bs[i].setBackground(colors[4]);
 			placementPanel.add(bs[i]);
 		}
 	}

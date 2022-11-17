@@ -105,7 +105,7 @@ public class Shooting extends JPanel
 		for (int i = 0; i < bs.length; i++)
 		{
 			bs[i] = new JButton();
-			bs[i].setFocusable(true);
+			bs[i].setFocusable(false);
 			bs[i].setEnabled(true);
 			bs[i].setOpaque(true);
 			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));

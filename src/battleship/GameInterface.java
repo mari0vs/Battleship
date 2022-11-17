@@ -27,7 +27,7 @@ public class GameInterface extends JFrame
 		//------------------------------ Frame ------------------------------
 
 		setTitle("Menu");
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setUndecorated(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -110,7 +110,7 @@ public class GameInterface extends JFrame
 
 		nextTurn = new JButton("PLAYER 1'S TURN");
 		nextTurn.setName("A");
-		nextTurn.setFocusable(true);
+		nextTurn.setFocusable(false);
 		nextTurn.setEnabled(true);
 		nextTurn.setOpaque(true);
 		nextTurn.setFont(new Font("Comic Sans", Font.BOLD, 100));

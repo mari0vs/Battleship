@@ -29,7 +29,7 @@ public class Init implements ActionListener, MouseListener
 		sizeSetter = new SizeSetter();
 		sizes = sizeSetter.sizes;
 
-		coolors = new Colors(new String[] {"retro", "dark"});
+		coolors = new Colors(new String[] {"sunset", "light"});
 		colors = coolors.colors;
 
 		menuInterface = new MenuInterface(colors);
