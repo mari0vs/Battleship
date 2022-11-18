@@ -85,7 +85,6 @@ public class ShipPlacement extends JPanel
 		done = new JButton("Done");
 		done.setFocusable(false);
 		done.setEnabled(true);//--------------------------------------------------------------------------false
-		done.setOpaque(true);
 		done.setFont(buttonFont);
 		done.setBorder(new EmptyBorder(20, 60, 20, 60));
 		done.setBackground(colors[0]);
@@ -108,8 +107,6 @@ public class ShipPlacement extends JPanel
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
 			bs[i].setFocusable(false);
-			bs[i].setEnabled(true);
-			bs[i].setOpaque(true);
 			bs[i].setFont(bf);
 			bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
 			bs[i].setBackground(colors[0]);
@@ -149,8 +146,6 @@ public class ShipPlacement extends JPanel
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
 			bs[i].setFocusable(false);
-			bs[i].setEnabled(true);
-			bs[i].setOpaque(true);
 			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
 			bs[i].setBackground(colors[4]);

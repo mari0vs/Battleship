@@ -33,7 +33,7 @@ public class GameInterface extends JFrame
 
 		//------------------------------ Menu ------------------------------
 
-		Font font = new Font("Comic Sans", Font.BOLD, 15);
+		Font font = new Font("Comic Sans", Font.BOLD, 20);
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBorder(BorderFactory.createMatteBorder(5, 10, 5, 10, colors[2]));

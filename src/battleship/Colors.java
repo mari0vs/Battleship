@@ -16,11 +16,6 @@ public class Colors
     		retroTheme(theme[1]);
     	}
 
-    	else if (theme[0] == "beach")
-    	{
-    		beachTheme(theme[1]);
-    	}
-
     	else if (theme[0] == "docks")
     	{
     		docksTheme(theme[1]);
@@ -83,37 +78,6 @@ public class Colors
 			colors[6] = new Color(239, 71, 111);//red
 			colors[7] = new Color(142, 202, 230);//light blue
 			colors[8] = new Color(255, 209, 102);//yelow
-		}
-	}
-
-	public void beachTheme (String t)
-	{
-		if (t == "light")
-		{
-			colors[0] = new Color(241, 227, 211);//cream
-			colors[1] = new Color(0, 48, 73);//background blue
-			colors[2] = new Color(255, 175, 204);//orange
-			colors[3] = new Color(242, 208,169);//dark blue
-
-			colors[4] = new Color(189, 224, 254);//blue
-			colors[5] = new Color(6, 214, 160);//green
-			colors[6] = new Color(239, 71, 111);//red
-			colors[7] = new Color(142, 202, 230);//light blue
-			colors[8] = new Color(241, 227, 211);//cream
-		}
-
-		if (t == "dark")
-		{
-			colors[0] = new Color(0, 48, 73);//background blue
-			colors[1] = new Color(241, 227, 211);//cream
-			colors[2] = new Color(255, 175, 204);//orange
-			colors[3] = new Color(242, 208,169);//dark blue
-
-			colors[4] = new Color(189, 224, 254);//blue
-			colors[5] = new Color(6, 214, 160);//green
-			colors[6] = new Color(239, 71, 111);//red
-			colors[7] = new Color(142, 202, 230);//light blue
-			colors[8] = new Color(0, 48, 73);//background blue
 		}
 	}
 
