@@ -17,7 +17,7 @@ public class SizeSetter
 		System.out.println(screenWidth + " x " + screenHeight);
 		System.out.println(screenWidth/screenHeight);
 
-		sizes = new int[13];
+		sizes = new int[11];
 
 		if ((screenWidth/screenHeight) > 1.5)
 		{

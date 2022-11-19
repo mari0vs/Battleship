@@ -5,39 +5,50 @@ import java.awt.*;
 
 public class Colors
 {
-    Color[] colors;
+	Color[] colors;
+	ImageIcon[]  iconsA, iconsB;
 
-    public Colors (String[] theme)
-    {
-    	colors = new Color[9];
+	public Colors (String[] theme)
+	{
+		iconsA = new ImageIcon[18];
+		iconsA[0] = new ImageIcon("src/icons/2x1FrontVerticalA.png");
 
-    	if (theme[0] == "retro")
-    	{
-    		retroTheme(theme[1]);
-    	}
+		iconsB = new ImageIcon[18];
 
-    	else if (theme[0] == "docks")
-    	{
-    		docksTheme(theme[1]);
-    	}
+		colors = new Color[9];
 
-    	else if (theme[0] == "sunset")
-    	{
-    		sunsetTheme(theme[1]);
-    	}
+		if (theme[0] == "retro")
+		{
+			retroTheme(theme[1]);
+		}
 
-    	else if (theme[0] == "neon")
-    	{
+		else if (theme[0] == "docks")
+		{
+			docksTheme(theme[1]);
+		}
+
+		else if (theme[0] == "sunset")
+		{
+			sunsetTheme(theme[1]);
+		}
+
+		else if (theme[0] == "neon")
+		{
 			neonTheme(theme[1]);
-    	}
+		}
 
-    	else if (theme[0] == "pastel")
-    	{
-    		pastelTheme(theme[1]);
-    	}
-    }
+		else if (theme[0] == "pastel")
+		{
+			pastelTheme(theme[1]);
+		}
+	}
 
-    /*
+	public void setIcons (ImageIcon[] icons)
+	{
+		icons[0] = new ImageIcon("/src/battleship/2x1FrontVerticalA.png");
+	}
+
+/*
 	background 			0
 	foreground 			1
 	highlight			2
@@ -48,7 +59,7 @@ public class Colors
 	!placeable & hit 	6
 	!hit				7
 	ships				8
-	*/
+*/
 
 	public void retroTheme (String t)
 	{

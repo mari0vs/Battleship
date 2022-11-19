@@ -12,13 +12,15 @@ public class ShipPlacement extends JPanel
 	JPanel leftPanel, selectionPanel, centerPanel, placementPanel, rightPanel, donePanel;
 	JLabel playerLabel;
 	JButton done;
+	ImageIcon[] icons;
 	Color[] colors;
 	JButton[] placementButtons, selectionButtons;
 	Ship[] ships;
 
-	public ShipPlacement (int[] ss, Color[] cs, Ship[] s, String p)
+	public ShipPlacement (int[] ss, Color[] cs, ImageIcon[] is, Ship[] s, String p)
 	{
 		Font buttonFont = new Font("Comic Sans", Font.BOLD, 40);
+		icons = is;
 		colors = cs;
 
 		setLayout(new BorderLayout(ss[4], 0));
@@ -111,7 +113,6 @@ public class ShipPlacement extends JPanel
 			bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
 			bs[i].setBackground(colors[0]);
 			bs[i].setForeground(colors[1]);
-			// bs[i].setAlignmentX(CENTER_ALIGNMENT);
 			selectionPanel.add(bs[i]);
 
 			if (i == 0 || i == 1)
@@ -135,6 +136,14 @@ public class ShipPlacement extends JPanel
 		}
 
 		selectionPanel.add(Box.createVerticalGlue());
+
+		for (int i = 0; i < ships.length; i++)
+		{
+			if (ships[i].placed)
+			{
+				bs[i].setEnabled(false);
+			}
+		}
 	}
 
 //--------------------------------------------------------------------------------------------------------------
@@ -146,10 +155,21 @@ public class ShipPlacement extends JPanel
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
 			bs[i].setFocusable(false);
-			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
 			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
 			bs[i].setBackground(colors[4]);
 			placementPanel.add(bs[i]);
+		}
+
+		for (Ship ship: ships)
+		{
+			if (ship.placed)
+			{
+				for(int i: ship.position)
+				{
+					bs[i].setBackground(colors[8]);
+					bs[i].setEnabled(false);
+				}
+			}
 		}
 	}
 }

@@ -1,6 +1,10 @@
 package battleship;
 
-public class Ship
+import java.io.*;
+
+@SuppressWarnings("serial")
+
+public class Ship implements Serializable
 {
 	int size;
 	int[] position;

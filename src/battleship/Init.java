@@ -3,46 +3,168 @@ package battleship;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
 
 public class Init implements ActionListener, MouseListener
 {
+	int turn;
+	Ship[] shipsA, shipsB;
+	boolean[] shotsA, shotsB;
+	SaveManager saveManager1Turn,
+				saveManager1ShotsA,
+				saveManager1ShotsB,
+				saveManager1A,
+				saveManager1B,
+				saveManager2Turn,
+				saveManager2ShotsA,
+				saveManager2ShotsB,
+				saveManager2A,
+				saveManager2B,
+				saveManager3Turn,
+				saveManager3ShotsA,
+				saveManager3ShotsB,
+				saveManager3B,
+				saveManager3A;
 	SizeSetter sizeSetter;
 	int[] sizes;
 	Colors coolors;
+	ImageIcon[] iconsA, iconsB;
 	Color[] colors;
 	Font[] fonts;
+	SaveManager saveManager;
 	MenuInterface menuInterface;
-	Ship[] shipsA, shipsB;
 	GameInterface gameInterface;
 	ShipPlacement shipPlacementA, shipPlacementB;
 	Shooting shootingA, shootingB;
 	Winner winner;
 
-	public Init ()
+	public Init () throws IOException
 	{
+		turn = 1;
+		shotsA = new boolean[100];
+		shotsB = new boolean[100];
+		shipsA = new Ship[5];
+		setShips(shipsA);
+		shipsB = new Ship[5];
+		setShips(shipsB);
+//
+		saveManager1Turn = new SaveManager(1, "Turn");
+		if (!saveManager1Turn.fileExistance())
+		{
+			saveManager1Turn.fileSave(turn);
+		}
+
+		saveManager1ShotsA = new SaveManager(1, "shotsA");
+		if (!saveManager1ShotsA.fileExistance())
+		{
+			saveManager1ShotsA.fileSave(shotsA);
+		}
+
+		saveManager1ShotsB = new SaveManager(1, "shotsB");
+		if (!saveManager1ShotsB.fileExistance())
+		{
+			saveManager1ShotsB.fileSave(shotsB);
+		}
+
+		saveManager1A = new SaveManager(1, "shipsA");
+		if (!saveManager1A.fileExistance())
+		{
+			saveManager1A.fileSave(shipsA);
+		}
+
+		saveManager1B = new SaveManager(1, "shipsB");
+		if (!saveManager1B.fileExistance())
+		{
+			saveManager1B.fileSave(shipsB);
+		}
+
+		saveManager2Turn = new SaveManager(2, "Turn");
+		if (!saveManager2Turn.fileExistance())
+		{
+			saveManager2Turn.fileSave(turn);
+		}
+
+		saveManager2ShotsA = new SaveManager(2, "shotsA");
+		if (!saveManager2ShotsA.fileExistance())
+		{
+			saveManager2ShotsA.fileSave(shotsA);
+		}
+
+		saveManager2ShotsB = new SaveManager(2, "shotsB");
+		if (!saveManager2ShotsB.fileExistance())
+		{
+			saveManager2ShotsB.fileSave(shotsB);
+		}
+
+		saveManager2A = new SaveManager(2, "shipsA");
+		if (!saveManager2A.fileExistance())
+		{
+			saveManager2A.fileSave(shipsA);
+		}
+
+		saveManager2B = new SaveManager(2, "shipsB");
+		if (!saveManager2B.fileExistance())
+		{
+			saveManager2B.fileSave(shipsB);
+		}
+
+		saveManager3Turn = new SaveManager(3, "Turn");
+		if (!saveManager3Turn.fileExistance())
+		{
+			saveManager3Turn.fileSave(turn);
+		}
+
+		saveManager3ShotsA = new SaveManager(3, "shotsA");
+		if (!saveManager3ShotsA.fileExistance())
+		{
+			saveManager3ShotsA.fileSave(shotsA);
+		}
+
+		saveManager3ShotsB = new SaveManager(3, "shotsB");
+		if (!saveManager3ShotsB.fileExistance())
+		{
+			saveManager3ShotsB.fileSave(shotsB);
+		}
+
+		saveManager3A = new SaveManager(3, "shipsA");
+		if (!saveManager3A.fileExistance())
+		{
+			saveManager3A.fileSave(shipsA);
+		}
+
+		saveManager3B = new SaveManager(3, "shipsB");
+		if (!saveManager3B.fileExistance())
+		{
+			saveManager3B.fileSave(shipsB);
+		}
+//
 		sizeSetter = new SizeSetter();
 		sizes = sizeSetter.sizes;
 
 		coolors = new Colors(new String[] {"retro", "dark"});
+		iconsA = coolors.iconsA;
+		iconsB = coolors.iconsB;
 		colors = coolors.colors;
 
 		menuInterface = new MenuInterface(colors);
 		menuInterface.newGame.addActionListener(this);
 		menuInterface.loadGame.addActionListener(this);
 		menuInterface.exit.addActionListener(this);
+		menuInterface.save1.addActionListener(this);
+		menuInterface.save2.addActionListener(this);
+		menuInterface.save3.addActionListener(this);
+		menuInterface.back.addActionListener(this);
 		menuInterface.setVisible(true);
 
 	}
 
-	public static void main (String[] args)
+	public static void main (String[] args) throws IOException
 	{
 		new Init();
 	}
 
 	public Ship[] setShips (Ship[] ss)
 	{
-		ss = new Ship[5];
-
 		ss[0] = new Ship(2);
 		ss[1] = new Ship(2);
 		ss[2] = new Ship(3);
@@ -50,6 +172,80 @@ public class Init implements ActionListener, MouseListener
 		ss[4] = new Ship(4);
 
 		return ss;
+	}
+
+	public void setGameInterface ()
+	{
+		gameInterface = new GameInterface(sizes, colors, turn);
+		gameInterface.newGame.addActionListener(this);
+		gameInterface.loadSave1.addActionListener(this);
+		gameInterface.loadSave2.addActionListener(this);
+		gameInterface.loadSave3.addActionListener(this);
+		gameInterface.saveSave1.addActionListener(this);
+		gameInterface.saveSave2.addActionListener(this);
+		gameInterface.saveSave3.addActionListener(this);
+		gameInterface.exit.addActionListener(this);
+		gameInterface.nextTurn.addActionListener(this);
+
+		if (!CheckShipPlacement(shipsA))
+		{
+			shipPlacementA = new ShipPlacement(sizes, colors, iconsA, shipsA, "PLAYER 1");
+			shipPlacementA.addMouseListener(this);
+			shipPlacementSetSelectionPanel(shipPlacementA.selectionButtons);
+			shipPlacementSetPlacementPanel(shipPlacementA.placementButtons);
+			shipPlacementA.done.addActionListener(this);
+			gameInterface.cardPanel.add(shipPlacementA, "1");
+
+			shipPlacementB = new ShipPlacement(sizes, colors, iconsB, shipsB, "PLAYER 2");
+			shipPlacementB.addMouseListener(this);
+			shipPlacementSetSelectionPanel(shipPlacementB.selectionButtons);
+			shipPlacementSetPlacementPanel(shipPlacementB.placementButtons);
+			shipPlacementB.done.addActionListener(this);
+			gameInterface.cardPanel.add(shipPlacementB, "2");
+
+			gameInterface.currentCard = 1;
+			gameInterface.card.show(gameInterface.cardPanel, "1");
+		}
+
+		else if (!CheckShipPlacement(shipsB))
+		{
+			shipPlacementB = new ShipPlacement(sizes, colors, iconsB, shipsB, "PLAYER 2");
+			shipPlacementB.addMouseListener(this);
+			shipPlacementSetSelectionPanel(shipPlacementB.selectionButtons);
+			shipPlacementSetPlacementPanel(shipPlacementB.placementButtons);
+			shipPlacementB.done.addActionListener(this);
+			gameInterface.cardPanel.add(shipPlacementB, "2");
+
+			gameInterface.currentCard = 2;
+			gameInterface.card.show(gameInterface.cardPanel, "2");
+		}
+
+		else
+		{
+			shootingA = new Shooting(sizes, colors, shipsA, shipsB, shotsA, shotsB, "PLAYER 1");
+
+			for (int i = 0; i < shootingA.shootingButtons.length; i++)
+			{
+				shootingA.shootingButtons[i].addActionListener(this);
+			}
+
+			gameInterface.cardPanel.add(shootingA, "4");
+
+			shootingB = new Shooting(sizes, colors, shipsB, shipsA, shotsB, shotsA, "PLAYER 2");
+
+			for (int i = 0; i < shootingB.shootingButtons.length; i++)
+			{
+				shootingB.shootingButtons[i].addActionListener(this);
+			}
+
+			gameInterface.cardPanel.add(shootingB, "5");
+
+			gameInterface.card.show(gameInterface.cardPanel, "3");
+			gameInterface.currentCard = 3;
+		}
+
+		menuInterface.setVisible(false);
+		gameInterface.setVisible(true);
 	}
 
 	public void shipPlacementSetSelectionPanel (JButton[] bs)
@@ -68,7 +264,7 @@ public class Init implements ActionListener, MouseListener
 		}
 	}
 
-	public boolean shipPlacementCheckShipPlacement (Ship[] ss)
+	public boolean CheckShipPlacement (Ship[] ss)
 	{
 		int counter = ss.length;
 		boolean allShipsPlaced = false;
@@ -348,7 +544,7 @@ public class Init implements ActionListener, MouseListener
 			shipPlacement.selectionButtons[i].setEnabled(false);
 		}
 
-		if (shipPlacementCheckShipPlacement(ships))
+		if (CheckShipPlacement(ships))
 		{
 			shipPlacement.done.setEnabled(true);
 		}
@@ -399,69 +595,58 @@ public class Init implements ActionListener, MouseListener
 
 			if (buttonText == "New Game")
 			{
-				shipsA = setShips(shipsA);
-				shipsB = setShips(shipsB);
-
-				gameInterface = new GameInterface(sizes, colors);
-				gameInterface.newGame.addActionListener(this);
-				gameInterface.loadGame.addActionListener(this);
-				gameInterface.exit.addActionListener(this);
-				gameInterface.nextTurn.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
-
-				shipPlacementA = new ShipPlacement(sizes, colors, shipsA, "PLAYER 1");
-				shipPlacementA.addMouseListener(this);
-				shipPlacementSetSelectionPanel(shipPlacementA.selectionButtons);
-				shipPlacementSetPlacementPanel(shipPlacementA.placementButtons);
-				shipPlacementA.done.addActionListener(this);
-				gameInterface.cardPanel.add(shipPlacementA, "1");
-
-				shipPlacementB = new ShipPlacement(sizes, colors, shipsB, "PLAYER 2");
-				shipPlacementB.addMouseListener(this);
-				shipPlacementSetSelectionPanel(shipPlacementB.selectionButtons);
-				shipPlacementSetPlacementPanel(shipPlacementB.placementButtons);
-				shipPlacementB.done.addActionListener(this);
-				gameInterface.cardPanel.add(shipPlacementB, "2");
-
-				gameInterface.card.show(gameInterface.cardPanel, "1");
-				gameInterface.currentCard = 1;
-
-				gameInterface.setVisible(true);
-				menuInterface.setVisible(false);
+				turn = 1;
+				shotsA = new boolean[100];
+				shotsB = new boolean[100];
+				setShips(shipsA);
+				setShips(shipsB);
+				setGameInterface();
 			}
 
 			else if (buttonText == "Load Game")
 			{
-				gameInterface = new GameInterface(sizes, colors);
-				gameInterface.newGame.addActionListener(this);
-				gameInterface.loadGame.addActionListener(this);
-				gameInterface.exit.addActionListener(this);
-				gameInterface.nextTurn.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
+				menuInterface.card.last(menuInterface.cardPanel);
+			}
 
-/*
-			for (Ship ship: gameInterface.shipsA)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+			else if (buttonText == "Save 1")
+			{
+				turn = saveManager1Turn.fileLoad(turn);
+				shipsA = saveManager1A.fileLoad(shipsA);
+				shipsB = saveManager1B.fileLoad(shipsB);
+				shotsA = saveManager1ShotsA.fileLoad(shotsA);
+				shotsB = saveManager1ShotsB.fileLoad(shotsB);
 
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}
+				menuInterface.card.first(menuInterface.cardPanel);
+				setGameInterface();
+			}
 
-				for (Ship ship: gameInterface.shipsB)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+			else if (buttonText == "Save 2")
+			{
+				turn = saveManager2Turn.fileLoad(turn);
+				shipsA = saveManager2A.fileLoad(shipsA);
+				shipsB = saveManager2B.fileLoad(shipsB);
+				shotsA = saveManager2ShotsA.fileLoad(shotsA);
+				shotsB = saveManager2ShotsB.fileLoad(shotsB);
 
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}
-*/
-				gameInterface.setVisible(true);
-				menuInterface.setVisible(false);
+				menuInterface.card.first(menuInterface.cardPanel);
+				setGameInterface();
+			}
+
+			else if (buttonText == "Save 3")
+			{
+				turn = saveManager3Turn.fileLoad(turn);
+				shipsA = saveManager3A.fileLoad(shipsA);
+				shipsB = saveManager3B.fileLoad(shipsB);
+				shotsA = saveManager3ShotsA.fileLoad(shotsA);
+				shotsB = saveManager3ShotsB.fileLoad(shotsB);
+
+				menuInterface.card.first(menuInterface.cardPanel);
+				setGameInterface();
+			}
+
+			else if (buttonText == "Back")
+			{
+				menuInterface.card.first(menuInterface.cardPanel);
 			}
 
 			else if (buttonText == "Exit")
@@ -479,7 +664,7 @@ public class Init implements ActionListener, MouseListener
 
 				else if (gameInterface.currentCard == 2)
 				{
-					shootingA = new Shooting(sizes, colors, shipsA, "PLAYER 1");
+					shootingA = new Shooting(sizes, colors, shipsA, shipsB, shotsA, shotsB, "PLAYER 1");
 
 					for (int i = 0; i < shootingA.shootingButtons.length; i++)
 					{
@@ -488,7 +673,7 @@ public class Init implements ActionListener, MouseListener
 
 					gameInterface.cardPanel.add(shootingA, "4");
 
-					shootingB = new Shooting(sizes, colors, shipsB, "PLAYER 2");
+					shootingB = new Shooting(sizes, colors, shipsB, shipsA, shotsB, shotsA, "PLAYER 2");
 
 					for (int i = 0; i < shootingB.shootingButtons.length; i++)
 					{
@@ -510,80 +695,83 @@ public class Init implements ActionListener, MouseListener
 				{
 					gameInterface.currentCard = 4;
 					gameInterface.card.show(gameInterface.cardPanel, "4");
-					clickedButton.setText("PLAYER 2'S TURN");
-					clickedButton.setName("B");
 				}
 
 				if (buttonName == "B")
 				{
 					gameInterface.currentCard = 5;
 					gameInterface.card.show(gameInterface.cardPanel, "5");
-					clickedButton.setText("PLAYER 1'S TURN");
-					clickedButton.setName("A");
 				}
 			}
 
-			else if (gameInterface.currentCard == 4 || gameInterface.currentCard == 5)
+			else if (gameInterface.currentCard == 4)
 			{
 				int coordinates = Integer.parseInt(clickedButton.getName());
 
-				if (gameInterface.currentCard == 4)
+				for (Ship enemyShip: shipsB)
 				{
-					for (Ship enemyShip: shipsB)
+					for (int position: enemyShip.position)
 					{
-						for (int position: enemyShip.position)
+						if (coordinates == position)
 						{
-							if (coordinates == position)
-							{
-								shootingA.shootingButtons[coordinates].setBackground(colors[6]);
-								shootingB.playerShipsLabels[coordinates].setBackground(colors[6]);
-							}
-
-							else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[4])
-							{
-								shootingA.shootingButtons[coordinates].setBackground(colors[7]);
-								shootingB.playerShipsLabels[coordinates].setBackground(colors[7]);
-							}
-
-							shootingA.shootingButtons[coordinates].setEnabled(false);
+							shootingA.shootingButtons[coordinates].setBackground(colors[6]);
+							shootingB.playerShipsLabels[coordinates].setBackground(colors[6]);
 						}
-					}
 
-					if (!checkWinner(shipsB, coordinates, "PLAYER 1"))
-					{
-						gameInterface.currentCard = 3;
-						gameInterface.card.show(gameInterface.cardPanel, "3");
+						else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[4])
+						{
+							shotsA[coordinates] = true;
+							shootingA.shootingButtons[coordinates].setBackground(colors[7]);
+							shootingB.playerShipsLabels[coordinates].setBackground(colors[7]);
+						}
+
+						shootingA.shootingButtons[coordinates].setEnabled(false);
 					}
 				}
 
-
-				else if (gameInterface.currentCard == 5)
+				if (!checkWinner(shipsB, coordinates, "PLAYER 1"))
 				{
-					for (Ship enemyShip: shipsA)
+					turn = 2;
+					gameInterface.nextTurn.setName("B");
+					gameInterface.nextTurn.setText("PLAYER 2'S TURN");
+					gameInterface.currentCard = 3;
+					gameInterface.card.show(gameInterface.cardPanel, "3");
+				}
+			}
+
+
+			else if (gameInterface.currentCard == 5)
+			{
+				int coordinates = Integer.parseInt(clickedButton.getName());
+
+				for (Ship enemyShip: shipsA)
+				{
+					for (int position: enemyShip.position)
 					{
-						for (int position: enemyShip.position)
+						if (coordinates == position)
 						{
-							if (coordinates == position)
-							{
-								shootingB.shootingButtons[coordinates].setBackground(colors[6]);
-								shootingA.playerShipsLabels[coordinates].setBackground(colors[6]);
-							}
-
-							else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[4])
-							{
-								shootingB.shootingButtons[coordinates].setBackground(colors[7]);
-								shootingA.playerShipsLabels[coordinates].setBackground(colors[7]);
-							}
-
-							shootingB.shootingButtons[coordinates].setEnabled(false);
+							shootingB.shootingButtons[coordinates].setBackground(colors[6]);
+							shootingA.playerShipsLabels[coordinates].setBackground(colors[6]);
 						}
-					}
 
-					if (!checkWinner(shipsA, coordinates, "PLAYER 2"))
-					{
-						gameInterface.currentCard = 3;
-						gameInterface.card.show(gameInterface.cardPanel, "3");
+						else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[4])
+						{
+							shotsB[coordinates] = true;
+							shootingB.shootingButtons[coordinates].setBackground(colors[7]);
+							shootingA.playerShipsLabels[coordinates].setBackground(colors[7]);
+						}
+
+						shootingB.shootingButtons[coordinates].setEnabled(false);
 					}
+				}
+
+				if (!checkWinner(shipsA, coordinates, "PLAYER 2"))
+				{
+					turn = 1;
+					gameInterface.nextTurn.setName("A");
+					gameInterface.nextTurn.setText("PLAYER 1'S TURN");
+					gameInterface.currentCard = 3;
+					gameInterface.card.show(gameInterface.cardPanel, "3");
 				}
 			}
 
@@ -604,56 +792,101 @@ public class Init implements ActionListener, MouseListener
 			JMenuItem clickedItem = (JMenuItem) e.getSource();
 			String clickedItemText = clickedItem.getText();
 
-			if (clickedItemText == "New Game")
+			if (clickedItem == gameInterface.newGame)
 			{
 				gameInterface.setVisible(false);
-				gameInterface = new GameInterface(sizes, colors);
-				gameInterface.newGame.addActionListener(this);
-				gameInterface.loadGame.addActionListener(this);
-				gameInterface.exit.addActionListener(this);
-				gameInterface.nextTurn.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
+				turn = 1;
+				shotsA = new boolean[100];
+				shotsB = new boolean[100];
+				setShips(shipsA);
+				setShips(shipsB);
+				setGameInterface();
+				gameInterface.setVisible(true);
+			}
+
+			else if (clickedItem == gameInterface.loadSave1)
+			{
+				gameInterface.setVisible(false);
+
+				turn = saveManager1Turn.fileLoad(turn);
+				shipsA = saveManager1A.fileLoad(shipsA);
+				shipsB = saveManager1B.fileLoad(shipsB);
+				shotsA = saveManager1ShotsA.fileLoad(shotsA);
+				shotsB = saveManager1ShotsB.fileLoad(shotsB);
+
+				setGameInterface();
 
 				gameInterface.setVisible(true);
 			}
 
-			else if (clickedItemText == "Sava Game")
-			{}
-
-			else if (clickedItemText == "Load Game")
+			else if (clickedItem == gameInterface.loadSave2)
 			{
 				gameInterface.setVisible(false);
-				gameInterface = new GameInterface(sizes, colors);
-				gameInterface.newGame.addActionListener(this);
-				gameInterface.loadGame.addActionListener(this);
-				gameInterface.exit.addActionListener(this);
-				gameInterface.nextTurn.addActionListener(this);
-				// gameInterface.ng.addActionListener(this);
-/*
-				for (Ship ship: gameInterface.shipsA)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
 
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}
+				turn = saveManager2Turn.fileLoad(turn);
+				shipsA = saveManager2A.fileLoad(shipsA);
+				shipsB = saveManager2B.fileLoad(shipsB);
+				shotsA = saveManager2ShotsA.fileLoad(shotsA);
+				shotsB = saveManager2ShotsB.fileLoad(shotsB);
 
-				for (Ship ship: gameInterface.shipsB)
-				{
-					int rand = (int) Math.floor(Math.random() * (55 - 0 + 1) + 0);
+				setGameInterface();
 
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = rand + i;
-					}
-				}
-*/
 				gameInterface.setVisible(true);
 			}
 
-			else if (clickedItemText == "Exit")
+			else if (clickedItem == gameInterface.loadSave3)
+			{
+				gameInterface.setVisible(false);
+
+				turn = saveManager3Turn.fileLoad(turn);
+				shipsA = saveManager3A.fileLoad(shipsA);
+				shipsB = saveManager3B.fileLoad(shipsB);
+				shotsA = saveManager3ShotsA.fileLoad(shotsA);
+				shotsB = saveManager3ShotsB.fileLoad(shotsB);
+
+				setGameInterface();
+
+				gameInterface.setVisible(true);
+			}
+
+			else if (clickedItem == gameInterface.saveSave1)
+			{
+				for (Ship ship: shipsA)
+				{
+					ship.selected = false;
+				}
+
+				for (Ship ship: shipsB)
+				{
+					ship.selected = false;
+				}
+
+				saveManager1Turn.fileSave(turn);
+				saveManager1A.fileSave(shipsA);
+				saveManager1B.fileSave(shipsB);
+				saveManager1ShotsA.fileSave(shotsA);
+				saveManager1ShotsB.fileSave(shotsB);
+			}
+
+			else if (clickedItem == gameInterface.saveSave2)
+			{
+				saveManager2Turn.fileSave(turn);
+				saveManager2A.fileSave(shipsA);
+				saveManager2B.fileSave(shipsB);
+				saveManager2ShotsA.fileSave(shotsA);
+				saveManager2ShotsB.fileSave(shotsB);
+			}
+
+			else if (clickedItem == gameInterface.saveSave3)
+			{
+				saveManager3Turn.fileSave(turn);
+				saveManager3A.fileSave(shipsA);
+				saveManager3B.fileSave(shipsB);
+				saveManager3ShotsA.fileSave(shotsA);
+				saveManager3ShotsB.fileSave(shotsB);
+			}
+
+			else if (clickedItem == gameInterface.exit)
 			{
 				gameInterface.setVisible(false);
 				gameInterface = null;
