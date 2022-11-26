@@ -7,31 +7,12 @@ import java.io.*;
 
 public class Init implements ActionListener, MouseListener
 {
-	int turn;
+	String playerA, playerB;
 	Ship[] shipsA, shipsB;
-	boolean[] shotsA, shotsB;
-	SaveManager saveManager1Turn,
-				saveManager1ShotsA,
-				saveManager1ShotsB,
-				saveManager1A,
-				saveManager1B,
-				saveManager2Turn,
-				saveManager2ShotsA,
-				saveManager2ShotsB,
-				saveManager2A,
-				saveManager2B,
-				saveManager3Turn,
-				saveManager3ShotsA,
-				saveManager3ShotsB,
-				saveManager3B,
-				saveManager3A;
+	boolean shotsA[], shotsB[], turn;
+	SaveManager saveManager1, saveManager2, saveManager3;
 	SizeSetter sizeSetter;
-	int[] sizes;
-	Colors coolors;
-	ImageIcon[] iconsA, iconsB;
-	Color[] colors;
-	Font[] fonts;
-	SaveManager saveManager;
+	Assets assets;
 	MenuInterface menuInterface;
 	GameInterface gameInterface;
 	ShipPlacement shipPlacementA, shipPlacementB;
@@ -40,113 +21,16 @@ public class Init implements ActionListener, MouseListener
 
 	public Init () throws IOException
 	{
-		turn = 1;
-		shotsA = new boolean[100];
-		shotsB = new boolean[100];
-		shipsA = new Ship[5];
-		setShips(shipsA);
-		shipsB = new Ship[5];
-		setShips(shipsB);
-//
-		saveManager1Turn = new SaveManager(1, "Turn");
-		if (!saveManager1Turn.fileExistance())
-		{
-			saveManager1Turn.fileSave(turn);
-		}
-
-		saveManager1ShotsA = new SaveManager(1, "shotsA");
-		if (!saveManager1ShotsA.fileExistance())
-		{
-			saveManager1ShotsA.fileSave(shotsA);
-		}
-
-		saveManager1ShotsB = new SaveManager(1, "shotsB");
-		if (!saveManager1ShotsB.fileExistance())
-		{
-			saveManager1ShotsB.fileSave(shotsB);
-		}
-
-		saveManager1A = new SaveManager(1, "shipsA");
-		if (!saveManager1A.fileExistance())
-		{
-			saveManager1A.fileSave(shipsA);
-		}
-
-		saveManager1B = new SaveManager(1, "shipsB");
-		if (!saveManager1B.fileExistance())
-		{
-			saveManager1B.fileSave(shipsB);
-		}
-
-		saveManager2Turn = new SaveManager(2, "Turn");
-		if (!saveManager2Turn.fileExistance())
-		{
-			saveManager2Turn.fileSave(turn);
-		}
-
-		saveManager2ShotsA = new SaveManager(2, "shotsA");
-		if (!saveManager2ShotsA.fileExistance())
-		{
-			saveManager2ShotsA.fileSave(shotsA);
-		}
-
-		saveManager2ShotsB = new SaveManager(2, "shotsB");
-		if (!saveManager2ShotsB.fileExistance())
-		{
-			saveManager2ShotsB.fileSave(shotsB);
-		}
-
-		saveManager2A = new SaveManager(2, "shipsA");
-		if (!saveManager2A.fileExistance())
-		{
-			saveManager2A.fileSave(shipsA);
-		}
-
-		saveManager2B = new SaveManager(2, "shipsB");
-		if (!saveManager2B.fileExistance())
-		{
-			saveManager2B.fileSave(shipsB);
-		}
-
-		saveManager3Turn = new SaveManager(3, "Turn");
-		if (!saveManager3Turn.fileExistance())
-		{
-			saveManager3Turn.fileSave(turn);
-		}
-
-		saveManager3ShotsA = new SaveManager(3, "shotsA");
-		if (!saveManager3ShotsA.fileExistance())
-		{
-			saveManager3ShotsA.fileSave(shotsA);
-		}
-
-		saveManager3ShotsB = new SaveManager(3, "shotsB");
-		if (!saveManager3ShotsB.fileExistance())
-		{
-			saveManager3ShotsB.fileSave(shotsB);
-		}
-
-		saveManager3A = new SaveManager(3, "shipsA");
-		if (!saveManager3A.fileExistance())
-		{
-			saveManager3A.fileSave(shipsA);
-		}
-
-		saveManager3B = new SaveManager(3, "shipsB");
-		if (!saveManager3B.fileExistance())
-		{
-			saveManager3B.fileSave(shipsB);
-		}
-//
+		playerA = "PLAYER 1";
+		playerB = "PLAYER 2";
 		sizeSetter = new SizeSetter();
-		sizes = sizeSetter.sizes;
+		assets = new Assets(new String[] {"retro", "dark"});
 
-		coolors = new Colors(new String[] {"retro", "dark"});
-		iconsA = coolors.iconsA;
-		iconsB = coolors.iconsB;
-		colors = coolors.colors;
+		saveManager1 = new SaveManager(1);
+		saveManager2 = new SaveManager(2);
+		saveManager3 = new SaveManager(3);
 
-		menuInterface = new MenuInterface(colors);
+		menuInterface = new MenuInterface(assets);
 		menuInterface.newGame.addActionListener(this);
 		menuInterface.loadGame.addActionListener(this);
 		menuInterface.exit.addActionListener(this);
@@ -155,7 +39,6 @@ public class Init implements ActionListener, MouseListener
 		menuInterface.save3.addActionListener(this);
 		menuInterface.back.addActionListener(this);
 		menuInterface.setVisible(true);
-
 	}
 
 	public static void main (String[] args) throws IOException
@@ -163,20 +46,34 @@ public class Init implements ActionListener, MouseListener
 		new Init();
 	}
 
-	public Ship[] setShips (Ship[] ss)
+	public void setNewGame ()
 	{
-		ss[0] = new Ship(2);
-		ss[1] = new Ship(2);
-		ss[2] = new Ship(3);
-		ss[3] = new Ship(3);
-		ss[4] = new Ship(4);
+		shipsA = new Ship[5];
+		shipsA[0] = new Ship(2);
+		shipsA[1] = new Ship(2);
+		shipsA[2] = new Ship(3);
+		shipsA[3] = new Ship(3);
+		shipsA[4] = new Ship(4);
 
-		return ss;
+		shipsB = new Ship[5];
+		shipsB[0] = new Ship(2);
+		shipsB[1] = new Ship(2);
+		shipsB[2] = new Ship(3);
+		shipsB[3] = new Ship(3);
+		shipsB[4] = new Ship(4);
+
+		shotsA = new boolean[100];
+		shotsB = new boolean[100];
+
+		turn = true;
+
+		setGameInterface();
 	}
 
 	public void setGameInterface ()
 	{
-		gameInterface = new GameInterface(sizes, colors, turn);
+		gameInterface = new GameInterface(sizeSetter, assets);
+		gameInterface.setTurnButtonPlayer(turn, playerA, playerB);
 		gameInterface.newGame.addActionListener(this);
 		gameInterface.loadSave1.addActionListener(this);
 		gameInterface.loadSave2.addActionListener(this);
@@ -187,19 +84,19 @@ public class Init implements ActionListener, MouseListener
 		gameInterface.exit.addActionListener(this);
 		gameInterface.nextTurn.addActionListener(this);
 
-		if (!CheckShipPlacement(shipsA))
+		if (!checkShipPlacement(shipsA))
 		{
-			shipPlacementA = new ShipPlacement(sizes, colors, iconsA, shipsA, "PLAYER 1");
+			shipPlacementA = new ShipPlacement(sizeSetter, assets, shipsA, playerA);
 			shipPlacementA.addMouseListener(this);
-			shipPlacementSetSelectionPanel(shipPlacementA.selectionButtons);
-			shipPlacementSetPlacementPanel(shipPlacementA.placementButtons);
+			setButtonsListener(shipPlacementA.selectionButtons, false);
+			setButtonsListener(shipPlacementA.placementButtons, false);
 			shipPlacementA.done.addActionListener(this);
 			gameInterface.cardPanel.add(shipPlacementA, "1");
 
-			shipPlacementB = new ShipPlacement(sizes, colors, iconsB, shipsB, "PLAYER 2");
+			shipPlacementB = new ShipPlacement(sizeSetter, assets, shipsB, playerB);
 			shipPlacementB.addMouseListener(this);
-			shipPlacementSetSelectionPanel(shipPlacementB.selectionButtons);
-			shipPlacementSetPlacementPanel(shipPlacementB.placementButtons);
+			setButtonsListener(shipPlacementB.selectionButtons, false);
+			setButtonsListener(shipPlacementB.placementButtons, false);
 			shipPlacementB.done.addActionListener(this);
 			gameInterface.cardPanel.add(shipPlacementB, "2");
 
@@ -207,12 +104,19 @@ public class Init implements ActionListener, MouseListener
 			gameInterface.card.show(gameInterface.cardPanel, "1");
 		}
 
-		else if (!CheckShipPlacement(shipsB))
+		else if (!checkShipPlacement(shipsB))
 		{
-			shipPlacementB = new ShipPlacement(sizes, colors, iconsB, shipsB, "PLAYER 2");
+			shipPlacementA = new ShipPlacement(sizeSetter, assets, shipsA, playerA);
+			shipPlacementA.addMouseListener(this);
+			setButtonsListener(shipPlacementA.selectionButtons, false);
+			setButtonsListener(shipPlacementA.placementButtons, false);
+			shipPlacementA.done.addActionListener(this);
+			gameInterface.cardPanel.add(shipPlacementA, "1");
+
+			shipPlacementB = new ShipPlacement(sizeSetter, assets, shipsB, playerB);
 			shipPlacementB.addMouseListener(this);
-			shipPlacementSetSelectionPanel(shipPlacementB.selectionButtons);
-			shipPlacementSetPlacementPanel(shipPlacementB.placementButtons);
+			setButtonsListener(shipPlacementB.selectionButtons, false);
+			setButtonsListener(shipPlacementB.placementButtons, false);
 			shipPlacementB.done.addActionListener(this);
 			gameInterface.cardPanel.add(shipPlacementB, "2");
 
@@ -222,340 +126,71 @@ public class Init implements ActionListener, MouseListener
 
 		else
 		{
-			shootingA = new Shooting(sizes, colors, shipsA, shipsB, shotsA, shotsB, "PLAYER 1");
-
-			for (int i = 0; i < shootingA.shootingButtons.length; i++)
-			{
-				shootingA.shootingButtons[i].addActionListener(this);
-			}
-
+			shootingA = new Shooting(sizeSetter, assets, playerA);
+			shootingA.setPlayerShipsPanel(assets, shipsA, shotsB);
+			shootingA.setShootingPanel(assets, shipsB, shotsA);
+			setButtonsListener(shootingA.shootingButtons, true);
 			gameInterface.cardPanel.add(shootingA, "4");
 
-			shootingB = new Shooting(sizes, colors, shipsB, shipsA, shotsB, shotsA, "PLAYER 2");
-
-			for (int i = 0; i < shootingB.shootingButtons.length; i++)
-			{
-				shootingB.shootingButtons[i].addActionListener(this);
-			}
-
+			shootingB = new Shooting(sizeSetter, assets, playerB);
+			shootingB.setPlayerShipsPanel(assets, shipsB, shotsA);
+			shootingB.setShootingPanel(assets, shipsA, shotsB);
+			setButtonsListener(shootingB.shootingButtons, true);
 			gameInterface.cardPanel.add(shootingB, "5");
 
-			gameInterface.card.show(gameInterface.cardPanel, "3");
-			gameInterface.currentCard = 3;
+			if (checkWinner(shipsB, playerA) || checkWinner(shipsA, playerB))
+			{
+				gameInterface.currentCard = 6;
+				gameInterface.card.show(gameInterface.cardPanel, "6");
+			}
+
+			else
+			{
+				gameInterface.card.show(gameInterface.cardPanel, "3");
+				gameInterface.currentCard = 3;
+			}
 		}
 
 		menuInterface.setVisible(false);
 		gameInterface.setVisible(true);
 	}
 
-	public void shipPlacementSetSelectionPanel (JButton[] bs)
+	public boolean checkShipPlacement (Ship[] ss)
 	{
-		for (int i = 0; i < bs.length; i++)
-		{
-			bs[i].addMouseListener(this);
-		}
-	}
-
-	public void shipPlacementSetPlacementPanel (JButton[] bs)
-	{
-		for (int i = 0; i < bs.length; i++)
-		{
-			bs[i].addMouseListener(this);
-		}
-	}
-
-	public boolean CheckShipPlacement (Ship[] ss)
-	{
-		int counter = ss.length;
-		boolean allShipsPlaced = false;
+		boolean allShipsPlaced = true;
 
 		for (Ship s: ss)
 		{
-			if (s.placed)
-			{
-				counter--;
-			}
-		}
-
-		if (counter == 0)
-		{
-			allShipsPlaced = true;
+			allShipsPlaced = allShipsPlaced && s.placed;
 		}
 
 		return allShipsPlaced;
 	}
 
-	public boolean shipPlacementCheckEnabledButtonsX (Ship s, JButton[] b, int c)
+	public void setButtonsListener (JButton[] buttons, boolean boo)
 	{
-		int counter = s.size;
-		boolean allButtonsEnabled = false;
-
-		for (int i = 0; i < s.size; i++)
+		if (boo)
 		{
-			if (b[c + i].isEnabled())
+			for (JButton button: buttons)
 			{
-				counter--;
-			}
-		}
-
-		if (counter == 0)
-		{
-			allButtonsEnabled = true;
-		}
-
-		return allButtonsEnabled;
-	}
-
-	public boolean shipPlacementCheckEnabledButtonsY (Ship s, JButton[] b, int c)
-	{
-		int counter = s.size;
-		boolean allButtonsEnabled = false;
-
-		for (int i = 0; i < s.size; i++)
-		{
-			if (b[c + (i * 10)].isEnabled())
-			{
-				counter--;
-			}
-		}
-
-		if (counter == 0)
-		{
-			allButtonsEnabled = true;
-		}
-
-		return allButtonsEnabled;
-	}
-
-	public boolean shipPlacementCheckButtonsSameRow (Ship s, JButton[] b, int c)
-	{
-		int counter = s.size;
-		int buttonRow = Integer.parseInt(String.valueOf(c).substring(0,1));
-		boolean allButtonsSameRow = false;
-
-		if (c < 10)
-		{
-			for (int i = 0; i < s.size; i++)
-			{
-				if ((c + i) < 10)
-				{
-					counter--;
-				}
+				button.addActionListener(this);
 			}
 		}
 
 		else
 		{
-			for (int i = 0; i < s.size; i++)
+			for (JButton button: buttons)
 			{
-				if (buttonRow == Integer.parseInt(Integer.toString(c + i).substring(0,1)))
-				{
-					counter--;
-				}
-			}
-		}
-
-		if (counter == 0)
-		{
-			allButtonsSameRow = true;
-		}
-
-		return allButtonsSameRow;
-	}
-
-	public void shipPlacementMouseEntered (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
-	{
-		for (Ship ship: ships)
-		{
-			if (ship.selected && !ship.placed)
-			{
-				if (ship.orientation &&
-					0 <= (coordinates) &&
-					(coordinates + ship.size - 1) < 100 &&
-					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
-					shipPlacementCheckButtonsSameRow(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + i].setBackground(colors[5]);
-					}
-				}
-
-				else if (!ship.orientation &&
-						0 <= (coordinates) &&
-						(coordinates + ((ship.size - 1) * 10)) < 100 &&
-						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(colors[5]);
-					}
-				}
-
-				else if (shipPlacement.placementButtons[coordinates].isEnabled())
-				{
-					shipPlacement.placementButtons[coordinates].setBackground(colors[6]);
-				}
+				button.addMouseListener(this);
 			}
 		}
 	}
 
-	public void shipPlacementMouseExited (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
+	public boolean checkHit (Ship[] ss, boolean[] shots, Shooting playerShooting, Shooting enemyShooting, int coordinates)
 	{
-		for (Ship ship: ships)
-		{
-			if (ship.selected == true && ship.placed == false)
-			{
-				if (ship.orientation &&
-					0 <= (coordinates) &&
-					(coordinates + ship.size - 1) < 100 &&
-					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
-					shipPlacementCheckButtonsSameRow(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + i].setBackground(colors[4]);
-					}
-				}
-
-				else if (!ship.orientation &&
-						0 <= (coordinates) &&
-						(coordinates + ((ship.size - 1) * 10)) < 100 &&
-						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(colors[4]);
-					}
-				}
-
-				else if (shipPlacement.placementButtons[coordinates].isEnabled())
-				{
-					shipPlacement.placementButtons[coordinates].setBackground(colors[4]);
-				}
-			}
-		}
-	}
-
-	public void shipPlacementMousePressedBUTTON3 (Ship[] ships, ShipPlacement shipPlacement, JButton placementButton, int coordinates)
-	{
-		for (Ship ship: ships)
-		{
-			if (ship.selected)
-			{
-				ship.orientation = !ship.orientation;
-
-				if (ship.orientation &&
-					0 <= (coordinates) &&
-					(coordinates + ship.size - 1) < 100 &&
-					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
-					shipPlacementCheckButtonsSameRow(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + i].setBackground(colors[5]);
-					}
-				}
-
-				else if (!ship.orientation &&
-						0 <= (coordinates) &&
-						(coordinates + ((ship.size - 1) * 10)) < 100 &&
-						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(colors[5]);
-					}
-				}
-
-				else if (placementButton.isEnabled())
-				{
-					placementButton.setBackground(colors[6]);
-				}
-			}
-		}
-	}
-
-	public void shipPlacementMousePressedBUTTON1 (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
-	{
-		for (Ship ship: ships) 
-		{
-			if (ship.selected == true && ship.placed == false)
-			{
-				if (ship.orientation &&
-					0 <= (coordinates) &&
-					(coordinates + ship.size - 1) < 100 &&
-					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
-					shipPlacementCheckButtonsSameRow(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = coordinates + i;
-						shipPlacement.placementButtons[coordinates + i].setBackground(colors[8]);
-						shipPlacement.placementButtons[coordinates + i].setEnabled(false);
-					}
-
-					ship.placed = true;
-					ship.selected = false;
-					
-					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
-					{
-						if (!ships[i].placed)
-						{
-							shipPlacement.selectionButtons[i].setEnabled(true);
-						}
-					}
-				}
-
-				else if (!ship.orientation &&
-						0 <= (coordinates) &&
-						(coordinates + ((ship.size - 1) * 10)) < 100 &&
-						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
-				{
-					for (int i = 0; i < ship.size; i++)
-					{
-						ship.position[i] = coordinates + (i * 10);
-						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(colors[8]);
-						shipPlacement.placementButtons[coordinates + (i * 10)].setEnabled(false);
-
-					}
-
-					ship.placed = true;
-					ship.selected = false;
-
-					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
-					{
-						if (!ships[i].placed)
-						{
-							shipPlacement.selectionButtons[i].setEnabled(true);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	public void shipPlacementMouseReleased (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
-	{
-		ships[coordinates].selected = true;
-
-		for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
-		{
-			shipPlacement.selectionButtons[i].setEnabled(false);
-		}
-
-		if (CheckShipPlacement(ships))
-		{
-			shipPlacement.done.setEnabled(true);
-		}
-	}
-
-	public boolean checkWinner (Ship[] ships, int coordinates, String player)
-	{
-		boolean w = true;
 		boolean hit = false;
 
-		for (Ship ship: ships)
+		for (Ship ship: ss)
 		{
 			ship.sunk = true;
 
@@ -563,31 +198,48 @@ public class Init implements ActionListener, MouseListener
 			{
 				if (coordinates == ship.position[i])
 				{
+					hit = true;
 					ship.hits[i] = true;
-					hit = ship.hits[i];
+					playerShooting.shootingButtons[coordinates].setBackground(assets.colors[6]);
+					enemyShooting.playerShipsLabels[coordinates].setBackground(assets.colors[6]);
+				}
+
+				else if (enemyShooting.playerShipsLabels[coordinates].getBackground() == assets.colors[4])
+				{
+					shots[coordinates] = true;
+					playerShooting.shootingButtons[coordinates].setBackground(assets.colors[7]);
+					enemyShooting.playerShipsLabels[coordinates].setBackground(assets.colors[7]);
 				}
 
 				ship.sunk = ship.sunk && ship.hits[i];
 			}
+		}
+
+		playerShooting.shootingButtons[coordinates].setEnabled(false);
+		return hit;
+	}
+
+	public boolean checkWinner (Ship[] ships, String player)
+	{
+		boolean w = true;
+
+		for (Ship ship: ships)
+		{
 			w = w && ship.sunk;
 		}
 
 		if (w)
 		{
-			winner = new Winner(colors, sizes, player, shootingA.playerShipsPanel, shootingB.playerShipsPanel);
+			winner = new Winner(sizeSetter, assets, player, shootingA.playerShipsPanel, shootingB.playerShipsPanel);
 			winner.mainMenu.addActionListener(this);
 			gameInterface.cardPanel.add(winner, "6");
-
-			gameInterface.currentCard = 6;
-			gameInterface.card.show(gameInterface.cardPanel, "6");
 		}
 
-		return hit;
+		return w;
 	}
 
-	public void actionPerformed(ActionEvent e)
+	public void actionPerformed (ActionEvent e)
 	{
-
 		if (e.getSource() instanceof JButton)
 		{
 			JButton clickedButton = (JButton) e.getSource();
@@ -595,12 +247,7 @@ public class Init implements ActionListener, MouseListener
 
 			if (buttonText == "New Game")
 			{
-				turn = 1;
-				shotsA = new boolean[100];
-				shotsB = new boolean[100];
-				setShips(shipsA);
-				setShips(shipsB);
-				setGameInterface();
+				setNewGame();
 			}
 
 			else if (buttonText == "Load Game")
@@ -610,11 +257,11 @@ public class Init implements ActionListener, MouseListener
 
 			else if (buttonText == "Save 1")
 			{
-				turn = saveManager1Turn.fileLoad(turn);
-				shipsA = saveManager1A.fileLoad(shipsA);
-				shipsB = saveManager1B.fileLoad(shipsB);
-				shotsA = saveManager1ShotsA.fileLoad(shotsA);
-				shotsB = saveManager1ShotsB.fileLoad(shotsB);
+				turn = saveManager1.fileLoad(turn);
+				shipsA = saveManager1.fileLoad("A", shipsA);
+				shipsB = saveManager1.fileLoad("B", shipsB);
+				shotsA = saveManager1.fileLoad("A", shotsA);
+				shotsB = saveManager1.fileLoad("B", shotsB);
 
 				menuInterface.card.first(menuInterface.cardPanel);
 				setGameInterface();
@@ -622,11 +269,11 @@ public class Init implements ActionListener, MouseListener
 
 			else if (buttonText == "Save 2")
 			{
-				turn = saveManager2Turn.fileLoad(turn);
-				shipsA = saveManager2A.fileLoad(shipsA);
-				shipsB = saveManager2B.fileLoad(shipsB);
-				shotsA = saveManager2ShotsA.fileLoad(shotsA);
-				shotsB = saveManager2ShotsB.fileLoad(shotsB);
+				turn = saveManager2.fileLoad(turn);
+				shipsA = saveManager2.fileLoad("A", shipsA);
+				shipsB = saveManager2.fileLoad("B", shipsB);
+				shotsA = saveManager2.fileLoad("A", shotsA);
+				shotsB = saveManager2.fileLoad("B", shotsB);
 
 				menuInterface.card.first(menuInterface.cardPanel);
 				setGameInterface();
@@ -634,11 +281,11 @@ public class Init implements ActionListener, MouseListener
 
 			else if (buttonText == "Save 3")
 			{
-				turn = saveManager3Turn.fileLoad(turn);
-				shipsA = saveManager3A.fileLoad(shipsA);
-				shipsB = saveManager3B.fileLoad(shipsB);
-				shotsA = saveManager3ShotsA.fileLoad(shotsA);
-				shotsB = saveManager3ShotsB.fileLoad(shotsB);
+				turn = saveManager3.fileLoad(turn);
+				shipsA = saveManager3.fileLoad("A", shipsA);
+				shipsB = saveManager3.fileLoad("B", shipsB);
+				shotsA = saveManager3.fileLoad("A", shotsA);
+				shotsB = saveManager3.fileLoad("B", shotsB);
 
 				menuInterface.card.first(menuInterface.cardPanel);
 				setGameInterface();
@@ -664,23 +311,20 @@ public class Init implements ActionListener, MouseListener
 
 				else if (gameInterface.currentCard == 2)
 				{
-					shootingA = new Shooting(sizes, colors, shipsA, shipsB, shotsA, shotsB, "PLAYER 1");
-
-					for (int i = 0; i < shootingA.shootingButtons.length; i++)
-					{
-						shootingA.shootingButtons[i].addActionListener(this);
-					}
-
+					shootingA = new Shooting(sizeSetter, assets, playerA);
+					shootingA.setPlayerShipsPanel(assets, shipsA, shotsB);
+					shootingA.setShootingPanel(assets, shipsB, shotsA);
+					setButtonsListener(shootingA.shootingButtons, true);
 					gameInterface.cardPanel.add(shootingA, "4");
 
-					shootingB = new Shooting(sizes, colors, shipsB, shipsA, shotsB, shotsA, "PLAYER 2");
-
-					for (int i = 0; i < shootingB.shootingButtons.length; i++)
-					{
-						shootingB.shootingButtons[i].addActionListener(this);
-					}
-
+					shootingB = new Shooting(sizeSetter, assets, playerB);
+					shootingB.setPlayerShipsPanel(assets, shipsB, shotsA);
+					shootingB.setShootingPanel(assets, shipsA, shotsB);
+					setButtonsListener(shootingB.shootingButtons, true);
 					gameInterface.cardPanel.add(shootingB, "5");
+
+					gameInterface.card.show(gameInterface.cardPanel, "3");
+					gameInterface.currentCard = 3;
 
 					gameInterface.currentCard = 3;
 					gameInterface.card.show(gameInterface.cardPanel, "3");
@@ -689,15 +333,13 @@ public class Init implements ActionListener, MouseListener
 
 			else if (gameInterface.currentCard == 3)
 			{
-				String buttonName = clickedButton.getName();
-
-				if (buttonName == "A")
+				if (turn)
 				{
 					gameInterface.currentCard = 4;
 					gameInterface.card.show(gameInterface.cardPanel, "4");
 				}
 
-				if (buttonName == "B")
+				else
 				{
 					gameInterface.currentCard = 5;
 					gameInterface.card.show(gameInterface.cardPanel, "5");
@@ -708,34 +350,19 @@ public class Init implements ActionListener, MouseListener
 			{
 				int coordinates = Integer.parseInt(clickedButton.getName());
 
-				for (Ship enemyShip: shipsB)
+				if (!checkHit(shipsB, shotsA, shootingA, shootingB, coordinates))
 				{
-					for (int position: enemyShip.position)
-					{
-						if (coordinates == position)
-						{
-							shootingA.shootingButtons[coordinates].setBackground(colors[6]);
-							shootingB.playerShipsLabels[coordinates].setBackground(colors[6]);
-						}
+					turn = false;
+					gameInterface.setTurnButtonPlayer(turn, playerA, playerB);
 
-						else if (shootingB.playerShipsLabels[coordinates].getBackground() == colors[4])
-						{
-							shotsA[coordinates] = true;
-							shootingA.shootingButtons[coordinates].setBackground(colors[7]);
-							shootingB.playerShipsLabels[coordinates].setBackground(colors[7]);
-						}
-
-						shootingA.shootingButtons[coordinates].setEnabled(false);
-					}
-				}
-
-				if (!checkWinner(shipsB, coordinates, "PLAYER 1"))
-				{
-					turn = 2;
-					gameInterface.nextTurn.setName("B");
-					gameInterface.nextTurn.setText("PLAYER 2'S TURN");
 					gameInterface.currentCard = 3;
 					gameInterface.card.show(gameInterface.cardPanel, "3");
+				}
+
+				else if (checkWinner(shipsB, playerA))
+				{
+					gameInterface.currentCard = 6;
+					gameInterface.card.show(gameInterface.cardPanel, "6");
 				}
 			}
 
@@ -744,46 +371,28 @@ public class Init implements ActionListener, MouseListener
 			{
 				int coordinates = Integer.parseInt(clickedButton.getName());
 
-				for (Ship enemyShip: shipsA)
+				if (!checkHit(shipsA, shotsB, shootingB, shootingA, coordinates))
 				{
-					for (int position: enemyShip.position)
-					{
-						if (coordinates == position)
-						{
-							shootingB.shootingButtons[coordinates].setBackground(colors[6]);
-							shootingA.playerShipsLabels[coordinates].setBackground(colors[6]);
-						}
+					turn = true;
+					gameInterface.setTurnButtonPlayer(turn, playerA, playerB);
 
-						else if (shootingA.playerShipsLabels[coordinates].getBackground() == colors[4])
-						{
-							shotsB[coordinates] = true;
-							shootingB.shootingButtons[coordinates].setBackground(colors[7]);
-							shootingA.playerShipsLabels[coordinates].setBackground(colors[7]);
-						}
-
-						shootingB.shootingButtons[coordinates].setEnabled(false);
-					}
-				}
-
-				if (!checkWinner(shipsA, coordinates, "PLAYER 2"))
-				{
-					turn = 1;
-					gameInterface.nextTurn.setName("A");
-					gameInterface.nextTurn.setText("PLAYER 1'S TURN");
 					gameInterface.currentCard = 3;
 					gameInterface.card.show(gameInterface.cardPanel, "3");
 				}
+
+				else if (checkWinner(shipsA, playerB))
+				{
+					gameInterface.currentCard = 6;
+					gameInterface.card.show(gameInterface.cardPanel, "6");
+				}
 			}
 
-			else if (gameInterface.currentCard == 6)
+			else if (buttonText == "Main Menu")
 			{
-				if (buttonText == "Main Menu")
-				{
-					gameInterface.setVisible(false);
-					gameInterface = null;
-					System.gc();
-					menuInterface.setVisible(true);
-				}
+				gameInterface.setVisible(false);
+				gameInterface = null;
+				System.gc();
+				menuInterface.setVisible(true);
 			}
 		}
 
@@ -795,12 +404,7 @@ public class Init implements ActionListener, MouseListener
 			if (clickedItem == gameInterface.newGame)
 			{
 				gameInterface.setVisible(false);
-				turn = 1;
-				shotsA = new boolean[100];
-				shotsB = new boolean[100];
-				setShips(shipsA);
-				setShips(shipsB);
-				setGameInterface();
+				setNewGame();
 				gameInterface.setVisible(true);
 			}
 
@@ -808,14 +412,13 @@ public class Init implements ActionListener, MouseListener
 			{
 				gameInterface.setVisible(false);
 
-				turn = saveManager1Turn.fileLoad(turn);
-				shipsA = saveManager1A.fileLoad(shipsA);
-				shipsB = saveManager1B.fileLoad(shipsB);
-				shotsA = saveManager1ShotsA.fileLoad(shotsA);
-				shotsB = saveManager1ShotsB.fileLoad(shotsB);
+				turn = saveManager1.fileLoad(turn);
+				shipsA = saveManager1.fileLoad("A", shipsA);
+				shipsB = saveManager1.fileLoad("B", shipsB);
+				shotsA = saveManager1.fileLoad("A", shotsA);
+				shotsB = saveManager1.fileLoad("B", shotsB);
 
 				setGameInterface();
-
 				gameInterface.setVisible(true);
 			}
 
@@ -823,14 +426,13 @@ public class Init implements ActionListener, MouseListener
 			{
 				gameInterface.setVisible(false);
 
-				turn = saveManager2Turn.fileLoad(turn);
-				shipsA = saveManager2A.fileLoad(shipsA);
-				shipsB = saveManager2B.fileLoad(shipsB);
-				shotsA = saveManager2ShotsA.fileLoad(shotsA);
-				shotsB = saveManager2ShotsB.fileLoad(shotsB);
+				turn = saveManager2.fileLoad(turn);
+				shipsA = saveManager2.fileLoad("A", shipsA);
+				shipsB = saveManager2.fileLoad("B", shipsB);
+				shotsA = saveManager2.fileLoad("A", shotsA);
+				shotsB = saveManager2.fileLoad("B", shotsB);
 
 				setGameInterface();
-
 				gameInterface.setVisible(true);
 			}
 
@@ -838,14 +440,13 @@ public class Init implements ActionListener, MouseListener
 			{
 				gameInterface.setVisible(false);
 
-				turn = saveManager3Turn.fileLoad(turn);
-				shipsA = saveManager3A.fileLoad(shipsA);
-				shipsB = saveManager3B.fileLoad(shipsB);
-				shotsA = saveManager3ShotsA.fileLoad(shotsA);
-				shotsB = saveManager3ShotsB.fileLoad(shotsB);
+				turn = saveManager3.fileLoad(turn);
+				shipsA = saveManager3.fileLoad("A", shipsA);
+				shipsB = saveManager3.fileLoad("B", shipsB);
+				shotsA = saveManager3.fileLoad("A", shotsA);
+				shotsB = saveManager3.fileLoad("B", shotsB);
 
 				setGameInterface();
-
 				gameInterface.setVisible(true);
 			}
 
@@ -861,29 +462,49 @@ public class Init implements ActionListener, MouseListener
 					ship.selected = false;
 				}
 
-				saveManager1Turn.fileSave(turn);
-				saveManager1A.fileSave(shipsA);
-				saveManager1B.fileSave(shipsB);
-				saveManager1ShotsA.fileSave(shotsA);
-				saveManager1ShotsB.fileSave(shotsB);
+				saveManager1.fileSave(turn);
+				saveManager1.fileSave("A", shipsA);
+				saveManager1.fileSave("B", shipsB);
+				saveManager1.fileSave("A", shotsA);
+				saveManager1.fileSave("B", shotsB);
 			}
 
 			else if (clickedItem == gameInterface.saveSave2)
 			{
-				saveManager2Turn.fileSave(turn);
-				saveManager2A.fileSave(shipsA);
-				saveManager2B.fileSave(shipsB);
-				saveManager2ShotsA.fileSave(shotsA);
-				saveManager2ShotsB.fileSave(shotsB);
+				for (Ship ship: shipsA)
+				{
+					ship.selected = false;
+				}
+
+				for (Ship ship: shipsB)
+				{
+					ship.selected = false;
+				}
+
+				saveManager2.fileSave(turn);
+				saveManager2.fileSave("A", shipsA);
+				saveManager2.fileSave("B", shipsB);
+				saveManager2.fileSave("A", shotsA);
+				saveManager2.fileSave("B", shotsB);
 			}
 
 			else if (clickedItem == gameInterface.saveSave3)
 			{
-				saveManager3Turn.fileSave(turn);
-				saveManager3A.fileSave(shipsA);
-				saveManager3B.fileSave(shipsB);
-				saveManager3ShotsA.fileSave(shotsA);
-				saveManager3ShotsB.fileSave(shotsB);
+				for (Ship ship: shipsA)
+				{
+					ship.selected = false;
+				}
+
+				for (Ship ship: shipsB)
+				{
+					ship.selected = false;
+				}
+
+				saveManager3.fileSave(turn);
+				saveManager3.fileSave("A", shipsA);
+				saveManager3.fileSave("B", shipsB);
+				saveManager3.fileSave("A", shotsA);
+				saveManager3.fileSave("B", shotsB);
 			}
 
 			else if (clickedItem == gameInterface.exit)
@@ -896,7 +517,92 @@ public class Init implements ActionListener, MouseListener
 		}
 	}
 
-	public void mouseEntered(MouseEvent e)
+	public boolean shipPlacementCheckEnabledButtonsX (Ship ship, JButton[] placementButtons, int coordinates)
+	{
+		boolean allButtonsEnabled = true;
+
+		for (int i = 0; i < ship.size; i++)
+		{
+			allButtonsEnabled = allButtonsEnabled && placementButtons[coordinates + i].isEnabled();
+		}
+
+		return allButtonsEnabled;
+	}
+
+	public boolean shipPlacementCheckEnabledButtonsY (Ship ship, JButton[] placementButtons, int coordinates)
+	{
+		boolean allButtonsEnabled = true;
+
+		for (int i = 0; i < ship.size; i++)
+		{
+			allButtonsEnabled = allButtonsEnabled && placementButtons[coordinates + (i * 10)].isEnabled();
+		}
+
+		return allButtonsEnabled;
+	}
+
+	public boolean shipPlacementCheckButtonsSameRow (Ship ship, int coordinates)
+	{
+		int buttonRow = Integer.parseInt(String.valueOf(coordinates).substring(0,1));
+		boolean allButtonsSameRow = true;
+
+		if (coordinates < 10)
+		{
+			for (int i = 0; i < ship.size; i++)
+			{
+				allButtonsSameRow = allButtonsSameRow && ((coordinates + i) < 10);
+			}
+		}
+
+		else
+		{
+			for (int i = 0; i < ship.size; i++)
+			{
+				allButtonsSameRow = allButtonsSameRow && (buttonRow == Integer.parseInt(Integer.toString(coordinates + i).substring(0,1)));
+			}
+		}
+
+		return allButtonsSameRow;
+	}
+
+	public void mouseEnteredAction (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
+	{
+		for (Ship ship: ships)
+		{
+			if (ship.selected && !ship.placed)
+			{
+				if (ship.orientation &&
+					0 <= (coordinates) &&
+					(coordinates + ship.size - 1) < 100 &&
+					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
+					shipPlacementCheckButtonsSameRow(ship, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + i].setBackground(assets.colors[5]);
+					}
+				}
+
+				else if (!ship.orientation &&
+						0 <= (coordinates) &&
+						(coordinates + ((ship.size - 1) * 10)) < 100 &&
+						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(assets.colors[5]);
+					}
+				}
+
+				else if (shipPlacement.placementButtons[coordinates].isEnabled())
+				{
+					shipPlacement.placementButtons[coordinates].setBackground(assets.colors[6]);
+				}
+			}
+		}
+	}
+
+	public void mouseEntered (MouseEvent e)
 	{
 		if (e.getSource() instanceof JButton)
 		{
@@ -905,17 +611,54 @@ public class Init implements ActionListener, MouseListener
 
 			if (enteredButton == shipPlacementA.placementButtons[coordinates])
 			{
-				shipPlacementMouseEntered(shipsA, shipPlacementA, coordinates);
+				mouseEnteredAction(shipsA, shipPlacementA, coordinates);
 			}
 
 			else if (enteredButton == shipPlacementB.placementButtons[coordinates])
 			{
-				shipPlacementMouseEntered(shipsB, shipPlacementB, coordinates);
+				mouseEnteredAction(shipsB, shipPlacementB, coordinates);
 			}
 		}
 	}
 
-	public void mouseExited(MouseEvent e)
+	public void mouseExitedAction (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
+	{
+		for (Ship ship: ships)
+		{
+			if (ship.selected == true && ship.placed == false)
+			{
+				if (ship.orientation &&
+					0 <= (coordinates) &&
+					(coordinates + ship.size - 1) < 100 &&
+					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
+					shipPlacementCheckButtonsSameRow(ship, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + i].setBackground(assets.colors[4]);
+					}
+				}
+
+				else if (!ship.orientation &&
+						0 <= (coordinates) &&
+						(coordinates + ((ship.size - 1) * 10)) < 100 &&
+						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(assets.colors[4]);
+					}
+				}
+
+				else if (shipPlacement.placementButtons[coordinates].isEnabled())
+				{
+					shipPlacement.placementButtons[coordinates].setBackground(assets.colors[4]);
+				}
+			}
+		}
+	}
+
+	public void mouseExited (MouseEvent e)
 	{
 		if (e.getSource() instanceof JButton)
 		{
@@ -924,17 +667,114 @@ public class Init implements ActionListener, MouseListener
 
 			if (exitedButton == shipPlacementA.placementButtons[coordinates])
 			{
-				shipPlacementMouseExited(shipsA, shipPlacementA, coordinates);
+				mouseExitedAction(shipsA, shipPlacementA, coordinates);
 			}
 
 			else if (exitedButton == shipPlacementB.placementButtons[coordinates])
 			{
-				shipPlacementMouseExited(shipsB, shipPlacementB, coordinates);
+				mouseExitedAction(shipsB, shipPlacementB, coordinates);
 			}
 		}
 	}
 
-	public void mousePressed(MouseEvent e)
+	public void mousePressedActionBUTTON3 (Ship[] ships, ShipPlacement shipPlacement, JButton placementButton, int coordinates)
+	{
+		for (Ship ship: ships)
+		{
+			if (ship.selected)
+			{
+				ship.orientation = !ship.orientation;
+
+				if (ship.orientation &&
+					0 <= (coordinates) &&
+					(coordinates + ship.size - 1) < 100 &&
+					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
+					shipPlacementCheckButtonsSameRow(ship, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + i].setBackground(assets.colors[5]);
+					}
+				}
+
+				else if (!ship.orientation &&
+						0 <= (coordinates) &&
+						(coordinates + ((ship.size - 1) * 10)) < 100 &&
+						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(assets.colors[5]);
+					}
+				}
+
+				else if (placementButton.isEnabled())
+				{
+					placementButton.setBackground(assets.colors[6]);
+				}
+			}
+		}
+	}
+
+	public void mousePressedActionBUTTON1 (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
+	{
+		for (Ship ship: ships) 
+		{
+			if (ship.selected == true && ship.placed == false)
+			{
+				if (ship.orientation &&
+					0 <= (coordinates) &&
+					(coordinates + ship.size - 1) < 100 &&
+					shipPlacementCheckEnabledButtonsX(ship, shipPlacement.placementButtons, coordinates) &&
+					shipPlacementCheckButtonsSameRow(ship, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = coordinates + i;
+						shipPlacement.placementButtons[coordinates + i].setBackground(assets.colors[8]);
+						shipPlacement.placementButtons[coordinates + i].setEnabled(false);
+					}
+
+					ship.placed = true;
+					ship.selected = false;
+					
+					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
+					{
+						if (!ships[i].placed)
+						{
+							shipPlacement.selectionButtons[i].setEnabled(true);
+						}
+					}
+				}
+
+				else if (!ship.orientation &&
+						0 <= (coordinates) &&
+						(coordinates + ((ship.size - 1) * 10)) < 100 &&
+						shipPlacementCheckEnabledButtonsY(ship, shipPlacement.placementButtons, coordinates))
+				{
+					for (int i = 0; i < ship.size; i++)
+					{
+						ship.position[i] = coordinates + (i * 10);
+						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(assets.colors[8]);
+						shipPlacement.placementButtons[coordinates + (i * 10)].setEnabled(false);
+					}
+
+					ship.placed = true;
+					ship.selected = false;
+
+					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
+					{
+						if (!ships[i].placed)
+						{
+							shipPlacement.selectionButtons[i].setEnabled(true);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void mousePressed (MouseEvent e)
 	{
 		if (e.getButton() == MouseEvent.BUTTON3)
 		{
@@ -947,7 +787,7 @@ public class Init implements ActionListener, MouseListener
 				{
 					if (placementButton.isEnabled())
 					{
-						placementButton.setBackground(colors[4]);
+						placementButton.setBackground(assets.colors[4]);
 					}
 				}
 
@@ -955,7 +795,7 @@ public class Init implements ActionListener, MouseListener
 				{
 					if (clickedButton == placementButton)
 					{
-						shipPlacementMousePressedBUTTON3(shipsA, shipPlacementA, clickedButton, coordinates);
+						mousePressedActionBUTTON3(shipsA, shipPlacementA, clickedButton, coordinates);
 					}
 				}
 
@@ -963,7 +803,7 @@ public class Init implements ActionListener, MouseListener
 				{
 					if (placementButton.isEnabled())
 					{
-						placementButton.setBackground(colors[4]);
+						placementButton.setBackground(assets.colors[4]);
 					}
 				}
 
@@ -971,7 +811,7 @@ public class Init implements ActionListener, MouseListener
 				{
 					if (clickedButton == placementButton)
 					{
-						shipPlacementMousePressedBUTTON3(shipsB, shipPlacementB, clickedButton, coordinates);
+						mousePressedActionBUTTON3(shipsB, shipPlacementB, clickedButton, coordinates);
 					}
 				}
 			}
@@ -996,8 +836,6 @@ public class Init implements ActionListener, MouseListener
 			}
 		}
 
-//--------------------------------------------------------------------------------------------------------------
-
 		else if (e.getSource() instanceof JButton && e.getButton() == MouseEvent.BUTTON1)
 		{
 			JButton clickedButton = (JButton) e.getSource();
@@ -1005,17 +843,32 @@ public class Init implements ActionListener, MouseListener
 
 			if (clickedButton == shipPlacementA.placementButtons[coordinates])
 			{
-				shipPlacementMousePressedBUTTON1(shipsA, shipPlacementA, coordinates);
+				mousePressedActionBUTTON1(shipsA, shipPlacementA, coordinates);
 			}
 
 			if (clickedButton == shipPlacementB.placementButtons[coordinates])
 			{
-				shipPlacementMousePressedBUTTON1(shipsB, shipPlacementB, coordinates);
+				mousePressedActionBUTTON1(shipsB, shipPlacementB, coordinates);
 			}
 		}
 	}
 
-	public void mouseReleased(MouseEvent e)
+	public void mouseReleasedAction (Ship[] ships, ShipPlacement shipPlacement, int coordinates)
+	{
+		ships[coordinates].selected = true;
+
+		for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
+		{
+			shipPlacement.selectionButtons[i].setEnabled(false);
+		}
+
+		if (checkShipPlacement(ships))
+		{
+			shipPlacement.done.setEnabled(true);
+		}
+	}
+
+	public void mouseReleased (MouseEvent e)
 	{
 		if (e.getSource() instanceof JButton && e.getButton() == MouseEvent.BUTTON1)
 		{
@@ -1026,14 +879,14 @@ public class Init implements ActionListener, MouseListener
 				coordinates < shipPlacementA.selectionButtons.length &&
 				clickedButton == shipPlacementA.selectionButtons[coordinates])
 			{
-				shipPlacementMouseReleased(shipsA, shipPlacementA, coordinates);
+				mouseReleasedAction(shipsA, shipPlacementA, coordinates);
 			}
 
 			if (clickedButton.isEnabled() &&
 				coordinates < shipPlacementB.selectionButtons.length &&
 				clickedButton == shipPlacementB.selectionButtons[coordinates])
 			{
-				shipPlacementMouseReleased(shipsB, shipPlacementB, coordinates);
+				mouseReleasedAction(shipsB, shipPlacementB, coordinates);
 			}
 		}
 	}

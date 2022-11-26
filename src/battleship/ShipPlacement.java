@@ -11,39 +11,30 @@ public class ShipPlacement extends JPanel
 {
 	JPanel leftPanel, selectionPanel, centerPanel, placementPanel, rightPanel, donePanel;
 	JLabel playerLabel;
-	JButton done;
-	ImageIcon[] icons;
-	Color[] colors;
-	JButton[] placementButtons, selectionButtons;
+	JButton placementButtons[], selectionButtons[], done;
 	Ship[] ships;
 
-	public ShipPlacement (int[] ss, Color[] cs, ImageIcon[] is, Ship[] s, String p)
+	public ShipPlacement (SizeSetter sis, Assets ass, Ship[] ss, String p)
 	{
-		Font buttonFont = new Font("Comic Sans", Font.BOLD, 40);
-		icons = is;
-		colors = cs;
-
-		setLayout(new BorderLayout(ss[4], 0));
-		setBackground(colors[0]);
-
-		//------------------------------ Panels ------------------------------
-
+		setLayout(new BorderLayout(sis.sizes[4], 0));
+		setBackground(ass.colors[0]);
 		playerLabel = new JLabel(p, SwingConstants.CENTER);
-		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 80));
-		playerLabel.setForeground(colors[1]);
+		playerLabel.setFont(ass.fonts[0]);
+		playerLabel.setForeground(ass.colors[1]);
 		add(playerLabel, BorderLayout.NORTH);
 
+//------------------------------ Panels ------------------------------
 		JPanel leftPanel = new JPanel(new BorderLayout());
-		leftPanel.setPreferredSize(new Dimension(ss[5], 0));
+		leftPanel.setPreferredSize(new Dimension(sis.sizes[5], 0));
 		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
 
 		selectionPanel = new JPanel();
-		Border spb = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
-		Border spm = new EmptyBorder(20, 20, 20, 20);
-		selectionPanel.setBorder(new CompoundBorder(spb, spm));
-		selectionPanel.setBackground(colors[3]);
+		Border selectionPanelb = BorderFactory.createMatteBorder(10, 10, 10, 10, ass.colors[2]);
+		Border selectionPanelm = new EmptyBorder(20, 20, 20, 20);
+		selectionPanel.setBorder(new CompoundBorder(selectionPanelb, selectionPanelm));
+		selectionPanel.setBackground(ass.colors[3]);
 		leftPanel.add(selectionPanel, BorderLayout.CENTER);
 
 		BoxLayout spbl = new BoxLayout(selectionPanel, BoxLayout.Y_AXIS);
@@ -56,63 +47,63 @@ public class ShipPlacement extends JPanel
 
 		placementPanel = new JPanel(new GridLayout(10, 10, 0, 0));
 		placementPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		placementPanel.setBackground(colors[2]);
+		placementPanel.setBackground(ass.colors[2]);
 		centerPanel.add(placementPanel, BorderLayout.CENTER);
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
-		rightPanel.setPreferredSize(new Dimension(ss[5], 0));
-		rightPanel.setBorder(new EmptyBorder(ss[6], 20, 20, 20));
+		rightPanel.setPreferredSize(new Dimension(sis.sizes[5], 0));
+		rightPanel.setBorder(new EmptyBorder(sis.sizes[6], 20, 20, 20));
 		rightPanel.setOpaque(false);
 		add(rightPanel, BorderLayout.EAST);
 
 		JPanel donePanel = new JPanel();
-		Border dpb = BorderFactory.createMatteBorder(10, 10, 10, 10, colors[2]);
-		Border dpm = new EmptyBorder(20, 20, 20, 20);
-		donePanel.setBorder(new CompoundBorder(dpb, dpm));
-		donePanel.setBackground(colors[3]);
+		Border donePanelb = BorderFactory.createMatteBorder(10, 10, 10, 10, ass.colors[2]);
+		Border donePanelm = new EmptyBorder(20, 20, 20, 20);
+		donePanel.setBorder(new CompoundBorder(donePanelb, donePanelm));
+		donePanel.setBackground(ass.colors[3]);
 		rightPanel.add(donePanel, BorderLayout.CENTER);
 
 		BoxLayout rpbl = new BoxLayout(donePanel, BoxLayout.Y_AXIS);
 		donePanel.setLayout(rpbl);
 
-		//------------------------------ Content ------------------------------
+//------------------------------ Content ------------------------------
 
-		ships = s;
+		ships = ss;
 
 		selectionButtons = new JButton[ships.length];
-		setSelectionPanel(selectionButtons, buttonFont);
+		setSelectionPanel(selectionButtons, ass);
 
 		donePanel.add(Box.createVerticalGlue());
 
 		done = new JButton("Done");
 		done.setFocusable(false);
 		done.setEnabled(true);//--------------------------------------------------------------------------false
-		done.setFont(buttonFont);
+		done.setFont(ass.fonts[0]);
 		done.setBorder(new EmptyBorder(20, 60, 20, 60));
-		done.setBackground(colors[0]);
-		done.setForeground(colors[1]);
+		done.setBackground(ass.colors[0]);
+		done.setForeground(ass.colors[1]);
 		done.setAlignmentX(CENTER_ALIGNMENT);
 		donePanel.add(done);
 
 		donePanel.add(Box.createVerticalGlue());
 
 		placementButtons = new JButton[100];
-		setPlacementPanel(placementButtons);
+		setPlacementPanel(placementButtons, ass);
 	}
 
 //--------------------------------------------------------------------------------------------------------------
 
-	public void setSelectionPanel (JButton[] bs, Font bf)
+	public void setSelectionPanel (JButton[] bs, Assets ass)
 	{
 		for (int i = 0; i < bs.length; i++)
 		{
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
 			bs[i].setFocusable(false);
-			bs[i].setFont(bf);
+			bs[i].setFont(ass.fonts[1]);
 			bs[i].setBorder(new EmptyBorder(20, 20, 20, 20));
-			bs[i].setBackground(colors[0]);
-			bs[i].setForeground(colors[1]);
+			bs[i].setBackground(ass.colors[0]);
+			bs[i].setForeground(ass.colors[1]);
 			selectionPanel.add(bs[i]);
 
 			if (i == 0 || i == 1)
@@ -148,15 +139,15 @@ public class ShipPlacement extends JPanel
 
 //--------------------------------------------------------------------------------------------------------------
 
-	public void setPlacementPanel (JButton[] bs)
+	public void setPlacementPanel (JButton[] bs, Assets ass)
 	{
 		for (int i = 0; i < bs.length; i++)
 		{
 			bs[i] = new JButton();
 			bs[i].setName(Integer.toString(i));
 			bs[i].setFocusable(false);
-			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-			bs[i].setBackground(colors[4]);
+			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, ass.colors[1]));
+			bs[i].setBackground(ass.colors[4]);
 			placementPanel.add(bs[i]);
 		}
 
@@ -166,7 +157,7 @@ public class ShipPlacement extends JPanel
 			{
 				for(int i: ship.position)
 				{
-					bs[i].setBackground(colors[8]);
+					bs[i].setBackground(ass.colors[8]);
 					bs[i].setEnabled(false);
 				}
 			}

@@ -6,49 +6,58 @@ import java.io.*;
 
 public class SaveManager
 {
+	String filePath;
 	File file;
 	ObjectOutputStream output;
 	ObjectInputStream input;
 
-	public SaveManager (int save, String fileName) throws IOException
+	public SaveManager (int save) throws IOException
 	{
-		file = new File("sfs/save" + save + "/" + fileName);
-	}
+		filePath = "sfs/save" + save + "/";
 
-	public void fileSave (int turn)
-	{
-		try
+		if (!fileExistance(new File(filePath + "shipsA")))
 		{
-			output = new ObjectOutputStream(new FileOutputStream(file));
-			output.writeObject(turn);
-			output.close();
+			fileSave("A", new Ship[] {new Ship(2), new Ship(2), new Ship(3), new Ship(3), new Ship(4)});
 		}
 
-		catch (IOException e)
+		if (!fileExistance(new File(filePath + "shipsB")))
 		{
-			System.out.println("Error initializing stream");
-		}
-	}
-
-	public void fileSave (boolean[] shots)
-	{
-		try
-		{
-			output = new ObjectOutputStream(new FileOutputStream(file));
-			output.writeObject(shots);
-			output.close();
+			fileSave("B", new Ship[] {new Ship(2), new Ship(2), new Ship(3), new Ship(3), new Ship(4)});
 		}
 
-		catch (IOException e)
+		if (!fileExistance(new File(filePath + "shotsA")))
 		{
-			System.out.println("Error initializing stream");
+			fileSave("A", new boolean[100]);
+		}
+
+		if (!fileExistance(new File(filePath + "shotsB")))
+		{
+			fileSave("B", new boolean[100]);
+		}
+
+		if (!fileExistance(new File(filePath + "turn")))
+		{
+			fileSave(true);
 		}
 	}
 
-	public void fileSave (Ship[] ships)
+	public boolean fileExistance (File f)
+	{
+		boolean exists = false;
+
+		if (f.isFile())
+		{
+			exists = true;
+		}
+
+		return exists;
+	}
+
+	public void fileSave (String player, Ship[] ships)
 	{
 		try
 		{
+			file = new File(filePath + "ships" + player);
 			output = new ObjectOutputStream(new FileOutputStream(file));
 			output.writeObject(ships);
 			output.close();
@@ -60,37 +69,43 @@ public class SaveManager
 		}
 	}
 
-	public int fileLoad (int turn)
+	public void fileSave (String player, boolean[] shots)
 	{
 		try
 		{
-			input = new ObjectInputStream((new FileInputStream(file)));
-			turn = (int) input.readObject();
-			input.close();
-		}
-
-		catch (FileNotFoundException e)
-		{
-			System.out.println("File not found");
+			file = new File(filePath + "shots" + player);
+			output = new ObjectOutputStream(new FileOutputStream(file));
+			output.writeObject(shots);
+			output.close();
 		}
 
 		catch (IOException e)
 		{
 			System.out.println("Error initializing stream");
 		}
-
-		catch (ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-
-		return turn;
 	}
 
-	public boolean[] fileLoad (boolean[] shots)
+	public void fileSave (boolean turn)
 	{
 		try
 		{
+			file = new File(filePath + "turn");
+			output = new ObjectOutputStream(new FileOutputStream(file));
+			output.writeObject(turn);
+			output.close();
+		}
+
+		catch (IOException e)
+		{
+			System.out.println("Error initializing stream");
+		}
+	}
+
+	public boolean[] fileLoad (String player, boolean[] shots)
+	{
+		try
+		{
+			file = new File(filePath + "shots" + player);
 			input = new ObjectInputStream((new FileInputStream(file)));
 			shots = (boolean[]) input.readObject();
 			input.close();
@@ -114,10 +129,11 @@ public class SaveManager
 		return shots;
 	}
 
-	public Ship[] fileLoad (Ship[] ships)
+	public Ship[] fileLoad (String player, Ship[] ships)
 	{
 		try
 		{
+			file = new File(filePath + "ships" + player);
 			input = new ObjectInputStream((new FileInputStream(file)));
 			ships = (Ship[]) input.readObject();
 			input.close();
@@ -141,23 +157,31 @@ public class SaveManager
 		return ships;
 	}
 
-	public boolean fileExistance ()
+	public boolean fileLoad (boolean turn)
 	{
-		boolean exists = false;
-
-		if (file.isFile())
+		try
 		{
-			exists = true;
+			file = new File(filePath + "turn");
+			input = new ObjectInputStream((new FileInputStream(file)));
+			turn = (boolean) input.readObject();
+			input.close();
 		}
 
-		return exists;
+		catch (FileNotFoundException e)
+		{
+			System.out.println("File not found");
+		}
+
+		catch (IOException e)
+		{
+			System.out.println("Error initializing stream");
+		}
+
+		catch (ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+
+		return turn;
 	}
 }
-
-/*
-	if !shipsA.allShipsPlaced
-	if !shipsB.allShipsPlaced
-
-	if (file empty)
-		menuItems.setEnabeled(false);
-*/

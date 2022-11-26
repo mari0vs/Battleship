@@ -13,24 +13,19 @@ public class Shooting extends JPanel
 	JLabel playerLabel;
 	JLabel[] playerShipsLabels;
 	JButton[] shootingButtons;
-	Color[] colors;
-	Ship[] playerShips, enemyShips;
-	boolean[] playerShots, enemyShots;
 
-	public Shooting (int[] ss, Color[] c, Ship[] pss, Ship[] ess, boolean[] pshs, boolean[] eshs, String player)
+	public Shooting (SizeSetter sis, Assets ass, String player)
 	{
-		colors = c;
-
-		setLayout(new BorderLayout(ss[4], 0));
-		setBackground(colors[0]);
+		setLayout(new BorderLayout(sis.sizes[4], 0));
+		setBackground(ass.colors[0]);
 
 		playerLabel = new JLabel(player, SwingConstants.CENTER);
 		playerLabel.setFont(new Font("Comic Sans", Font.BOLD, 80));
-		playerLabel.setForeground(colors[1]);
+		playerLabel.setForeground(ass.colors[1]);
 		add(playerLabel, BorderLayout.NORTH);
 
 		leftPanel = new JPanel();
-		leftPanel.setPreferredSize(new Dimension(ss[5], 0));
+		leftPanel.setPreferredSize(new Dimension(sis.sizes[5], 0));
 		leftPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 		leftPanel.setOpaque(false);
 		add(leftPanel, BorderLayout.WEST);
@@ -40,11 +35,11 @@ public class Shooting extends JPanel
 
 		playerShipsPanel = new JPanel(new GridLayout(10, 10, 0, 0));
 		playerShipsPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		playerShipsPanel.setBackground(colors[2]);
+		playerShipsPanel.setBackground(ass.colors[2]);
 		// playerShipsPanel.setAlignmentX(CENTER_ALIGNMENT);
 		leftPanel.add(playerShipsPanel);
 
-		leftPanel.add(Box.createRigidArea(new Dimension(0, ss[7])));
+		leftPanel.add(Box.createRigidArea(new Dimension(0, sis.sizes[7])));
 
 		JPanel centerPanel = new JPanel(new BorderLayout());
 		centerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -53,101 +48,93 @@ public class Shooting extends JPanel
 
 		shootingPanel = new JPanel(new GridLayout(10, 10, 0, 0));
 		shootingPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-		shootingPanel.setBackground(colors[2]);
+		shootingPanel.setBackground(ass.colors[2]);
 		centerPanel.add(shootingPanel, BorderLayout.CENTER);
 
 		rightPanel = new JPanel();
 		rightPanel.setOpaque(false);
-		rightPanel.setPreferredSize(new Dimension(ss[5], 0));
+		rightPanel.setPreferredSize(new Dimension(sis.sizes[5], 0));
 		add(rightPanel, BorderLayout.EAST);
 
-		playerShips = pss;
-		enemyShips = ess;
-		playerShots = pshs;
-		enemyShots = eshs;
-
 		playerShipsLabels = new JLabel[100];
-		setPlayerShipsPanel(playerShipsLabels);
-
 		shootingButtons = new JButton[100];
-		setShootingPanel(shootingButtons);
 	}
 
-	public void setPlayerShipsPanel (JLabel[] ls)
+	public void setPlayerShipsPanel (Assets ass, Ship[] ships, boolean[] shots)
 	{
-		for (int i = 0; i < ls.length; i++)
+		for (int i = 0; i < playerShipsLabels.length; i++)
 		{
-			ls[i] = new JLabel();
-			ls[i].setName(Integer.toString(i));
-			ls[i].setOpaque(true);
-			// ls[i].setBorder(new EmptyBorder(0, 0, 0, 0));
-			ls[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
-			ls[i].setBackground(colors[4]);
+			playerShipsLabels[i] = new JLabel();
+			playerShipsLabels[i].setName(Integer.toString(i));
+			playerShipsLabels[i].setOpaque(true);
+			// playerShipsLabels[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+			playerShipsLabels[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, ass.colors[1]));
+			playerShipsLabels[i].setBackground(ass.colors[4]);
 
-			if (playerShots[i])
+			if (shots[i])
 			{
-				ls[i].setBackground(colors[7]);
+				playerShipsLabels[i].setBackground(ass.colors[7]);
 			}
 
 			else
 			{
-				ls[i].setBackground(colors[4]);
+				playerShipsLabels[i].setBackground(ass.colors[4]);
 			}
 
-			playerShipsPanel.add(ls[i]);
+			playerShipsPanel.add(playerShipsLabels[i]);
 		}
 
-		for (Ship ship: playerShips)
+		for (Ship ship: ships)
 		{
 			for (int i = 0; i < ship.size; i++)
 			{
 				if (ship.hits[i])
 				{
-					ls[ship.position[i]].setBackground(colors[6]);
+					playerShipsLabels[ship.position[i]].setBackground(ass.colors[6]);
 				}
 
 				else
 				{
-					ls[ship.position[i]].setBackground(colors[8]);
+					playerShipsLabels[ship.position[i]].setBackground(ass.colors[8]);
 				}
 			}
 		}
 	}
 
-	public void setShootingPanel (JButton[] bs)
+	public void setShootingPanel (Assets ass, Ship[] ships, boolean[] shots)
 	{
-		for (int i = 0; i < bs.length; i++)
+		for (int i = 0; i < shootingButtons.length; i++)
 		{
-			bs[i] = new JButton();
-			bs[i].setName(Integer.toString(i));
-			bs[i].setFocusable(false);
-			bs[i].setOpaque(true);
-			// bs[i].setBorder(new EmptyBorder(0, 0, 0, 0));
-			bs[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, colors[1]));
+			shootingButtons[i] = new JButton();
+			shootingButtons[i].setName(Integer.toString(i));
+			shootingButtons[i].setFocusable(false);
+			shootingButtons[i].setOpaque(true);
+			// shootingButtons[i].setBorder(new EmptyBorder(0, 0, 0, 0));
+			shootingButtons[i].setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, ass.colors[1]));
 
-			if (enemyShots[i])
+			if (shots[i])
 			{
-				bs[i].setEnabled(false);
-				bs[i].setBackground(colors[7]);
+				shootingButtons[i].setEnabled(false);
+				shootingButtons[i].setBackground(ass.colors[7]);
 			}
 
 			else
 			{
-				bs[i].setEnabled(true);
-				bs[i].setBackground(colors[4]);
+				shootingButtons[i].setEnabled(true);
+				shootingButtons[i].setBackground(ass.colors[4]);
 			}
 
-			shootingPanel.add(bs[i]);
+			shootingPanel.add(shootingButtons[i]);
 		}
 
-		for (Ship ship: enemyShips)
+		for (Ship ship: ships)
 		{
 			for (int i = 0; i < ship.size; i++)
 			{
 				if (ship.hits[i])
 				{
-					bs[ship.position[i]].setEnabled(false);
-					bs[ship.position[i]].setBackground(colors[6]);
+					shootingButtons[ship.position[i]].setEnabled(false);
+					shootingButtons[ship.position[i]].setBackground(ass.colors[6]);
 				}
 			}
 		}

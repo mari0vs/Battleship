@@ -3,13 +3,35 @@ package battleship;
 import javax.swing.*;
 import java.awt.*;
 
-public class Colors
+public class Assets
 {
+	Font[] fonts;
+/*
+	title				0
+	menu buttons		1
+	game buttons		3
+*/
 	Color[] colors;
+/*
+	background 			0
+	foreground 			1
+	highlight			2
+	menu				3
+
+	board				4
+	placeable			5
+	!placeable & hit 	6
+	!hit				7
+	ships				8
+*/
 	ImageIcon[]  iconsA, iconsB;
 
-	public Colors (String[] theme)
+	public Assets (String[] theme)
 	{
+		fonts = new Font[] {new Font("Comic Sans", Font.BOLD, 80),
+							new Font("Comic Sans", Font.BOLD, 40),
+							new Font("Comic Sans", Font.BOLD, 20)};
+
 		iconsA = new ImageIcon[18];
 		iconsA[0] = new ImageIcon("src/icons/2x1FrontVerticalA.png");
 
@@ -47,19 +69,6 @@ public class Colors
 	{
 		icons[0] = new ImageIcon("/src/battleship/2x1FrontVerticalA.png");
 	}
-
-/*
-	background 			0
-	foreground 			1
-	highlight			2
-	menu				3
-
-	board				4
-	placeable			5
-	!placeable & hit 	6
-	!hit				7
-	ships				8
-*/
 
 	public void retroTheme (String t)
 	{
