@@ -15,6 +15,11 @@ public class SaveManager
 	{
 		filePath = "sfs/save" + save + "/";
 
+		if (!fileExistance(new File("sfs/save" + save)))
+		{
+			new File("sfs/save" + save).mkdirs();
+		}
+
 		if (!fileExistance(new File(filePath + "shipsA")))
 		{
 			fileSave("A", new Ship[] {new Ship(2), new Ship(2), new Ship(3), new Ship(3), new Ship(4)});
