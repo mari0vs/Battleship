@@ -12,7 +12,7 @@ public class SaveManager
 
 	public SaveManager (int save, String fileName) throws IOException
 	{
-		file = new File("sfs/save" + save  + "/" + fileName);
+		file = new File("sfs/save" + save + "/" + fileName);
 	}
 
 	public void fileSave (int turn)
