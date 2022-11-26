@@ -77,7 +77,7 @@ public class ShipPlacement extends JPanel
 
 		done = new JButton("Done");
 		done.setFocusable(false);
-		done.setEnabled(true);//--------------------------------------------------------------------------false
+		done.setEnabled(false);//--------------------------------------------------------------------------false
 		done.setFont(ass.fonts[0]);
 		done.setBorder(new EmptyBorder(20, 60, 20, 60));
 		done.setBackground(ass.colors[0]);
