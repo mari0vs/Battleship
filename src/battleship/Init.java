@@ -84,42 +84,28 @@ public class Init implements ActionListener, MouseListener
 		gameInterface.exit.addActionListener(this);
 		gameInterface.nextTurn.addActionListener(this);
 
+		shipPlacementA = new ShipPlacement(sizeSetter, assets, shipsA, playerA);
+		shipPlacementA.addMouseListener(this);
+		setButtonsListener(shipPlacementA.selectionButtons, false);
+		setButtonsListener(shipPlacementA.placementButtons, false);
+		shipPlacementA.done.addActionListener(this);
+		gameInterface.cardPanel.add(shipPlacementA, "1");
+
+		shipPlacementB = new ShipPlacement(sizeSetter, assets, shipsB, playerB);
+		shipPlacementB.addMouseListener(this);
+		setButtonsListener(shipPlacementB.selectionButtons, false);
+		setButtonsListener(shipPlacementB.placementButtons, false);
+		shipPlacementB.done.addActionListener(this);
+		gameInterface.cardPanel.add(shipPlacementB, "2");
+
 		if (!checkShipPlacement(shipsA))
 		{
-			shipPlacementA = new ShipPlacement(sizeSetter, assets, shipsA, playerA);
-			shipPlacementA.addMouseListener(this);
-			setButtonsListener(shipPlacementA.selectionButtons, false);
-			setButtonsListener(shipPlacementA.placementButtons, false);
-			shipPlacementA.done.addActionListener(this);
-			gameInterface.cardPanel.add(shipPlacementA, "1");
-
-			shipPlacementB = new ShipPlacement(sizeSetter, assets, shipsB, playerB);
-			shipPlacementB.addMouseListener(this);
-			setButtonsListener(shipPlacementB.selectionButtons, false);
-			setButtonsListener(shipPlacementB.placementButtons, false);
-			shipPlacementB.done.addActionListener(this);
-			gameInterface.cardPanel.add(shipPlacementB, "2");
-
 			gameInterface.currentCard = 1;
 			gameInterface.card.show(gameInterface.cardPanel, "1");
 		}
 
 		else if (!checkShipPlacement(shipsB))
 		{
-			shipPlacementA = new ShipPlacement(sizeSetter, assets, shipsA, playerA);
-			shipPlacementA.addMouseListener(this);
-			setButtonsListener(shipPlacementA.selectionButtons, false);
-			setButtonsListener(shipPlacementA.placementButtons, false);
-			shipPlacementA.done.addActionListener(this);
-			gameInterface.cardPanel.add(shipPlacementA, "1");
-
-			shipPlacementB = new ShipPlacement(sizeSetter, assets, shipsB, playerB);
-			shipPlacementB.addMouseListener(this);
-			setButtonsListener(shipPlacementB.selectionButtons, false);
-			setButtonsListener(shipPlacementB.placementButtons, false);
-			shipPlacementB.done.addActionListener(this);
-			gameInterface.cardPanel.add(shipPlacementB, "2");
-
 			gameInterface.currentCard = 2;
 			gameInterface.card.show(gameInterface.cardPanel, "2");
 		}
