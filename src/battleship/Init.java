@@ -734,17 +734,6 @@ public class Init implements ActionListener, MouseListener
 						shipPlacement.placementButtons[coordinates + i].setBackground(assets.colors[8]);
 						shipPlacement.placementButtons[coordinates + i].setEnabled(false);
 					}
-
-					ship.placed = true;
-					ship.selected = false;
-					
-					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
-					{
-						if (!ships[i].placed)
-						{
-							shipPlacement.selectionButtons[i].setEnabled(true);
-						}
-					}
 				}
 
 				else if (!ship.orientation &&
@@ -758,17 +747,22 @@ public class Init implements ActionListener, MouseListener
 						shipPlacement.placementButtons[coordinates + (i * 10)].setBackground(assets.colors[8]);
 						shipPlacement.placementButtons[coordinates + (i * 10)].setEnabled(false);
 					}
+				}
 
-					ship.placed = true;
-					ship.selected = false;
+				ship.placed = true;
+				ship.selected = false;
 
-					for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
+				for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
+				{
+					if (!ships[i].placed)
 					{
-						if (!ships[i].placed)
-						{
-							shipPlacement.selectionButtons[i].setEnabled(true);
-						}
+						shipPlacement.selectionButtons[i].setEnabled(true);
 					}
+				}
+
+				if (checkShipPlacement(ships))
+				{
+					shipPlacement.done.setEnabled(true);
 				}
 			}
 		}
@@ -860,11 +854,6 @@ public class Init implements ActionListener, MouseListener
 		for (int i = 0; i < shipPlacement.selectionButtons.length; i++)
 		{
 			shipPlacement.selectionButtons[i].setEnabled(false);
-		}
-
-		if (checkShipPlacement(ships))
-		{
-			shipPlacement.done.setEnabled(true);
 		}
 	}
 
